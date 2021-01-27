@@ -13,6 +13,9 @@ public class CameraController : MonoBehaviour
     private float movementSpeed;
     public float movementTime;
     public float rotationAmount;
+    public float panBorderThickness;
+    public float minY;
+    public float maxY;
     public Vector3 zoomAmount;
 
     private Quaternion newRotation;
@@ -21,6 +24,8 @@ public class CameraController : MonoBehaviour
 
     private Vector3 dragStartPosition;
     private Vector3 dragCurrentPosition;
+
+    public Vector3 panLimit;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +49,18 @@ public class CameraController : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             newZoom += Input.mouseScrollDelta.y * -zoomAmount;
+
+            //Handle max zoom
+            if (newZoom.y <= minY && newZoom.z >= -minY)
+            {
+                newZoom.y = minY;
+                newZoom.z = -minY;
+            }
+            if (newZoom.y >= maxY && newZoom.z <= -maxY)
+            {
+                newZoom.y = maxY;
+                newZoom.z = -maxY;
+            }
         }
 
         //Handle camera drag with mouse
@@ -91,19 +108,19 @@ public class CameraController : MonoBehaviour
             movementSpeed = normalSpeed;
         }
         //WASD and Arrow key support
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
             newPosition += (transform.forward * movementSpeed);
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.mousePosition.y <= panBorderThickness)
         {
             newPosition += (transform.forward * -movementSpeed);
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.mousePosition.x >= Screen.width - panBorderThickness)
         {
             newPosition += (transform.right * movementSpeed);
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.mousePosition.x <= panBorderThickness)
         {
             newPosition += (transform.right * -movementSpeed);
         }
@@ -118,15 +135,9 @@ public class CameraController : MonoBehaviour
             newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
         }
 
-        ////Handle keyboard zoom
-        //if (Input.GetKey(KeyCode.R))
-        //{
-        //    newZoom += zoomAmount;
-        //}
-        //if (Input.GetKey(KeyCode.F))
-        //{
-        //    newZoom -= zoomAmount;
-        //}
+        //Sets the max amount of panning
+        newPosition.x = Mathf.Clamp(newPosition.x, -panLimit.x, panLimit.x);
+        newPosition.z = Mathf.Clamp(newPosition.z, -panLimit.z, panLimit.z);
 
         //Update camera + Make camera smooth
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
