@@ -107,7 +107,7 @@ public class CameraController : MonoBehaviour
         {
             movementSpeed = normalSpeed;
         }
-        //WASD and Arrow key support
+        //WASD and Arrow key support and all sides of screen panning
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
             newPosition += (transform.forward * movementSpeed);

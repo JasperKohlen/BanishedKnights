@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4599764947080311227}
   - component: {fileID: 8942482072833026909}
   - component: {fileID: 8316848724285577254}
-  - component: {fileID: 1737795986183823510}
+  - component: {fileID: 3765040517572433785}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1737795986183823510
+--- !u!114 &3765040517572433785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -507,8 +507,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1737795986183823510}
-        m_TargetAssemblyTypeName: Build_House, Assembly-CSharp
+      - m_Target: {fileID: 3765040517572433785}
+        m_TargetAssemblyTypeName: Build, Assembly-CSharp
         m_MethodName: SpawnHouseBlueprint
         m_Mode: 1
         m_Arguments:
@@ -639,8 +639,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1737795986183823510}
-        m_TargetAssemblyTypeName: Build_House, Assembly-CSharp
+      - m_Target: {fileID: 3765040517572433785}
+        m_TargetAssemblyTypeName: Build, Assembly-CSharp
         m_MethodName: SpawnStorageBlueprint
         m_Mode: 1
         m_Arguments:

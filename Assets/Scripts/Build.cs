@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Build_House : MonoBehaviour
+public class Build : MonoBehaviour
 {
     public GameObject houseBlueprint;
     public GameObject storageBlueprint;
