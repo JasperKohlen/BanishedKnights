@@ -8,6 +8,7 @@ TagManager:
   - HouseBP
   - Storage
   - StorageBP
+  - Removable
   layers:
   - Default
   - TransparentFX
