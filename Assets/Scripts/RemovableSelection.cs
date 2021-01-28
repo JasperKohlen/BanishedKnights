@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RemovableSelection : MonoBehaviour
 {
@@ -54,70 +55,96 @@ public class RemovableSelection : MonoBehaviour
             //Select single unit(s)
             if (dragSelect == false)
             {
-                Ray ray = Camera.main.ScreenPointToRay(p1);
-
-                //When clicking on a removable object
-                if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag == "Removable")
-                {
-                    //Specifically select multiple units
-                    if (Input.GetKey(KeyCode.LeftShift))
-                    {
-                        selectedTable.AddSelected(hit.transform.gameObject);
-                    }
-                    //Select only one unit, therefore also deselecting all other units
-                    else
-                    {
-                        selectedTable.DeselectAll();
-                        selectedTable.AddSelected(hit.transform.gameObject);
-                    }
-                }
-                //When you click dont click on a removable object or on nothing
-                else
-                {
-                    selectedTable.DeselectAll();
-                }
+                ManuallySelect();
             }
-            //Draw rectangle while dragging
+            //Draw selectionbox while dragging
             else
             {
-                verts = new Vector3[4];
-                vecs = new Vector3[4];
-                int i = 0;
-                p2 = Input.mousePosition;
-                corners = getBoundingBox(p1, p2);
-
-                //Perform raycast from screenposition into the world to select multiple objects
-                foreach (Vector2 corner in corners)
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(corner);
-
-                    //Add each of the lines that intersect with the ground by the raycast to the verts
-                    if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag == "Removable")
-                    {
-                        verts[i] = new Vector3(hit.point.x, 0, hit.point.z);
-                        vecs[i] = ray.origin - hit.point;
-                        Debug.DrawLine(Camera.main.ScreenToWorldPoint(corner), hit.point, Color.red, 1.0f);
-                    }
-                    i++;
-                }
-
-                //Draw the boxmesh based on the verts generated in the foreach loop
-                selectionMesh = generateSelectionMesh(verts, vecs);
-
-                selectionBox = gameObject.AddComponent<MeshCollider>();
-                selectionBox.sharedMesh = selectionMesh;
-                selectionBox.convex = true;
-                selectionBox.isTrigger = true;
-
-                if (!Input.GetKey(KeyCode.LeftShift))
-                {
-                    selectedTable.DeselectAll();
-                }
-
-                Destroy(selectionBox, 0.02f);
+                DrawSelectionBox();
             }
             dragSelect = false;
         }
+    }
+
+    private void ManuallySelect()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(p1);
+
+        //When clicking on a removable object
+        if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag == "Removable")
+        {
+            //Specifically select multiple units
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (selectedTable.Contains(hit.transform.gameObject))
+                {
+                    selectedTable.Deselect(hit.transform.gameObject);
+                }
+                else
+                {
+                    selectedTable.AddSelected(hit.transform.gameObject);
+                }
+            }
+            //Select only one unit, therefore also deselecting all other units
+            else
+            {
+                if (selectedTable.Contains(hit.transform.gameObject))
+                {
+                    selectedTable.DeselectAll();
+                }
+                else
+                {
+                    //TODO: small bug when multiple are selecting and you then try to only select 1 tree who was already selected
+                    //The tree you click on doesnt get selected until you click again afterwards
+                    selectedTable.DeselectAll();
+                    selectedTable.AddSelected(hit.transform.gameObject);
+                }
+            }
+        }
+        //When you dont click on a removable object 
+        else 
+        {
+            selectedTable.DeselectAll();
+        }
+    }
+
+    private void DrawSelectionBox()
+    {
+        verts = new Vector3[4];
+        vecs = new Vector3[4];
+        int i = 0;
+        p2 = Input.mousePosition;
+        corners = getBoundingBox(p1, p2);
+
+        //Perform raycast from screenposition into the world to select multiple objects
+        foreach (Vector2 corner in corners)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(corner);
+
+            //Add each of the lines that intersect with the ground by the raycast to the verts
+            if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag == "Removable")
+            {
+                verts[i] = new Vector3(hit.point.x, 0, hit.point.z);
+                vecs[i] = ray.origin - hit.point;
+                Debug.DrawLine(Camera.main.ScreenToWorldPoint(corner), hit.point, Color.red, 1.0f);
+            }
+            i++;
+        }
+
+        //Draw the boxmesh based on the verts generated in the foreach loop
+        selectionMesh = generateSelectionMesh(verts, vecs);
+
+        selectionBox = gameObject.AddComponent<MeshCollider>();
+        selectionBox.sharedMesh = selectionMesh;
+        selectionBox.convex = true;
+        selectionBox.isTrigger = true;
+
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            selectedTable.DeselectAll();
+        }
+
+        Destroy(selectionBox, 0.02f);
     }
 
     private void OnGUI()

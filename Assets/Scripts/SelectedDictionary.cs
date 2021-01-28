@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectedDictionary : MonoBehaviour
@@ -17,8 +18,9 @@ public class SelectedDictionary : MonoBehaviour
         }
     }
 
-    public void Deselect(int id)
+    public void Deselect(GameObject go)
     {
+        int id = go.GetInstanceID();
         Destroy(selectedTable[id].GetComponent<SelectionComponent>());
         selectedTable.Remove(id);
     }
@@ -35,5 +37,22 @@ public class SelectedDictionary : MonoBehaviour
         }
         //Table needs to be cleared on top of destroy selectioncomponents
         selectedTable.Clear();
+    }
+
+    public bool Contains(GameObject go)
+    {
+        if (selectedTable.ContainsKey(go.GetInstanceID()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Dictionary<int, GameObject> GetTable()
+    {
+        return selectedTable;
     }
 }

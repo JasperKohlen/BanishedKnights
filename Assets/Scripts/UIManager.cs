@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     RemovableSelection removableSelection;
-    SelectedDictionary selectedTable;
 
+    public GameObject removeBtn;
     public GameObject removeDestroyPanel;
     private void Start()
     {
         removableSelection = EventSystem.current.gameObject.GetComponent<RemovableSelection>();
-        selectedTable = EventSystem.current.gameObject.GetComponent<SelectedDictionary>();
 
     }
     //Open the menu with all remove and destroy buttons
     public void HandleRemoveDestroyPanel()
     {
+        //Disable remove panel
         if (removeDestroyPanel.activeSelf)
         {
-            Debug.Log("Turning off menu");
+            removeBtn.GetComponent<Image>().color = Color.white;
+            removableSelection.enabled = false;
             removeDestroyPanel.SetActive(false);
         }
+        //Enable remove panel
         else if (!removeDestroyPanel.activeSelf)
         {
-            Debug.Log("Turning on menu");
             removeDestroyPanel.SetActive(true);
         }
     }
@@ -33,14 +35,17 @@ public class UIManager : MonoBehaviour
     //Enable/Disable resource removal selection
     public void HandleRemovableSelection()
     {
+        //Disable removable selection
         if (removableSelection.enabled == true)
         {
+            removeBtn.GetComponent<Image>().color = Color.white;
             removableSelection.enabled = false;
-            selectedTable.DeselectAll();
         }
-        else 
+        //Enable removable selection
+        else
         {
             removableSelection.enabled = true;
+            removeBtn.GetComponent<Image>().color = Color.grey;
         }
     }
 }
