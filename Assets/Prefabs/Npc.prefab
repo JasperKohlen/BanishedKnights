@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 1371084398041648006}
   - component: {fileID: 1371084398041648005}
   - component: {fileID: 1371084398041648007}
-  - component: {fileID: 8707468394026247949}
+  - component: {fileID: 5370020549517880056}
   - component: {fileID: 9172166424612614644}
   m_Layer: 0
   m_Name: Npc
@@ -330,11 +330,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371084398041648004}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.5034107, z: 1}
+  m_Center: {x: 0, y: 0.25170526, z: 0}
 --- !u!54 &1371084398041648007
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -351,7 +351,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8707468394026247949
+--- !u!114 &5370020549517880056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1371084398041648004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47a9c764b482e740818aa5014e215cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 91846555adb18554b8e234e23d9f0d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 0}

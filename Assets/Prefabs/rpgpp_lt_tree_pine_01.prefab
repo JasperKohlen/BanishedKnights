@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3646446182365219625}
   - component: {fileID: 3655842693157617873}
   - component: {fileID: 3025508722090019776}
+  - component: {fileID: 3514887300686878972}
   m_Layer: 0
   m_Name: rpgpp_lt_tree_pine_01
   m_TagString: Removable
@@ -95,3 +96,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.2663984, y: 8.179804, z: 3.9665127}
   m_Center: {x: -0.009553432, y: 4.089902, z: -0.3596468}
+--- !u!114 &3514887300686878972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668545159370947283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eada2d80297f5d4b912bde887c7c193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logPrefab: {fileID: 1120918600862803585, guid: 719e40e344e9a6c4ca7000b6f596a943, type: 3}

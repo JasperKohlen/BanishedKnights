@@ -9,6 +9,7 @@ TagManager:
   - Storage
   - StorageBP
   - Removable
+  - Worker
   layers:
   - Default
   - TransparentFX

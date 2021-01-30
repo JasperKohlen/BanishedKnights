@@ -13,7 +13,8 @@ namespace Assets.Scripts
         DESTROYING,
         DELIVERING_TO_BUILD,
         BUILDING,
-        DELIVERING,
+        DELIVERING_TO_STORAGE,
+        NAVIGATE_TO_RESOURCE,
         WORKING,
     }
 }
