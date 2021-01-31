@@ -418,7 +418,6 @@ GameObject:
   - component: {fileID: 4599764947080311227}
   - component: {fileID: 8942482072833026909}
   - component: {fileID: 8316848724285577254}
-  - component: {fileID: 3765040517572433785}
   - component: {fileID: 5502567129983909050}
   m_Layer: 5
   m_Name: Canvas
@@ -509,20 +508,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3765040517572433785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5769811520359742459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62993899f09eb70418aef21e7297715c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  houseBlueprint: {fileID: 3123724409353819854, guid: 9b73205d2766b0043a0449be03f81f76, type: 3}
-  storageBlueprint: {fileID: 8447017859649435949, guid: 732781c141fcbda4cb0b78a250d7cace, type: 3}
 --- !u!114 &5502567129983909050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +522,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   removeBtn: {fileID: 6165628025442905323}
   removeDestroyPanel: {fileID: 6840151600679807692}
+  houseBlueprint: {fileID: 3123724409353819854, guid: 9b73205d2766b0043a0449be03f81f76, type: 3}
+  storageBlueprint: {fileID: 8447017859649435949, guid: 732781c141fcbda4cb0b78a250d7cace, type: 3}
 --- !u!1 &6165628025442905323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,8 +1121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3765040517572433785}
-        m_TargetAssemblyTypeName: Build, Assembly-CSharp
+      - m_Target: {fileID: 5502567129983909050}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SpawnHouseBlueprint
         m_Mode: 1
         m_Arguments:
@@ -1266,8 +1253,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3765040517572433785}
-        m_TargetAssemblyTypeName: Build, Assembly-CSharp
+      - m_Target: {fileID: 5502567129983909050}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SpawnStorageBlueprint
         m_Mode: 1
         m_Arguments:

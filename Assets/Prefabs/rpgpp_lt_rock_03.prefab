@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8460659414244918775}
   - component: {fileID: 8451197154485841459}
   - component: {fileID: 6995670249249620925}
+  - component: {fileID: 1646855043748768673}
   m_Layer: 0
   m_Name: rpgpp_lt_rock_03
   m_TagString: Removable
@@ -95,3 +96,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.0224223, y: 1.6239221, z: 2.738186}
   m_Center: {x: 0.034115314, y: -0.013772577, z: -0.11796063}
+--- !u!114 &1646855043748768673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8437873955070239185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eada2d80297f5d4b912bde887c7c193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logPrefab: {fileID: 0}

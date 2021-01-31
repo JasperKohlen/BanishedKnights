@@ -11,9 +11,10 @@ public class Worker : MonoBehaviour
 {
     private Dictionary<int, GameObject> inventory;
 
-    public GameObject destination;
+    public Vector3 destination;
     public int movSpeed;
-    private State state;
+    public State state;
+
     private NavMeshAgent agent;
 
     private SelectedDictionary selectedTable;
@@ -87,27 +88,30 @@ public class Worker : MonoBehaviour
         {
             SortDestinations(item.Value);
         }
-        destination = sorted.First();
+        destination = sorted.First().transform.position;
 
-        agent.SetDestination(destination.transform.position);
+        agent.SetDestination(destination);
         sorted.Clear();
     }
 
     private void NavigateToResource()
     {
-        Vector3 resource = resourcesInWorld.GetTable().First().Value.transform.position;
-        agent.SetDestination(resource);
+        destination = resourcesInWorld.GetTable().ToList().First().Value.gameObject.transform.position;
+        agent.SetDestination(destination);
 
         PickupResource();
     }
 
     void PickupResource()
     {
-        foreach (var item in resourcesInWorld.GetTable())
+        foreach (var item in resourcesInWorld.GetTable().ToList())
         {
             //If distance to resource is smaller than given value, pick up item
-            if (Vector3.Distance(gameObject.transform.position, item.Value.transform.position) < 10)
+            if (Vector3.Distance(gameObject.transform.position, item.Value.transform.position) < 5)
             {
+                //Remove from the world resources dictionary
+                resourcesInWorld.RemoveFromTable(item.Value);
+
                 //Add to inventory dictionary
                 if (inventory.ContainsKey(item.Value.GetInstanceID()))
                 {
@@ -117,8 +121,7 @@ public class Worker : MonoBehaviour
                 //Carry resource ingame
 
 
-                //Remove from the world resources dictionary
-                resourcesInWorld.RemoveFromTable(item.Value);
+                state = State.DELIVERING_TO_STORAGE;
             }
         }
     }

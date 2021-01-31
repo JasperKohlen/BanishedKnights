@@ -102,7 +102,7 @@ public class RemovableSelection : MonoBehaviour
             }
         }
         //When you dont click on a removable object 
-        else 
+        else if (!Input.GetKey(KeyCode.LeftShift))
         {
             selectedTable.DeselectAll();
         }

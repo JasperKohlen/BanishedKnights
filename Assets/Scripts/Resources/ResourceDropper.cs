@@ -20,7 +20,8 @@ public class ResourceDropper : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Worker") && selectedTable.Contains(gameObject))
+        //Only remove removable when selected and the collider is a worker who is in the removing state.
+        if (other.gameObject.tag.Equals("Worker") && selectedTable.Contains(gameObject) && other.GetComponent<Worker>().state == Assets.Scripts.State.REMOVING)
         {
             selectedTable.Deselect(gameObject);
             Destroy(gameObject);

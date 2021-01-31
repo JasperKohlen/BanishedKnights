@@ -19,7 +19,10 @@ public class ResourceDictionary : MonoBehaviour
     public void RemoveFromTable(GameObject go)
     {
         int id = go.GetInstanceID();
-        resourceInWorldTable.Remove(id);
+        if (resourceInWorldTable.ContainsKey(id))
+        {
+            resourceInWorldTable.Remove(id);
+        }
     }
 
     public bool Available()

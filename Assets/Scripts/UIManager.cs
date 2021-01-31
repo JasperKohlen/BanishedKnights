@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject removeBtn;
     public GameObject removeDestroyPanel;
+
+    public GameObject houseBlueprint;
+    public GameObject storageBlueprint;
     private void Start()
     {
         removableSelection = EventSystem.current.gameObject.GetComponent<RemovableSelection>();
@@ -18,14 +21,14 @@ public class UIManager : MonoBehaviour
     //Open the menu with all remove and destroy buttons
     public void HandleRemoveDestroyPanel()
     {
-        //Disable remove panel
+        //Disable remove-panel
         if (removeDestroyPanel.activeSelf)
         {
             removeBtn.GetComponent<Image>().color = Color.white;
             removableSelection.enabled = false;
             removeDestroyPanel.SetActive(false);
         }
-        //Enable remove panel
+        //Enable remove-panel
         else if (!removeDestroyPanel.activeSelf)
         {
             removeDestroyPanel.SetActive(true);
@@ -48,4 +51,29 @@ public class UIManager : MonoBehaviour
             removeBtn.GetComponent<Image>().color = Color.grey;
         }
     }
+
+    #region Building
+    public void SpawnHouseBlueprint()
+    {
+        removeBtn.GetComponent<Image>().color = Color.white;
+
+        //Disable panels to prevent deselection
+        //TODO: make more readable and efficient
+        removableSelection.enabled = false;
+        removeDestroyPanel.SetActive(false);
+        Instantiate(houseBlueprint);
+    }
+
+    public void SpawnStorageBlueprint()
+    {
+        removeBtn.GetComponent<Image>().color = Color.white;
+
+        //Disable panels to prevent deselection
+        //TODO: make more readable and efficient
+        removableSelection.enabled = false;
+        removeDestroyPanel.SetActive(false);
+        Instantiate(storageBlueprint);
+    }
+
+    #endregion
 }
