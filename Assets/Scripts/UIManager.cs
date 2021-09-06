@@ -52,13 +52,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    #region Building
+    #region Buildings
     public void SpawnHouseBlueprint()
     {
         removeBtn.GetComponent<Image>().color = Color.white;
 
         //Disable panels to prevent deselection
-        //TODO: make more readable and efficient
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);
         Instantiate(houseBlueprint);
@@ -69,7 +68,6 @@ public class UIManager : MonoBehaviour
         removeBtn.GetComponent<Image>().color = Color.white;
 
         //Disable panels to prevent deselection
-        //TODO: make more readable and efficient
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);
         Instantiate(storageBlueprint);

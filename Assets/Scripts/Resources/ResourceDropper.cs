@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,7 @@ public class ResourceDropper : MonoBehaviour
     private Vector3 objectPosition;
     private SelectedDictionary selectedTable;
     private ResourceDictionary resourcesInWorld;
+    private Worker worker;
     void Start()
     {
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
@@ -25,6 +27,9 @@ public class ResourceDropper : MonoBehaviour
         {
             selectedTable.Deselect(gameObject);
             Destroy(gameObject);
+
+            //TODO:
+            worker = other.gameObject.GetComponent<Worker>();
         }
     }
     void OnApplicationQuit()
@@ -36,8 +41,8 @@ public class ResourceDropper : MonoBehaviour
         //Prevent instantiation on ending playmode
         if (!isQuitting)
         {
-            Instantiate(logPrefab, objectPosition, Quaternion.identity);
-            resourcesInWorld.AddResource(logPrefab);
+            GameObject log = Instantiate(logPrefab, objectPosition, Quaternion.identity);
+            worker.resourcesToDeliver.AddResource(log);
         }
     }
 }

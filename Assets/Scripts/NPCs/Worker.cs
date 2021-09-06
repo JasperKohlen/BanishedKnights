@@ -11,22 +11,27 @@ public class Worker : MonoBehaviour
 {
     private Dictionary<int, GameObject> inventory;
 
-    public Vector3 destination;
-    public int movSpeed;
-    public State state;
+    private Vector3 destination;
+    [SerializeField] private int movSpeed;
+    private bool delivering;
+    [HideInInspector] public State state;
 
     private NavMeshAgent agent;
 
     private SelectedDictionary selectedTable;
-    private ResourceDictionary resourcesInWorld;
+    [HideInInspector] public ResourceDictionary resourcesToDeliver;
+    private StorageDictionary storages;
+
     private List<GameObject> sorted;
 
     // Start is called before the first frame update
     void Start()
     {
+        delivering = false;
         agent = GetComponent<NavMeshAgent>();
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
-        resourcesInWorld = EventSystem.current.GetComponent<ResourceDictionary>();
+        resourcesToDeliver = EventSystem.current.GetComponent<ResourceDictionary>();
+        storages = EventSystem.current.GetComponent<StorageDictionary>();
         inventory = new Dictionary<int, GameObject>();
         sorted = new List<GameObject>();
 
@@ -49,10 +54,8 @@ public class Worker : MonoBehaviour
                 break;
             case State.DELIVERING_TO_BUILD:
                 break;
-            case State.NAVIGATE_TO_RESOURCE:
-                NavigateToResource();
-                break;
             case State.DELIVERING_TO_STORAGE:
+                DeliverToStorage();
                 break;
             default:
                 HandleState();
@@ -70,12 +73,10 @@ public class Worker : MonoBehaviour
         {
             state = State.REMOVING;
         }
-        if (resourcesInWorld.Available())
+        if (resourcesToDeliver.GetTable().Count() > 0)
         {
-            state = State.NAVIGATE_TO_RESOURCE;
+            state = State.DELIVERING_TO_STORAGE;
         }
-
-        
     }
     private void Idling()
     {
@@ -94,41 +95,39 @@ public class Worker : MonoBehaviour
         sorted.Clear();
     }
 
-    private void NavigateToResource()
+    void PickupResource(GameObject resource)
     {
-        destination = resourcesInWorld.GetTable().ToList().First().Value.gameObject.transform.position;
-        agent.SetDestination(destination);
+        Debug.Log("Picking up...");
+        Debug.Log(state);
 
-        PickupResource();
-    }
+        //Remove from the toDeliver dictionary
+        resourcesToDeliver.RemoveFromTable(resource);
 
-    void PickupResource()
-    {
-        foreach (var item in resourcesInWorld.GetTable().ToList())
-        {
-            //If distance to resource is smaller than given value, pick up item
-            if (Vector3.Distance(gameObject.transform.position, item.Value.transform.position) < 5)
-            {
-                //Remove from the world resources dictionary
-                resourcesInWorld.RemoveFromTable(item.Value);
+        //Place in worker inventory
+        inventory.Add(resource.GetInstanceID(), resource);
+        Debug.Log(inventory.Count());
 
-                //Add to inventory dictionary
-                if (inventory.ContainsKey(item.Value.GetInstanceID()))
-                {
-                    inventory.Add(item.Value.GetInstanceID(), item.Value);
-                }
-
-                //Carry resource ingame
-
-
-                state = State.DELIVERING_TO_STORAGE;
-            }
-        }
+        //Carry resource ingame
+        resource.transform.SetParent(gameObject.transform);
+        resource.transform.position = new Vector3(0,4,0);
     }
 
     void DeliverToStorage()
     {
+        foreach (var item in resourcesToDeliver.GetTable().ToList())
+        {
+            destination = item.Value.gameObject.transform.position;
+            agent.SetDestination(destination);
 
+            PickupResource(item.Value.gameObject);
+
+            while (delivering)
+            {
+                //Set destination to nearest storage
+                agent.SetDestination(storages.GetTable().ToList().First().Value.transform.position);
+                delivering = false;
+            }
+        }
     }
 
     //Sort list based on distance from the NPC, so npc always goes to closest target
