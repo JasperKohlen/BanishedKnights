@@ -11,18 +11,20 @@ public class Worker : MonoBehaviour
 {
     private Dictionary<int, GameObject> inventory;
 
+    [HideInInspector] 
+    public ResourceDictionary resourcesToDeliver;
+    private SelectedDictionary selectedTable;
+    private StorageBuildingsDictionary storages;
+    private List<GameObject> sorted;
+
     private Vector3 destination;
-    [SerializeField] private int movSpeed;
+    [HideInInspector]
     private bool delivering;
-    [HideInInspector] public State state;
+    public State state;
+    [SerializeField]
+    private int movSpeed;
 
     private NavMeshAgent agent;
-
-    private SelectedDictionary selectedTable;
-    [HideInInspector] public ResourceDictionary resourcesToDeliver;
-    private StorageDictionary storages;
-
-    private List<GameObject> sorted;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,9 @@ public class Worker : MonoBehaviour
         delivering = false;
         agent = GetComponent<NavMeshAgent>();
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
-        resourcesToDeliver = EventSystem.current.GetComponent<ResourceDictionary>();
-        storages = EventSystem.current.GetComponent<StorageDictionary>();
+        storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
+
+        resourcesToDeliver = gameObject.AddComponent<ResourceDictionary>();
         inventory = new Dictionary<int, GameObject>();
         sorted = new List<GameObject>();
 
@@ -65,11 +68,11 @@ public class Worker : MonoBehaviour
 
     private void HandleState()
     {
-        if (selectedTable.GetTable().Count == 0)
+        if (selectedTable.GetTable().Count == 0 && resourcesToDeliver.GetTable().Count == 0)
         {
             state = State.IDLE;
         }
-        if (selectedTable.GetTable().Count > 0)
+        if (selectedTable.GetTable().Count > 0 && resourcesToDeliver.GetTable().Count == 0)
         {
             state = State.REMOVING;
         }
@@ -77,6 +80,10 @@ public class Worker : MonoBehaviour
         {
             state = State.DELIVERING_TO_STORAGE;
         }
+        //else
+        //{
+        //    state = State.IDLE;
+        //}
     }
     private void Idling()
     {
@@ -97,37 +104,40 @@ public class Worker : MonoBehaviour
 
     void PickupResource(GameObject resource)
     {
-        Debug.Log("Picking up...");
-        Debug.Log(state);
-
-        //Remove from the toDeliver dictionary
-        resourcesToDeliver.RemoveFromTable(resource);
-
-        //Place in worker inventory
-        inventory.Add(resource.GetInstanceID(), resource);
-        Debug.Log(inventory.Count());
+        //Place in worker inventory BUGGED
+        //inventory.Add(resource.GetInstanceID(), resource);
 
         //Carry resource ingame
-        resource.transform.SetParent(gameObject.transform);
-        resource.transform.position = new Vector3(0,4,0);
+        resource.GetComponent<Rigidbody>().useGravity = false;
+        resource.GetComponent<Rigidbody>().isKinematic = true;
+        resource.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 3, gameObject.transform.position.z);
+        resource.transform.SetParent(gameObject.transform, false);
     }
 
+    //Called when in the DELIVERING_TO_STORAGE state
     void DeliverToStorage()
     {
         foreach (var item in resourcesToDeliver.GetTable().ToList())
         {
-            destination = item.Value.gameObject.transform.position;
-            agent.SetDestination(destination);
-
             PickupResource(item.Value.gameObject);
 
-            while (delivering)
-            {
-                //Set destination to nearest storage
-                agent.SetDestination(storages.GetTable().ToList().First().Value.transform.position);
-                delivering = false;
-            }
+            //Set destination to nearest storage
+            agent.SetDestination(storages.GetTable().ToList().First().Value.transform.position);
         }
+    }
+
+    //Called when entering a storage building when holding a resource to deliver
+    public void DropInStorage(LocalStorageDictionary storageInv)
+    {
+        Debug.Log("Dropping in storage...");
+
+        storageInv.Add(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
+        Debug.Log("Items in local storage: " + storageInv.GetTable().Count);
+
+        //Remove from the toDeliver dictionary
+        Destroy(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
+        resourcesToDeliver.RemoveFromTable(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
+        //remove from inventory
     }
 
     //Sort list based on distance from the NPC, so npc always goes to closest target

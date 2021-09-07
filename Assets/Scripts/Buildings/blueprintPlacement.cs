@@ -10,7 +10,7 @@ public class blueprintPlacement : MonoBehaviour
     [SerializeField] private static blueprintPlacement instance;
     [SerializeField] private GameObject prefab;
 
-    private StorageDictionary storages;
+    private StorageBuildingsDictionary storages;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class blueprintPlacement : MonoBehaviour
 
     private void Start()
     {
-        storages = EventSystem.current.GetComponent<StorageDictionary>();
+        storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
     }
 
     // Update is called once per frame
@@ -67,8 +67,8 @@ public class blueprintPlacement : MonoBehaviour
 
     private void PlacePrefab()
     {
-        GameObject storageHouse = Instantiate(prefab, transform.position, transform.rotation);
-        storages.Add(storageHouse);
+        GameObject building = Instantiate(prefab, transform.position, transform.rotation);
+        //storages.Add(storageHouse);
         Destroy(gameObject);
     }
 
