@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ResourceDropper : MonoBehaviour
 {
-    public GameObject logPrefab;
+    public GameObject prefab;
     private Vector3 objectPosition;
     private SelectedDictionary selectedTable;
     private Worker worker;
@@ -23,11 +23,10 @@ public class ResourceDropper : MonoBehaviour
         {
             selectedTable.Deselect(gameObject);
 
-            //Refactor?
             worker = other.gameObject.GetComponent<Worker>();
 
-            GameObject log = Instantiate(logPrefab, objectPosition, Quaternion.identity);
-            worker.resourcesToDeliver.AddResource(log);
+            GameObject resource = Instantiate(prefab, objectPosition, Quaternion.identity);
+            worker.resourcesToDeliver.AddResource(resource);
 
             Destroy(gameObject);
         }

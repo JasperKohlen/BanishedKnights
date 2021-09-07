@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,10 +15,21 @@ public class UIManager : MonoBehaviour
 
     public GameObject houseBlueprint;
     public GameObject storageBlueprint;
+
+    public GameObject storageMenu;
+    public TMP_Text storageTxt;
+
     private void Start()
     {
         removableSelection = EventSystem.current.gameObject.GetComponent<RemovableSelection>();
+    }
 
+    private void Update()
+    {
+        if (storageMenu.activeSelf)
+        {
+
+        }
     }
     //Open the menu with all remove and destroy buttons
     public void HandleRemoveDestroyPanel()
@@ -73,5 +86,23 @@ public class UIManager : MonoBehaviour
         Instantiate(storageBlueprint);
     }
 
+    #endregion
+
+    #region stats
+
+    public void OpenStorageMenu(LocalStorageDictionary localStorage)
+    {
+        storageMenu.SetActive(true);
+        storageTxt.text = "Logs : " + localStorage.GetTable().Count.ToString();
+    }
+    public void CloseStorageMenu()
+    {
+        storageMenu.SetActive(false);
+    }
+
+    public void UpdateStorage(LocalStorageDictionary localStorage)
+    {
+        storageTxt.text = "Logs : " + localStorage.GetTable().Count.ToString();
+    }
     #endregion
 }

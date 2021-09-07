@@ -18,8 +18,6 @@ public class Worker : MonoBehaviour
     private List<GameObject> sorted;
 
     private Vector3 destination;
-    [HideInInspector]
-    private bool delivering;
     public State state;
     [SerializeField]
     private int movSpeed;
@@ -29,7 +27,6 @@ public class Worker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        delivering = false;
         agent = GetComponent<NavMeshAgent>();
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
         storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
@@ -132,12 +129,12 @@ public class Worker : MonoBehaviour
         Debug.Log("Dropping in storage...");
 
         storageInv.Add(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
-        Debug.Log("Items in local storage: " + storageInv.GetTable().Count);
 
         //Remove from the toDeliver dictionary
         Destroy(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
         resourcesToDeliver.RemoveFromTable(resourcesToDeliver.GetTable().ToList().First().Value.gameObject);
-        //remove from inventory
+
+        //TODO: remove from worker inventory
     }
 
     //Sort list based on distance from the NPC, so npc always goes to closest target

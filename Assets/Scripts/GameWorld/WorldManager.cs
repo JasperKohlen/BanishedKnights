@@ -37,7 +37,7 @@ public class WorldManager : MonoBehaviour
 
     void SpawnCloud()
     {
-        randomPosition = new Vector3(-300, 200, Random.Range(300, -300));
+        randomPosition = new Vector3(-300, 200, Random.Range(200, -600));
         //randomRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
         //Instantiate with randomPosition on Z and random rotation
