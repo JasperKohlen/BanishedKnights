@@ -6,7 +6,6 @@ public class WorldManager : MonoBehaviour
 {
     //300 -300 range
     public GameObject cloudprefab;
-    public GameObject storageprefab;
     private Vector3 randomPosition;
     private Quaternion randomRotation;
     private float timer;
@@ -18,7 +17,6 @@ public class WorldManager : MonoBehaviour
     {
         time = Random.Range(minTime, maxTime);
         Vector3 pos = new Vector3(29, -2, -32);
-        Instantiate(storageprefab, pos, randomRotation);
     }
 
     // Update is called once per frame

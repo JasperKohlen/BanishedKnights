@@ -10,10 +10,17 @@ public class ResourceDropper : MonoBehaviour
     private Vector3 objectPosition;
     private SelectedDictionary selectedTable;
     private Worker worker;
+
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip[] breakSounds;
+    private float randomPitch;
+    private int selectSound;
     void Start()
     {
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
         objectPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2.0f, gameObject.transform.position.z);
+        randomPitch = Random.Range(0.25f, 2f);
+        selectSound = Random.Range(0, breakSounds.Length - 1);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,7 +35,16 @@ public class ResourceDropper : MonoBehaviour
             GameObject resource = Instantiate(prefab, objectPosition, Quaternion.identity);
             worker.resourcesToDeliver.AddResource(resource);
 
-            Destroy(gameObject);
+            PlayBreakSound();
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, source.clip.length);
         }
+    }
+
+    private void PlayBreakSound()
+    {
+        source.clip = breakSounds[selectSound];
+        source.pitch = randomPitch;
+        source.Play();
     }
 }

@@ -15,7 +15,9 @@ public class Worker : MonoBehaviour
     public ResourceDictionary resourcesToDeliver;
     private SelectedDictionary selectedTable;
     private StorageBuildingsDictionary storages;
-    private List<GameObject> sorted;
+
+    private List<GameObject> sortedResources;
+    private List<GameObject> sortedStorages;
 
     private Vector3 destination;
     public State state;
@@ -33,7 +35,8 @@ public class Worker : MonoBehaviour
 
         resourcesToDeliver = gameObject.AddComponent<ResourceDictionary>();
         inventory = new Dictionary<int, GameObject>();
-        sorted = new List<GameObject>();
+        sortedResources = new List<GameObject>();
+        sortedStorages = new List<GameObject>();
 
         agent.speed = movSpeed;
         state = State.IDLE;
@@ -62,7 +65,6 @@ public class Worker : MonoBehaviour
                 break;
         }
     }
-
     private void HandleState()
     {
         if (selectedTable.GetTable().Count == 0 && resourcesToDeliver.GetTable().Count == 0)
@@ -77,28 +79,23 @@ public class Worker : MonoBehaviour
         {
             state = State.DELIVERING_TO_STORAGE;
         }
-        //else
-        //{
-        //    state = State.IDLE;
-        //}
     }
     private void Idling()
     {
         agent.SetDestination(gameObject.transform.position);
     }
 
-    void NavigateToRemovable()
+    //Called when in the DELIVERING_TO_STORAGE state
+    void DeliverToStorage()
     {
-        foreach (var item in selectedTable.GetTable())
+        foreach (var item in resourcesToDeliver.GetTable().ToList())
         {
-            SortDestinations(item.Value);
+            PickupResource(item.Value.gameObject);
+
+            //Set destination to nearest storage
+            NavigateToStorage();
         }
-        destination = sorted.First().transform.position;
-
-        agent.SetDestination(destination);
-        sorted.Clear();
     }
-
     void PickupResource(GameObject resource)
     {
         //Place in worker inventory BUGGED
@@ -111,19 +108,7 @@ public class Worker : MonoBehaviour
         resource.transform.SetParent(gameObject.transform, false);
     }
 
-    //Called when in the DELIVERING_TO_STORAGE state
-    void DeliverToStorage()
-    {
-        foreach (var item in resourcesToDeliver.GetTable().ToList())
-        {
-            PickupResource(item.Value.gameObject);
-
-            //Set destination to nearest storage
-            agent.SetDestination(storages.GetTable().ToList().First().Value.transform.position);
-        }
-    }
-
-    //Called when entering a storage building when holding a resource to deliver
+    //Called when entering a storage trigger when holding a resource to deliver
     public void DropInStorage(LocalStorageDictionary storageInv)
     {
         Debug.Log("Dropping in storage...");
@@ -137,10 +122,43 @@ public class Worker : MonoBehaviour
         //TODO: remove from worker inventory
     }
 
+    #region Sorting
     //Sort list based on distance from the NPC, so npc always goes to closest target
     void SortDestinations(GameObject toSave)
     {
-        sorted.Add(toSave);
-        sorted = sorted.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+        sortedResources.Add(toSave);
+        sortedResources = sortedResources.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
     }
+    void NavigateToRemovable()
+    {
+        foreach (var item in selectedTable.GetTable())
+        {
+            SortDestinations(item.Value);
+        }
+        destination = sortedResources.First().transform.position;
+
+        agent.SetDestination(destination);
+        sortedResources.Clear();
+    }
+
+    void SortStoragesByDistance(GameObject toSave)
+    {
+
+        sortedStorages.Add(toSave);
+        sortedStorages = sortedStorages.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+    }
+
+    void NavigateToStorage()
+    {
+        foreach (var item in storages.GetTable())
+        {
+            SortStoragesByDistance(item.Value);
+        }
+
+        destination = sortedStorages.First().transform.position;
+
+        agent.SetDestination(destination);
+        sortedStorages.Clear();
+    }
+    #endregion
 }

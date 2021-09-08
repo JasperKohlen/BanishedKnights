@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 4032477431198147842}
   - component: {fileID: 4032477431198147845}
   m_Layer: 0
-  m_Name: Npc (1)
+  m_Name: Npc
   m_TagString: Worker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91846555adb18554b8e234e23d9f0d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  resourcesToDeliver: {fileID: 0}
+  state: 0
   movSpeed: 5
 --- !u!195 &4032477431198147845
 NavMeshAgent:
@@ -280,7 +281,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

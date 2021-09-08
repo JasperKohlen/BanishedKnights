@@ -10,6 +10,7 @@ TagManager:
   - StorageBP
   - Removable
   - Worker
+  - Controllable
   layers:
   - Default
   - TransparentFX
