@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
     public void OpenStorageMenu(LocalStorageDictionary localStorage)
     {
         storageMenu.SetActive(true);
-        storageTxt.text = "Logs : " + localStorage.GetTable().Count.ToString();
+        storageTxt.text = "Logs : " + localStorage.GetTable().Count;
     }
     public void CloseStorageMenu()
     {
@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateStorage(LocalStorageDictionary localStorage)
     {
-        storageTxt.text = "Logs : " + localStorage.GetTable().Count.ToString();
+        storageTxt.text = "Logs : " + localStorage.GetTable().Count;
     }
     #endregion
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceDictionary : MonoBehaviour
@@ -35,6 +36,11 @@ public class ResourceDictionary : MonoBehaviour
         {
             return true;
         }
+    }
+
+    public GameObject Get()
+    {
+        return resourceInWorldTable.ToList().First().Value.gameObject;
     }
 
     public Dictionary<int, GameObject> GetTable()

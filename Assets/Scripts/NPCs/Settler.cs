@@ -16,14 +16,7 @@ public class Settler : MonoBehaviour
     Vector3 worker1Pos;
     Vector3 worker2Pos;
     Vector3 worker3Pos;
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            ConsumeSettler();
-        }
-    }
+    Vector3 worker4Pos;
 
     public void ConsumeSettler()
     {
@@ -35,6 +28,7 @@ public class Settler : MonoBehaviour
         Instantiate(workerPrefab, worker1Pos, Quaternion.identity);
         Instantiate(workerPrefab, worker2Pos, Quaternion.identity);
         Instantiate(workerPrefab, worker3Pos, Quaternion.identity);
+        Instantiate(workerPrefab, worker4Pos, Quaternion.identity);
 
         Destroy(gameObject);
     }
@@ -49,6 +43,7 @@ public class Settler : MonoBehaviour
         worker1Pos = new Vector3(gameObject.transform.position.x + 1, gameObject.transform.position.y, gameObject.transform.position.z);
         worker2Pos = new Vector3(gameObject.transform.position.x - 1, gameObject.transform.position.y, gameObject.transform.position.z - 1);
         worker3Pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 2);
+        worker3Pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z + 1);
 
     }
 }

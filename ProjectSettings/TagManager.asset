@@ -11,6 +11,7 @@ TagManager:
   - Removable
   - Worker
   - Controllable
+  - Resource
   layers:
   - Default
   - TransparentFX

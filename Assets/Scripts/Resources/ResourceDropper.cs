@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,7 +34,7 @@ public class ResourceDropper : MonoBehaviour
             worker = other.gameObject.GetComponent<Worker>();
 
             GameObject resource = Instantiate(prefab, objectPosition, Quaternion.identity);
-            worker.resourcesToDeliver.AddResource(resource);
+            worker.resourceToDeliver.AddResource(resource);
 
             PlayBreakSound();
             gameObject.GetComponent<MeshRenderer>().enabled = false;

@@ -111,7 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1727691030728211335, guid: d4cf25e3d0e6bd540952a27ea7c3ffa7, type: 3}
   source: {fileID: 1632476953018714501}
-  breakSound: {fileID: 8300000, guid: fd4be73b51bfea84497d312fb61c525a, type: 3}
+  breakSounds:
+  - {fileID: 8300000, guid: fd4be73b51bfea84497d312fb61c525a, type: 3}
 --- !u!82 &1632476953018714501
 AudioSource:
   m_ObjectHideFlags: 0
