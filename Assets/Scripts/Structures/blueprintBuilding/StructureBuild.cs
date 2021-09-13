@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class StructureBuild : MonoBehaviour
 {
     private List<GameObject> deliveredObjects = new List<GameObject>();
+
     [Header("Recipe")]
     [SerializeField] private int logsNeeded;
     [SerializeField] private int cobblesNeeded;

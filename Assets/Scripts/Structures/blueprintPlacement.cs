@@ -6,10 +6,15 @@ using UnityEngine.EventSystems;
 //Starts dragging blueprint once it's spawned in
 public class blueprintPlacement : MonoBehaviour
 {
-    private RaycastHit hit;
+    [Header("Blueprint")]
     [SerializeField] private static blueprintPlacement instance;
     [SerializeField] private GameObject prefab;
 
+    [Header("Blueprint size")]
+    [SerializeField] private int width;
+    [SerializeField] private int length;
+
+    private RaycastHit hit;
 
     private void Awake()
     {
@@ -53,7 +58,6 @@ public class blueprintPlacement : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             transform.position = hit.point;
-
             //Adjust building's rotation based on terrain
             //transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
         }
