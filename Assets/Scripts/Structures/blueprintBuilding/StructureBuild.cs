@@ -9,12 +9,8 @@ public class StructureBuild : MonoBehaviour
 {
     private List<GameObject> deliveredObjects = new List<GameObject>();
 
-    [Header("Recipe")]
-    [SerializeField] private int logsNeeded;
-    [SerializeField] private int cobblesNeeded;
-
-    [Header("Resulting structure")]
-    [SerializeField] private GameObject prefab;
+    [Header("Scriptable Object")]
+    [SerializeField] private BlueprintSO prefab;
 
     private Worker worker;
 
@@ -58,7 +54,7 @@ public class StructureBuild : MonoBehaviour
         //Debug.Log("Logs needed " + logsNeeded);
         //Debug.Log("cobbles delivered " + deliveredcobbles);
         //Debug.Log("cobbles needed " + cobblesNeeded);
-        if (deliveredLogs == logsNeeded && deliveredcobbles == cobblesNeeded)
+        if (deliveredLogs >= prefab.logsNeeded && deliveredcobbles >= prefab.cobblesNeeded)
         {
             CompleteBuilding();
         }
@@ -69,9 +65,8 @@ public class StructureBuild : MonoBehaviour
         ConsumeResources();
         structsToBuild.RemoveFromTable(gameObject);
 
-        //TODO: Consume logs and cobbles
-        Instantiate(prefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        Instantiate(prefab.Structure_to_build, prefab.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
 
     void ConsumeResources()

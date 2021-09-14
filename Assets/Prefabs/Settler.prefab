@@ -251,9 +251,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d8623bdbce2e145bf477d3c50963db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  housePrefab: {fileID: 759559390215995805, guid: 79c906f9d74e59545b2986e314b52e97, type: 3}
-  storagePrefab: {fileID: 531159852797634534, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
-  workerPrefab: {fileID: 4032477431198147844, guid: c0990b01bac866b43ae96402e6060e58, type: 3}
+  housePrefab: {fileID: 759559390215995794, guid: 79c906f9d74e59545b2986e314b52e97, type: 3}
+  storagePrefab: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
+  workerPrefab: {fileID: 4032477431198147841, guid: c0990b01bac866b43ae96402e6060e58, type: 3}
+  houseSO: {fileID: 11400000, guid: 42352b5d95ea6ff4f863f0387b95b465, type: 2}
+  storageSO: {fileID: 11400000, guid: a206b9a5f89efcf41992fff19adcb519, type: 2}
 --- !u!1 &2779111334395950037
 GameObject:
   m_ObjectHideFlags: 0

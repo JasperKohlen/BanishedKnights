@@ -125,7 +125,6 @@ public class Worker : MonoBehaviour
     }
     public void PickupResource(GameObject resource)
     {
-        Debug.Log("PICKUP");
         //Carry resource ingame
         resource.GetComponent<Rigidbody>().useGravity = false;
         resource.GetComponent<Rigidbody>().isKinematic = true;
@@ -133,6 +132,7 @@ public class Worker : MonoBehaviour
         resource.transform.SetParent(gameObject.transform, false);
 
         //Place in worker inventory 
+        //BUG GETS CALLED ON UPDATE SO CANT ADD HERE
         inventory.Add(resource);
     }
 

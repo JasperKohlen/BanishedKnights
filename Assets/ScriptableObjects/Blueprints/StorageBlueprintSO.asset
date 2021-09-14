@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb14380b9def32a49b37f412c62da122, type: 3}
+  m_Name: StorageBlueprintSO
+  m_EditorClassIdentifier: 
+  logsNeeded: 8
+  cobblesNeeded: 4
+  Height: 3
+  Width: 4
+  Structure_to_build: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
+  position: {x: 45, y: 0, z: -30}
