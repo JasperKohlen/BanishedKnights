@@ -38,6 +38,7 @@ public class ResourceDropper : MonoBehaviour
 
             PlayBreakSound();
             gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider>().enabled = false;
             Destroy(gameObject, source.clip.length);
         }
     }

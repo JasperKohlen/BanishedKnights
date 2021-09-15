@@ -17,12 +17,12 @@ using CodeMonkey.Utils;
 
 public class Testing : MonoBehaviour {
 
-    private Grid grid;
+    private Grid2D grid;
     private float mouseMoveTimer;
     private float mouseMoveTimerMax = .01f;
 
     private void Start() {
-        grid = new Grid(100, 100, 10f, new Vector3(0, 0));
+        grid = new Grid2D(100, 100, 10f, new Vector3(0, 0));
 
         HeatMapVisual heatMapVisual = new HeatMapVisual(grid, GetComponent<MeshFilter>());
     }
@@ -54,10 +54,10 @@ public class Testing : MonoBehaviour {
 
     private class HeatMapVisual {
 
-        private Grid grid;
+        private Grid2D grid;
         private Mesh mesh;
 
-        public HeatMapVisual(Grid grid, MeshFilter meshFilter) {
+        public HeatMapVisual(Grid2D grid, MeshFilter meshFilter) {
             this.grid = grid;
             
             mesh = new Mesh();

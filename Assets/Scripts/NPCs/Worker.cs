@@ -19,11 +19,13 @@ public class Worker : MonoBehaviour
     private List<GameObject> sortedStorages;
 
     private Vector3 destination;
+    private GameObject structure;
     public State state;
     [SerializeField]
     private int movSpeed;
 
     private NavMeshAgent agent;
+    private bool isStorage;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +48,7 @@ public class Worker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleState();
-        switch (state)
+        switch (ReturnState())
         {
             case State.IDLE:
                 Idling();
@@ -61,31 +62,39 @@ public class Worker : MonoBehaviour
                 DeliverToBuild();
                 break;
             case State.DELIVERING_TO_STORAGE:
-                DeliverToStorage();
+                PrepareToDeliverToStorage();
                 break;
             default:
-                HandleState();
+                ReturnState();
                 break;
         }
     }
-    private void HandleState()
+    private State ReturnState()
     {
-        if (selectedTable.GetTable().Count == 0 && resourceToDeliver.GetTable().Count == 0)
-        {
-            state = State.IDLE;
-        }
+        //if (selectedTable.GetTable().Count == 0 && resourceToDeliver.GetTable().Count == 0)
+        //{
+        //    state = State.IDLE;
+        //    return State.IDLE;
+        //}
         if (selectedTable.GetTable().Count > 0 && resourceToDeliver.GetTable().Count == 0)
         {
             state = State.REMOVING;
+            return state;
         }
-        if (resourceToDeliver.GetTable().Count() > 0)
-        {
-            state = State.DELIVERING_TO_STORAGE;
-        }
-        if (structs.Available() && inventory.HoldingResource())
+        if (structs.Available() && inventory.HoldingResource() && CanDeliverToBuild() && !isStorage)
         {
             state = State.DELIVERING_TO_BUILD;
+            return state;
         }
+        if (resourceToDeliver.GetTable().Count > 0 || isStorage)
+        {
+            state = State.DELIVERING_TO_STORAGE;
+            return state;
+        }
+
+
+        state = State.IDLE;
+        return State.IDLE;
     }
     private void Idling()
     {
@@ -97,13 +106,29 @@ public class Worker : MonoBehaviour
     {
         PickupResource(resourceToDeliver.Get());
 
-        //TODO: Get Resources if not holding and available in storages
-        //TODO: algorithm that makes sure you cant drop off more resources than needed
-        // and that checks which resources are still required
+        //TODO: Get Resources from storage if not holding and available in storages
 
-        destination = structs.GetTable().First().Value.transform.position;
+        //For loop for each structure on ground?
+
+        structure = structs.GetTable().First().Value;
+
+        if (CanDeliverLogsToBuild())
+        {
+            destination = structs.GetTable().First().Value.transform.position;
+        }
+        if (CanDeliverCobblesToBuild())
+        {
+            destination = structs.GetTable().First().Value.transform.position;
+        }
+        if (CanDeliverToStorage())
+        {
+            isStorage = true;
+        }
+
         agent.SetDestination(destination);
     }
+
+    //Called when entering onTrigger on blueprint while holding resource
     public void PlaceResourceToBuild()
     {
         //Place near building
@@ -116,12 +141,12 @@ public class Worker : MonoBehaviour
     }
 
     //Called when in the DELIVERING_TO_STORAGE state
-    void DeliverToStorage()
+    void PrepareToDeliverToStorage()
     {
         PickupResource(resourceToDeliver.Get());
 
         //Set destination to nearest storage
-        NavigateToStorage();
+        agent.SetDestination(GetNearestStorage());
     }
     public void PickupResource(GameObject resource)
     {
@@ -132,7 +157,6 @@ public class Worker : MonoBehaviour
         resource.transform.SetParent(gameObject.transform, false);
 
         //Place in worker inventory 
-        //BUG GETS CALLED ON UPDATE SO CANT ADD HERE
         inventory.Add(resource);
     }
 
@@ -150,6 +174,7 @@ public class Worker : MonoBehaviour
         //Remove from the toDeliver dictionary
         Destroy(resourceToDeliver.GetTable().ToList().First().Value.gameObject);
         resourceToDeliver.RemoveFromTable(resourceToDeliver.Get());
+        isStorage = false;
     }
 
     #region Sorting
@@ -178,7 +203,7 @@ public class Worker : MonoBehaviour
         sortedStorages = sortedStorages.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
     }
 
-    void NavigateToStorage()
+    Vector3 GetNearestStorage()
     {
         foreach (var item in storages.GetTable())
         {
@@ -186,9 +211,65 @@ public class Worker : MonoBehaviour
         }
 
         destination = sortedStorages.First().transform.position;
-
-        agent.SetDestination(destination);
         sortedStorages.Clear();
+
+        return destination;
     }
+    #endregion
+
+    #region booleans
+
+    private bool CanDeliverLogsToBuild()
+    {
+        if (resourceToDeliver.Get().name.Contains("Logs") && !structure.GetComponent<StructureBuild>().AllLogsDelivered())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool CanDeliverCobblesToBuild()
+    {
+        if (resourceToDeliver.Get().name.Contains("Cobbles") && !structure.GetComponent<StructureBuild>().AllCobblesDelivered())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool CanDeliverToStorage()
+    {
+        if (structs.GetTable().Count == 0)
+        {
+            return true;
+        }
+        if (resourceToDeliver.Get().name.Contains("Logs") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllLogsDelivered() == false) || resourceToDeliver.Get().name.Contains("Cobbles") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllCobblesDelivered() == false))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private bool CanDeliverToBuild()
+    {
+        if (structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().IsUnfinished()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     #endregion
 }

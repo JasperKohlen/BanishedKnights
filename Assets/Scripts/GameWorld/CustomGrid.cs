@@ -20,6 +20,7 @@ public class CustomGrid<TGridObject>
     private Vector3 originPosition;
     private TGridObject[, ,] gridArray;
     private TextMesh[,,] debugTextArray;
+    public bool showDebug;
 
     public CustomGrid(int width, int length, float cellSize, Vector3 originPosition, Func<CustomGrid<TGridObject>, int, int, TGridObject> createGridObject)
     {
@@ -41,7 +42,7 @@ public class CustomGrid<TGridObject>
             }
         }
 
-        bool showDebug = true;
+        bool showDebug = false;
         if (showDebug)
         {
             for (int x = 0; x < gridArray.GetLength(0); x++)

@@ -34,12 +34,18 @@ public class GridObject
     public void SetTransform(Transform transform)
     {
         this.transform = transform;
-            grid.TriggerGridObjectChanged(x,z);
+        if (grid.showDebug)
+        {
+            grid.TriggerGridObjectChanged(x, z);
+        }
     }
     public void ClearTransform()
     {
         transform = null;
-            grid.TriggerGridObjectChanged(x,z);
+        if (grid.showDebug)
+        {
+            grid.TriggerGridObjectChanged(x, z);
+        }
     }
 
     public bool CanBuild()

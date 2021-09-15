@@ -27,7 +27,7 @@ public class StructureBuild : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Worker") && other.gameObject.GetComponent<Worker>().inventory.HoldingResource())
+        if (other.gameObject.tag.Equals("Worker") && other.gameObject.GetComponent<Worker>().inventory.HoldingResource() && other.GetComponent<Worker>().state == State.DELIVERING_TO_BUILD)
         {
             Debug.Log("Materials delivered: ");
             worker = other.gameObject.GetComponent<Worker>();
@@ -43,8 +43,8 @@ public class StructureBuild : MonoBehaviour
 
             deliveredObjects.Add(worker.resourceToDeliver.Get());
 
-            CheckDeliveredResources();
             worker.PlaceResourceToBuild();
+            CheckDeliveredResources();
         }
     }
 
@@ -57,6 +57,42 @@ public class StructureBuild : MonoBehaviour
         if (deliveredLogs >= prefab.logsNeeded && deliveredcobbles >= prefab.cobblesNeeded)
         {
             CompleteBuilding();
+        }
+    }
+
+    public bool IsUnfinished()
+    {
+        if (!AllLogsDelivered() || !AllCobblesDelivered())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool AllLogsDelivered()
+    {
+        if (deliveredLogs == prefab.logsNeeded)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool AllCobblesDelivered()
+    {
+        if (deliveredcobbles == prefab.cobblesNeeded)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

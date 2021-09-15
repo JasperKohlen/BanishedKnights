@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class Grid {
+public class Grid2D {
 
     public event EventHandler<OnGridValueChangedEventArgs> OnGridValueChanged;
     public class OnGridValueChangedEventArgs : EventArgs {
@@ -30,7 +30,7 @@ public class Grid {
     private Vector3 originPosition;
     private int[,] gridArray;
 
-    public Grid(int width, int height, float cellSize, Vector3 originPosition) {
+    public Grid2D(int width, int height, float cellSize, Vector3 originPosition) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
