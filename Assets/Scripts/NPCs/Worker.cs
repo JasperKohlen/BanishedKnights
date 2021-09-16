@@ -114,11 +114,11 @@ public class Worker : MonoBehaviour
 
         if (CanDeliverLogsToBuild())
         {
-            destination = structs.GetTable().First().Value.transform.position;
+            destination = FindDeliverLogsToBuild();
         }
         if (CanDeliverCobblesToBuild())
         {
-            destination = structs.GetTable().First().Value.transform.position;
+            destination = FindDeliverCobblesToBuild();
         }
         if (CanDeliverToStorage())
         {
@@ -177,6 +177,41 @@ public class Worker : MonoBehaviour
         isStorage = false;
     }
 
+    #region navigation
+    private Vector3 FindDeliverCobblesToBuild()
+    {
+        Vector3 structToDeliverTo = transform.position;
+
+        foreach (var item in structs.GetTable())
+        {
+            if (!item.Value.GetComponent<StructureBuild>().AllCobblesDelivered())
+            {
+                structToDeliverTo = item.Value.transform.position;
+                break;
+            }
+        }
+
+        return structToDeliverTo;
+    }
+
+    private Vector3 FindDeliverLogsToBuild()
+    {
+        Vector3 structToDeliverTo = transform.position;
+
+        foreach (var item in structs.GetTable())
+        {
+            if (!item.Value.GetComponent<StructureBuild>().AllLogsDelivered())
+            {
+                structToDeliverTo = item.Value.transform.position;
+                break;
+            }
+        }
+
+        return structToDeliverTo;
+    }
+
+    #endregion
+
     #region Sorting
     //Sort list based on distance from the NPC, so npc always goes to closest target
     void SortDestinations(GameObject toSave)
@@ -221,7 +256,7 @@ public class Worker : MonoBehaviour
 
     private bool CanDeliverLogsToBuild()
     {
-        if (resourceToDeliver.Get().name.Contains("Logs") && !structure.GetComponent<StructureBuild>().AllLogsDelivered())
+        if (resourceToDeliver.Get().name.Contains("Logs") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllLogsDelivered() == false))
         {
             return true;
         }
@@ -233,7 +268,7 @@ public class Worker : MonoBehaviour
 
     private bool CanDeliverCobblesToBuild()
     {
-        if (resourceToDeliver.Get().name.Contains("Cobbles") && !structure.GetComponent<StructureBuild>().AllCobblesDelivered())
+        if (resourceToDeliver.Get().name.Contains("Cobbles") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllCobblesDelivered() == false))
         {
             return true;
         }
@@ -249,7 +284,7 @@ public class Worker : MonoBehaviour
         {
             return true;
         }
-        if (resourceToDeliver.Get().name.Contains("Logs") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllLogsDelivered() == false) || resourceToDeliver.Get().name.Contains("Cobbles") && structs.GetTable().Any(s => s.Value.GetComponent<StructureBuild>().AllCobblesDelivered() == false))
+        if (CanDeliverLogsToBuild() || CanDeliverCobblesToBuild())
         {
             return false;
         }
