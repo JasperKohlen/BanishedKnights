@@ -18,10 +18,15 @@ public class StorageController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        worker = other.GetComponent<Worker>();
+
         if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.DELIVERING_TO_STORAGE)
         {
-            worker = other.GetComponent<Worker>();
             worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
+        }
+        if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_TO_BUILD)
+        {
+            worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
         }
     }
 }

@@ -15,5 +15,6 @@ namespace Assets.Scripts
         BUILDING,
         DELIVERING_TO_STORAGE,
         WORKING,
+        COLLECTING_TO_BUILD
     }
 }

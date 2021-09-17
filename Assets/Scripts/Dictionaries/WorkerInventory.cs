@@ -59,10 +59,8 @@ public class WorkerInventory : MonoBehaviour
     public GameObject ReturnResource()
     {
         GameObject toReturn = new GameObject();
-            Debug.Log("Checking: ");
         foreach (var item in inventory.ToList())
         {
-            Debug.Log("Checking: " + item.Value.gameObject.tag.ToString());
             if (item.Value.gameObject.tag.Equals("Resource"))
             {
                 Debug.Log("Returning: " + item.Value.gameObject.ToString());

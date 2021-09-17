@@ -17,7 +17,8 @@ public class UIManager : MonoBehaviour
     public GameObject storageBlueprint;
 
     public GameObject storageMenu;
-    public TMP_Text storageTxt;
+    public TMP_Text logsTxt;
+    public TMP_Text cobblesTxt;
 
     private void Start()
     {
@@ -86,7 +87,8 @@ public class UIManager : MonoBehaviour
     public void OpenStorageMenu(LocalStorageDictionary localStorage)
     {
         storageMenu.SetActive(true);
-        storageTxt.text = "Logs : " + localStorage.GetTable().Count;
+        logsTxt.text = "Logs : " + localStorage.GetLogsCount();
+        cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
     }
     public void CloseStorageMenu()
     {
@@ -95,7 +97,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateStorage(LocalStorageDictionary localStorage)
     {
-        storageTxt.text = "Logs : " + localStorage.GetTable().Count;
+        logsTxt.text = "Logs : " + localStorage.GetLogsCount();
+        cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
     }
     #endregion
 }

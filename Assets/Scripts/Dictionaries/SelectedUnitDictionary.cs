@@ -15,6 +15,8 @@ public class SelectedUnitDictionary : MonoBehaviour
         if (!selectedUnits.ContainsKey(id))
         {
             selectedUnits.Add(id, go);
+            go.GetComponentInChildren<SettlerUI>().ShowSelectedUI();
+            go.GetComponent<ControllableUnitAudio>().PlaySelectionSound();
             go.AddComponent<SelectionComponent>();
         }
     }
@@ -25,6 +27,7 @@ public class SelectedUnitDictionary : MonoBehaviour
         if (selectedUnits.ContainsKey(id))
         {
             Destroy(selectedUnits[id].GetComponent<SelectionComponent>());
+            go.GetComponentInChildren<SettlerUI>().HideSelectedUI();
             selectedUnits.Remove(id);
         }
     }
@@ -38,6 +41,7 @@ public class SelectedUnitDictionary : MonoBehaviour
                 //Check if object has not been destroyed yet
                 if (pair.Value != null)
                 {
+                    pair.Value.GetComponentInChildren<SettlerUI>().HideSelectedUI();
                     Destroy(selectedUnits[pair.Key].GetComponent<SelectionComponent>());
                 }
             }

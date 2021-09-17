@@ -25,6 +25,8 @@ public class MoveControllables : MonoBehaviour
 
     void MoveUnits()
     {
+        //REFACTOR
+        GameObject.Find("Settler").GetComponent<ControllableUnitAudio>().PlayMoveSound();
         foreach (var unit in selectedTable.GetTable())
         {
             unit.Value.GetComponent<Controllable>().MoveTowardsClick();

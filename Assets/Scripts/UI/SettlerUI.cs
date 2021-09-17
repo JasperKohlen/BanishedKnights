@@ -7,6 +7,7 @@ public class SettlerUI : MonoBehaviour
     [SerializeField] private GameObject confirmationBox;
     [SerializeField] private Settler settler;
     [SerializeField] private GameObject settleBtn;
+    [SerializeField] private GameObject selectedImage;
     private Camera camToLookAt;
 
     private void Start()
@@ -19,7 +20,14 @@ public class SettlerUI : MonoBehaviour
         transform.LookAt(camToLookAt.transform);
         transform.rotation = Quaternion.LookRotation(camToLookAt.transform.forward);
     }
-
+    public void ShowSelectedUI()
+    {
+        selectedImage.SetActive(true);
+    }
+    public void HideSelectedUI()
+    {
+        selectedImage.SetActive(false);
+    }
     public void SettleButtonClicked()
     {
         confirmationBox.SetActive(true);

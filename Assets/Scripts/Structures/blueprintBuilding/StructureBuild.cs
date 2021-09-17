@@ -70,18 +70,6 @@ public class StructureBuild : MonoBehaviour
         }
     }
 
-    public bool IsUnfinished()
-    {
-        if (!AllLogsDelivered() || !AllCobblesDelivered())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public bool AllLogsDelivered()
     {
         if (deliveredLogs >= prefab.logsNeeded)
