@@ -16,5 +16,6 @@ MonoBehaviour:
   cobblesNeeded: 4
   Height: 3
   Width: 4
-  Structure_to_build: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
-  position: {x: 45, y: 0, z: -30}
+  Resulting_Building: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
+  position: {x: 70, y: 0, z: -45}
+  rotation: {x: 0, y: 0, z: 0, w: 1}

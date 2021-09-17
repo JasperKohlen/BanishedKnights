@@ -6,13 +6,22 @@ using UnityEngine;
 public class WorkerInventory : MonoBehaviour
 {
     private Dictionary<int, GameObject> inventory = new Dictionary<int, GameObject>();
-
+    private int amountOfLogs;
+    private int amountOfCobbles;
     public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
 
         if (!inventory.ContainsKey(id))
         {
+            if (go.name.Contains("Logs"))
+            {
+                amountOfLogs++;
+            }
+            if (go.name.Contains("Cobbles"))
+            {
+                amountOfCobbles++;
+            }
             inventory.Add(id, go);
         }
     }
@@ -22,6 +31,14 @@ public class WorkerInventory : MonoBehaviour
         int id = go.GetInstanceID();
         if (inventory.ContainsKey(id))
         {
+            if (go.name.Contains("Logs"))
+            {
+                amountOfLogs--;
+            }
+            if (go.name.Contains("Cobbles"))
+            {
+                amountOfCobbles--;
+            }
             inventory.Remove(id);
         }
     }
@@ -58,6 +75,28 @@ public class WorkerInventory : MonoBehaviour
     {
 
         if (inventory.Any(item => item.Value.CompareTag("Resource")))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool CarryingLogs()
+    {
+        if (amountOfLogs > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool CarryingCobble()
+    {
+        if (amountOfCobbles > 0)
         {
             return true;
         }

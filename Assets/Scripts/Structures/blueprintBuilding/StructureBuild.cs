@@ -18,32 +18,42 @@ public class StructureBuild : MonoBehaviour
     private int deliveredcobbles;
 
     private ToBuildDictionary structsToBuild;
+
+    private Vector3 position_To_Place;
+    private Quaternion rotation_To_Place;
     // Start is called before the first frame update
     void Start()
     {
         structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
         structsToBuild.AddStruct(gameObject);
+
+        position_To_Place = prefab.position;
+        rotation_To_Place = prefab.rotation;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Worker") && other.gameObject.GetComponent<Worker>().inventory.HoldingResource() && other.GetComponent<Worker>().state == State.DELIVERING_TO_BUILD)
+        if (other.gameObject.tag.Equals("Worker") && 
+            other.gameObject.GetComponent<Worker>().inventory.HoldingResource() && 
+            other.GetComponent<Worker>().state == State.DELIVERING_TO_BUILD)
         {
-            Debug.Log("Materials delivered: ");
             worker = other.gameObject.GetComponent<Worker>();
 
-            if (worker.resourceToDeliver.Get().name.Contains("Logs"))
+            if (worker.inventory.ReturnResource().name.Contains("Logs") && !AllLogsDelivered())
             {
+                Debug.Log("Logs delivered: ");
+                deliveredObjects.Add(worker.resourceToDeliver.Get());
+                worker.PlaceResourceToBuild();
                 deliveredLogs++;
             }
-            if (worker.resourceToDeliver.Get().name.Contains("Cobbles"))
+            if (worker.inventory.ReturnResource().name.Contains("Cobbles") && !AllCobblesDelivered())
             {
+                Debug.Log("Cobbles delivered: ");
+                deliveredObjects.Add(worker.resourceToDeliver.Get());
+                worker.PlaceResourceToBuild();
                 deliveredcobbles++;
             }
 
-            deliveredObjects.Add(worker.resourceToDeliver.Get());
-
-            worker.PlaceResourceToBuild();
             CheckDeliveredResources();
         }
     }
@@ -74,7 +84,7 @@ public class StructureBuild : MonoBehaviour
 
     public bool AllLogsDelivered()
     {
-        if (deliveredLogs == prefab.logsNeeded)
+        if (deliveredLogs >= prefab.logsNeeded)
         {
             return true;
         }
@@ -86,7 +96,7 @@ public class StructureBuild : MonoBehaviour
 
     public bool AllCobblesDelivered()
     {
-        if (deliveredcobbles == prefab.cobblesNeeded)
+        if (deliveredcobbles >= prefab.cobblesNeeded)
         {
             return true;
         }
@@ -101,8 +111,8 @@ public class StructureBuild : MonoBehaviour
         ConsumeResources();
         structsToBuild.RemoveFromTable(gameObject);
 
-        Instantiate(prefab.Structure_to_build, prefab.position, Quaternion.identity);
-        Destroy(this.gameObject);
+        Instantiate(prefab.Resulting_Building, position_To_Place, rotation_To_Place);
+        Destroy(gameObject);
     }
 
     void ConsumeResources()

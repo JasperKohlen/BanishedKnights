@@ -14,8 +14,9 @@ public class BlueprintSO : ScriptableObject
     public int Width;
 
     [Header("Resulting building")]
-    public Transform Structure_to_build;
+    public Transform Resulting_Building;
     [HideInInspector] public Vector3 position;
+    [HideInInspector] public Quaternion rotation;
 
     public List<Vector2Int> GetGridPositionsList(Vector2Int offset, Dir dir)
     {

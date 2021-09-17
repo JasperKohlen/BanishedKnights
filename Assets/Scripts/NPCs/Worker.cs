@@ -71,11 +71,6 @@ public class Worker : MonoBehaviour
     }
     private State ReturnState()
     {
-        //if (selectedTable.GetTable().Count == 0 && resourceToDeliver.GetTable().Count == 0)
-        //{
-        //    state = State.IDLE;
-        //    return State.IDLE;
-        //}
         if (selectedTable.GetTable().Count > 0 && resourceToDeliver.GetTable().Count == 0)
         {
             state = State.REMOVING;
@@ -107,8 +102,6 @@ public class Worker : MonoBehaviour
         PickupResource(resourceToDeliver.Get());
 
         //TODO: Get Resources from storage if not holding and available in storages
-
-        //For loop for each structure on ground?
 
         structure = structs.GetTable().First().Value;
 
@@ -180,34 +173,36 @@ public class Worker : MonoBehaviour
     #region navigation
     private Vector3 FindDeliverCobblesToBuild()
     {
+        List<Vector3> blueprints = new List<Vector3>();
         Vector3 structToDeliverTo = transform.position;
 
         foreach (var item in structs.GetTable())
         {
             if (!item.Value.GetComponent<StructureBuild>().AllCobblesDelivered())
             {
-                structToDeliverTo = item.Value.transform.position;
-                break;
+                blueprints.Add(item.Value.transform.position);
             }
         }
+        blueprints = blueprints.OrderBy(s => Vector3.Distance(gameObject.transform.position, s)).ToList();
 
-        return structToDeliverTo;
+        return blueprints.First();
     }
 
     private Vector3 FindDeliverLogsToBuild()
     {
+        List<Vector3> blueprints = new List<Vector3>();
         Vector3 structToDeliverTo = transform.position;
 
         foreach (var item in structs.GetTable())
         {
             if (!item.Value.GetComponent<StructureBuild>().AllLogsDelivered())
             {
-                structToDeliverTo = item.Value.transform.position;
-                break;
+                blueprints.Add(item.Value.transform.position);
             }
         }
+        blueprints = blueprints.OrderBy(s => Vector3.Distance(gameObject.transform.position, s)).ToList();
 
-        return structToDeliverTo;
+        return blueprints.First();
     }
 
     #endregion

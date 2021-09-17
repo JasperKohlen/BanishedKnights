@@ -102,7 +102,8 @@ public class blueprintPlacement : MonoBehaviour
                 new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridSystem.grid.GetCellSize();
 
             //Place building and mark every gridtile as 'built'
-            blueprintSO.position = gridSystem.grid.GetWorldPosition(x, z);
+            blueprintSO.position = placedObjectWorldPosition;
+            blueprintSO.rotation = Quaternion.Euler(0, blueprintSO.GetRotationAngle(dir), 0);
             Transform builtTransform = 
                 Instantiate(
                     prefab, 
