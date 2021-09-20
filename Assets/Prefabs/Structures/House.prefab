@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 759559390215995794}
+  - component: {fileID: 8356339157208394219}
   m_Layer: 0
   m_Name: House
   m_TagString: House
@@ -31,6 +32,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &8356339157208394219
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759559390215995805}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.85, y: 5.235, z: 5.08}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 4.75, y: 3.9, z: 5.52}
+  m_TimeToStationary: 0.5
 --- !u!65 &8700620691926554268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44,6 +61,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8.411444, y: 9.649782, z: 9.731955}
   m_Center: {x: 0.017868519, y: 3.5851107, z: 0.0028619766}
+--- !u!114 &2264995363462060574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978817736719046919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbcc856a5eea12646b9bf220ab2b009d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  civ: {fileID: 4032477431198147844, guid: c0990b01bac866b43ae96402e6060e58, type: 3}
 --- !u!1001 &5979991811227807625
 PrefabInstance:
   m_ObjectHideFlags: 0

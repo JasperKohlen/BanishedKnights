@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject houseBlueprint;
     public GameObject storageBlueprint;
+    public GameObject barracksBlueprint;
 
     public GameObject storageMenu;
     public TMP_Text logsTxt;
@@ -78,6 +79,16 @@ public class UIManager : MonoBehaviour
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);
         Instantiate(storageBlueprint);
+    }
+
+    public void SpawnBarracksBlueprint()
+    {
+        removeBtn.GetComponent<Image>().color = Color.white;
+
+        //Disable panels to prevent deselection
+        removableSelection.enabled = false;
+        removeDestroyPanel.SetActive(false);
+        Instantiate(barracksBlueprint);
     }
 
     #endregion

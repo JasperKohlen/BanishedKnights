@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb14380b9def32a49b37f412c62da122, type: 3}
   m_Name: HouseBlueprintSO
   m_EditorClassIdentifier: 
-  logsNeeded: 2
+  logsNeeded: 4
   cobblesNeeded: 2
   Height: 2
   Width: 2
   Resulting_Building: {fileID: 759559390215995794, guid: 79c906f9d74e59545b2986e314b52e97, type: 3}
-  position: {x: 75, y: 0, z: -65}
+  position: {x: 45, y: 0, z: -55}
   rotation: {x: 0, y: 0, z: 0, w: 1}

@@ -11,7 +11,7 @@ public class LocalStorageDictionary : MonoBehaviour
     private int cobbles;
     private void Start()
     {
-        ui = GameObject.Find("Canvas").GetComponent<UIManager>();
+        ui = GameObject.FindObjectOfType<UIManager>();
     }
     public void Add(GameObject go)
     {

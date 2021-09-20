@@ -18,23 +18,29 @@ public class StructureBuild : MonoBehaviour
     private int deliveredcobbles;
 
     private ToBuildDictionary structsToBuild;
+    private SelectedDictionary resources;
 
     private Vector3 position_To_Place;
     private Quaternion rotation_To_Place;
     // Start is called before the first frame update
     void Start()
     {
+        resources = EventSystem.current.GetComponent<SelectedDictionary>();
+
         structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
         structsToBuild.AddStruct(gameObject);
 
         position_To_Place = prefab.position;
         rotation_To_Place = prefab.rotation;
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag.Equals("Worker") && 
-            other.gameObject.GetComponent<Worker>().inventory.HoldingResource() && 
+        if (other.gameObject.tag.Equals("Removable"))
+        {
+            resources.AddSelected(other.gameObject);
+        }
+        if (other.gameObject.tag.Equals("Worker") &&
+            other.gameObject.GetComponent<Worker>().inventory.HoldingResource() &&
             other.GetComponent<Worker>().state == State.DELIVERING_TO_BUILD)
         {
             worker = other.gameObject.GetComponent<Worker>();
@@ -57,7 +63,6 @@ public class StructureBuild : MonoBehaviour
             CheckDeliveredResources();
         }
     }
-
     void CheckDeliveredResources()
     {
         //Debug.Log("Logs delivered " + deliveredLogs);

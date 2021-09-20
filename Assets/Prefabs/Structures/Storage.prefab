@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 531159852797634537}
+  - component: {fileID: 8271213720133993465}
   m_Layer: 0
   m_Name: Storage
   m_TagString: Storage
@@ -32,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &8271213720133993465
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531159852797634534}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.845, y: 9.05, z: 2.63}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 9.88, y: 6.4, z: 7.87}
+  m_TimeToStationary: 0.5
 --- !u!65 &698502525003112165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43,8 +60,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.935985, y: 10.697996, z: 7.7417607}
-  m_Center: {x: -1.084312, y: 4.8431215, z: 0.025018692}
+  m_Size: {x: 12.636147, y: 12.701864, z: 8.558203}
+  m_Center: {x: -1.0099468, y: 5.845069, z: 0.3491478}
 --- !u!114 &2943731654676084033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +126,7 @@ BoxCollider:
   m_GameObject: {fileID: 8190872493594342952}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.4029621, y: 1, z: 1}
   m_Center: {x: 0.20148104, y: 0, z: 0}

@@ -157,8 +157,6 @@ public class Worker : MonoBehaviour
     //Called when in the DELIVERING_TO_STORAGE state
     void PrepareToDeliverToStorage()
     {
-        //PickupResource(resourceToDeliver.Get());
-
         //Set destination to nearest storage
         agent.SetDestination(GetNearestStorage());
     }

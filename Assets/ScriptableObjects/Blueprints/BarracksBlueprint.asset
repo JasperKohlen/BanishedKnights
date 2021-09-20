@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb14380b9def32a49b37f412c62da122, type: 3}
+  m_Name: BarracksBlueprint
+  m_EditorClassIdentifier: 
+  logsNeeded: 12
+  cobblesNeeded: 8
+  Height: 4
+  Width: 4
+  Resulting_Building: {fileID: 4369141305873987244, guid: 3cb9da6e828208c4db7a369b84c94151, type: 3}
+  position: {x: 30, y: 0, z: -65}
+  rotation: {x: 0, y: 0, z: 0, w: 1}
