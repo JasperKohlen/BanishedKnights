@@ -335,27 +335,6 @@ public class Worker : MonoBehaviour
             return true;
         }
     }
-    //public bool StorageContainsNecessaryResource()
-    //{
-    //    foreach (var toBuild in structs.GetTable())
-    //    {
-    //        foreach (var storage in storages.GetTable())
-    //        {
-    //            //If a buildable requires logs and a storage house has atleast one log
-    //            if (!toBuild.Value.GetComponent<StructureBuild>().AllLogsDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
-    //            {
-    //                neededResource = "Logs";
-    //                return true;
-    //            }
-    //            //If a buildable requires cobbles and a storage house has atleast one cobble
-    //            if (!toBuild.Value.GetComponent<StructureBuild>().AllCobblesDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetCobblesCount() > 0)
-    //            {
-    //                neededResource = "Cobbles";
-    //                return true;
-    //            }
-    //        }
-    //    }
-    //    return false;
-    //}
+
     #endregion
 }

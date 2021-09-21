@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2779111333726923697}
   - component: {fileID: 2779111333726923696}
   - component: {fileID: 2779111333726923703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 8951742074131582916}
   - component: {fileID: 1464050772968557682}
   - component: {fileID: 5881739988823974859}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Settler
   m_TagString: Controllable
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 2779111334395950033}
   - component: {fileID: 2779111334395950032}
   - component: {fileID: 2779111334395950039}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 2779111334559022444}
   - component: {fileID: 2779111334559022435}
   - component: {fileID: 2779111334559022434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 1899114534925441988}
   - component: {fileID: 3591379786825284470}
   - component: {fileID: 2139392136041156761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SelectedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 875675087281501892}
   - component: {fileID: 5355158347672886133}
   - component: {fileID: 4701575330450273199}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BtnTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 5992992707469277022}
   - component: {fileID: 8775136643466016125}
   - component: {fileID: 5905792248963176229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SettleBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 4610565176401267221}
   - component: {fileID: 4241498187587976688}
   - component: {fileID: 8702261326607398856}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

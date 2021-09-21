@@ -11,11 +11,6 @@ public class Settler : MonoBehaviour
     [SerializeField] private BlueprintSO houseSO;
     [SerializeField] private BlueprintSO storageSO;
 
-    //Vector3 worker1Pos;
-    //Vector3 worker2Pos;
-    //Vector3 worker3Pos;
-    //Vector3 worker4Pos;
-
     private GridSystem gridSystem;
     private void Start()
     {
@@ -23,28 +18,14 @@ public class Settler : MonoBehaviour
     }
     public void ConsumeSettler()
     {
-        //DeterminePrefabPositions();
-
         PlacePrefab(housePrefab, houseSO, 5, 0);
         PlacePrefab(housePrefab, houseSO, -3, 0);
         PlacePrefab(storagePrefab, storageSO, 0, 3);
 
-        //Instantiate(workerPrefab, worker1Pos, Quaternion.identity);
-        //Instantiate(workerPrefab, worker2Pos, Quaternion.identity);
-        //Instantiate(workerPrefab, worker3Pos, Quaternion.identity);
-        //Instantiate(workerPrefab, worker4Pos, Quaternion.identity);
-
         Destroy(gameObject);
     }
 
-    //private void DeterminePrefabPositions()
-    //{
-    //    worker1Pos = new Vector3(gameObject.transform.position.x + 1, gameObject.transform.position.y, gameObject.transform.position.z);
-    //    worker2Pos = new Vector3(gameObject.transform.position.x - 1, gameObject.transform.position.y, gameObject.transform.position.z - 1);
-    //    worker3Pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 2);
-    //    worker4Pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-    //}
-
+    //Instantiates building around settler position upon settling
     private void PlacePrefab(Transform structure, BlueprintSO sctructureSO, int xOffset, int zOffset)
     {
         gridSystem.grid.GetXZ(transform.position, out int x, out int z);

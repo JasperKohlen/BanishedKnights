@@ -6,21 +6,31 @@ using UnityEngine.UI;
 public abstract class UnitHealth : MonoBehaviour
 {
     public UnitStats stats;
+    private float currentHealth;
 
     #region Healthbar variables
-    public float maxHealth;
-    public Image healthBar;
-    private float elapsed = 0f;
+    [SerializeField] private Image healthBar;
     private float pctHealth;
     private float updateSpeed = 0.2f;
     #endregion
-    private void Start()
+    private void Awake()
     {
-        maxHealth = stats.health;
+        currentHealth = stats.maxHealth;
     }
     public void TakeDamage(float amount)
     {
-        stats.health -= amount;
+        if (amount - stats.armor <= 0)
+        {
+            amount = 1;
+        }
+        else
+        {
+            amount -= stats.armor;
+        }
+        Debug.Log(gameObject.name + " Taking " + amount + " dmg");
+        Debug.Log(gameObject.name + " now has " + currentHealth + " hp left");
+
+        currentHealth -= amount;
         StartCoroutine(ChangeHealthBarPct());
     }
 
@@ -29,14 +39,15 @@ public abstract class UnitHealth : MonoBehaviour
     //Makes the healthbar lose health smoothly
     public IEnumerator ChangeHealthBarPct()
     {
-        if (stats.health <= 0f)
+        if (currentHealth <= 0f)
         {
             Die();
         }
 
         float prePctChange = healthBar.fillAmount;
+        float elapsed = 0f;
 
-        pctHealth = stats.health / maxHealth;
+        pctHealth = currentHealth / stats.maxHealth;
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;

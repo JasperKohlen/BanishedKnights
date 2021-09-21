@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ff041f0180f794e8b519b1a14a5b24, type: 3}
   m_Name: Soldier
   m_EditorClassIdentifier: 
-  aggroRange: 0
-  atkRange: 1
-  attackDmg: 8
-  health: -10
-  armor: 0
+  aggroRange: 30
+  atkRange: 3
+  attackDmg: 10
+  attackDelay: 2
+  maxHealth: 60
+  armor: 2

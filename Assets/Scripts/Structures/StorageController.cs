@@ -16,17 +16,20 @@ public class StorageController : MonoBehaviour
         storages.Add(gameObject);
         localInv = gameObject.AddComponent<LocalStorageDictionary>();
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        worker = other.GetComponent<Worker>();
+        if (other != null)
+        {
+            worker = other.GetComponent<Worker>();
 
-        if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.DELIVERING_TO_STORAGE)
-        {
-            worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
-        }
-        if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_TO_BUILD)
-        {
-            worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
+            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.DELIVERING_TO_STORAGE)
+            {
+                worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
+            }
+            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_TO_BUILD)
+            {
+                worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
+            }
         }
     }
 }

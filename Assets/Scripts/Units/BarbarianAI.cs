@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class BarbarianAI : MonoBehaviour
+public class BarbarianAI : UnitHealth
 {
-    [SerializeField] private UnitStats stats;
     private SoldierDictionary enemies;
     private GameObject currentTarget;
     private NavMeshAgent agent;
     private bool aggro;
     private float radius = 100f;
+    private float attackTimer;
 
     [SerializeField] private Transform camp;
     // Start is called before the first frame update
@@ -20,35 +20,47 @@ public class BarbarianAI : MonoBehaviour
     {
         enemies = EventSystem.current.GetComponent<SoldierDictionary>();
         agent = GetComponent<NavMeshAgent>();
+        attackTimer = stats.attackDelay;
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindEnemies();
-
+        Collider[] hits = Physics.OverlapSphere(camp.position, stats.aggroRange, LayerMask.GetMask("Units"));
+        if (hits.Any(s => s.gameObject.layer == 6))
+        {
+            FindEnemies();
+        }
+        else
+        {
+            aggro = false;
+            BackToCamp();
+        }
     }
     private void FindEnemies()
     {
-        //Doesnt target workers yet
-        foreach (var enemy in enemies.GetTable())
+        //TODO: Doesnt target workers yet
+        if (enemies.GetTable().Count <= 0)
         {
-            var distanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
-            var distanceToEnemy = (transform.position - enemy.Value.transform.position).magnitude;
+            aggro = false;
+            BackToCamp();
+        }
+        else
+        {
+            foreach (var enemy in enemies.GetTable().ToList())
+            {
+                var distanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
+                var distanceToEnemy = (transform.position - enemy.Value.transform.position).magnitude;
 
-            if (distanceToCamp <= stats.aggroRange)
-            {
-                SetAggro(enemy.Value);
-                if (distanceToEnemy <= stats.atkRange)
+                if (distanceToCamp <= stats.aggroRange)
                 {
-                    Debug.Log("Barbarian: Attacking!");
-                    enemy.Value.GetComponent<Soldier>().TakeDamage(stats.attackDmg);
+                    SetAggro(enemy.Value);
+                    if (distanceToEnemy <= stats.atkRange)
+                    {
+                        agent.SetDestination(transform.position);
+                        Attack();
+                    }
                 }
-            }
-            else
-            {
-                BackToCamp();
-                aggro = false;
             }
         }
     }
@@ -61,7 +73,13 @@ public class BarbarianAI : MonoBehaviour
 
     private void Attack()
     {
-        currentTarget.GetComponent<Soldier>().TakeDamage(stats.attackDmg);
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= stats.attackDelay)
+        {
+            Debug.Log("Barbarian: Attacking!");
+            currentTarget.GetComponent<Soldier>().TakeDamage(stats.attackDmg);
+            attackTimer = 0;
+        }
     }
 
     private void BackToCamp()
@@ -74,5 +92,10 @@ public class BarbarianAI : MonoBehaviour
             destination = Random.insideUnitSphere * radius + camp.position;
             agent.SetDestination(destination);
         }
+    }
+
+    public override void Die()
+    {
+        Destroy(gameObject);
     }
 }

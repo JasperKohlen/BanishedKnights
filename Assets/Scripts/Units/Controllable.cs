@@ -20,8 +20,18 @@ public class Controllable : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Moving...");
-            agent.destination = hit.point;
+            if (hit.collider.gameObject.GetComponent<BarbarianAI>())
+            {
+                gameObject.GetComponent<Soldier>().SetTarget(hit.collider.gameObject);
+            }
+            else
+            {
+                if (gameObject.GetComponent<Soldier>())
+                {
+                    gameObject.GetComponent<Soldier>().SetTarget(null);
+                }
+                agent.destination = hit.point;
+            }
         }
     }
 }

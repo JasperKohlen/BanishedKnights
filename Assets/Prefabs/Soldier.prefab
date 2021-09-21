@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 579719335798860168}
   - component: {fileID: 579719335798860169}
   - component: {fileID: 579719335798860174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 579719335904225077}
   - component: {fileID: 579719335904225082}
   - component: {fileID: 579719335904225083}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 579719336681796072}
   - component: {fileID: 579719336681796073}
   - component: {fileID: 579719336681796078}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 3640150999992567726}
   - component: {fileID: 490319839792481321}
   - component: {fileID: 336853066410788555}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Soldier
   m_TagString: Controllable
   m_Icon: {fileID: 0}
@@ -365,12 +365,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 579719337409844023}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 10
-  m_Acceleration: 8
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -420,7 +420,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 1d704dc752655d24ea31621da3f16530, type: 2}
-  maxHealth: 0
   healthBar: {fileID: 8210647114682395511}
 --- !u!82 &490319839792481321
 AudioSource:
@@ -572,7 +571,7 @@ GameObject:
   - component: {fileID: 1795610237219328038}
   - component: {fileID: 3667965226561639635}
   - component: {fileID: 197297384726359013}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +684,7 @@ GameObject:
   - component: {fileID: 4877684321794328219}
   - component: {fileID: 8602087943821653537}
   - component: {fileID: 8210647114682395511}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +738,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 26d2e70834704ab4caaa1bcabebb3873, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 11068e6cb0f18044e93ad0154715d958, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -760,7 +759,7 @@ GameObject:
   - component: {fileID: 5270876672582890931}
   - component: {fileID: 1255154135266865821}
   - component: {fileID: 6080255325584441491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HpBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -836,7 +835,7 @@ GameObject:
   - component: {fileID: 6461984749792489714}
   - component: {fileID: 8538797479518114051}
   - component: {fileID: 1878610891090559478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SelectedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

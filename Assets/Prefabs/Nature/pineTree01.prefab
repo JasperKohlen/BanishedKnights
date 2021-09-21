@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3025508722090019776}
   - component: {fileID: 3514887300686878972}
   - component: {fileID: 8933795598091574377}
+  - component: {fileID: 5966405038484683818}
   m_Layer: 0
   m_Name: pineTree01
   m_TagString: Removable
@@ -211,3 +212,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!208 &5966405038484683818
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668545159370947283}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.33, y: 4.0670004, z: 1.52}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.006, y: 4.0670004, z: -0.35300002}
+  m_TimeToStationary: 0.5

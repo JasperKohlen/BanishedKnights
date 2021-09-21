@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4032477430660865979}
   - component: {fileID: 4032477430660865978}
   - component: {fileID: 4032477430660865981}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4032477430757871878}
   - component: {fileID: 4032477430757871881}
   - component: {fileID: 4032477430757871880}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 4032477431198147842}
   - component: {fileID: 5331583926416820219}
   - component: {fileID: 4032477431198147845}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Worker
   m_TagString: Worker
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4032477431198147844}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.95
+  m_Radius: 0.5
   m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 4032477431556376539}
   - component: {fileID: 4032477431556376538}
   - component: {fileID: 4032477431556376541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

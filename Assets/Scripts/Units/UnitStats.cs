@@ -8,6 +8,7 @@ public class UnitStats : ScriptableObject
     public float aggroRange;
     public float atkRange;
     public float attackDmg;
-    public float health;
+    public float attackDelay;
+    public float maxHealth;
     public float armor;
 }
