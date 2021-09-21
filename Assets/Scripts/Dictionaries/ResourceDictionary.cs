@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ResourceDictionary : MonoBehaviour
+public class ResourceDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> resourceInWorldTable = new Dictionary<int, GameObject>();
 
-    public void AddResource(GameObject go)
+    public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
 
@@ -17,7 +17,7 @@ public class ResourceDictionary : MonoBehaviour
         }
     }
 
-    public void RemoveFromTable(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (resourceInWorldTable.ContainsKey(id))

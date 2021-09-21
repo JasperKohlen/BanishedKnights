@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToBuildDictionary : MonoBehaviour
+public class ToBuildDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> structuresToBuild = new Dictionary<int, GameObject>();
 
-    public void AddStruct(GameObject go)
+    public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
 
@@ -16,7 +16,7 @@ public class ToBuildDictionary : MonoBehaviour
         }
     }
 
-    public void RemoveFromTable(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (structuresToBuild.ContainsKey(id))

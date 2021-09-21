@@ -10,8 +10,7 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gridString = new CustomGrid<StringGridObject>(10, 10, 5f, Vector3.zero, (CustomGrid<StringGridObject> o, int x, int z) => new StringGridObject(o, x, z));
-        grid = new CustomGrid<GridObject>(50, 50, 5f, new Vector3(-100,0,-100), (CustomGrid<GridObject> o, int x, int z) => new GridObject(o, x, z));
+        grid = new CustomGrid<GridObject>(67, 75, 5f, new Vector3(-150,0,-150), (CustomGrid<GridObject> o, int x, int z) => new GridObject(o, x, z));
     }
 }
 

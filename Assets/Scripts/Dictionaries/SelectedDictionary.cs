@@ -4,11 +4,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectedDictionary : MonoBehaviour
+public class SelectedDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> selectedTable = new Dictionary<int, GameObject>();
 
-    public void AddSelected(GameObject go)
+    public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
 
@@ -19,7 +19,7 @@ public class SelectedDictionary : MonoBehaviour
         }
     }
 
-    public void Deselect(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (selectedTable.ContainsKey(id))

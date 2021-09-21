@@ -117,9 +117,9 @@ public class Worker : MonoBehaviour
     //Called when entering storage trigger and worker is in the collecting_to_build state
     public void CollectResource(LocalStorageDictionary storageInv)
     {
-        resourceToDeliver.AddResource(storageInv.ReturnResource(neededResource));
+        resourceToDeliver.Add(storageInv.ReturnResource(neededResource));
         PickupResource(resourceToDeliver.Get());
-        storageInv.RemoveFromStorage(resourceToDeliver.Get());
+        storageInv.Remove(resourceToDeliver.Get());
     }
     //Finds needed resource and delivers it to a construction site
     void DeliverToBuild()
@@ -150,8 +150,8 @@ public class Worker : MonoBehaviour
         resourceToDeliver.Get().transform.position = gameObject.transform.position;
 
         //Remove from worker inventory
-        inventory.RemoveFromTable(resourceToDeliver.Get());
-        resourceToDeliver.RemoveFromTable(resourceToDeliver.Get());
+        inventory.Remove(resourceToDeliver.Get());
+        resourceToDeliver.Remove(resourceToDeliver.Get());
     }
 
     //Called when in the DELIVERING_TO_STORAGE state
@@ -182,11 +182,11 @@ public class Worker : MonoBehaviour
         storageInv.Add(resourceToDeliver.Get());
 
         //Remove from worker inventory
-        inventory.RemoveFromTable(resourceToDeliver.Get());
+        inventory.Remove(resourceToDeliver.Get());
 
         //Remove from the toDeliver dictionary
         resourceToDeliver.GetTable().ToList().First().Value.gameObject.transform.position = new Vector3(9999, 9999, 9999);
-        resourceToDeliver.RemoveFromTable(resourceToDeliver.Get());
+        resourceToDeliver.Remove(resourceToDeliver.Get());
         isStorage = false;
     }
 

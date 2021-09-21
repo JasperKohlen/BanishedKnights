@@ -4,30 +4,30 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectedUnitDictionary : MonoBehaviour
+public class SelectedUnitDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> selectedUnits = new Dictionary<int, GameObject>();
     
-    public void AddSelected(GameObject go)
+    public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
 
         if (!selectedUnits.ContainsKey(id))
         {
             selectedUnits.Add(id, go);
-            go.GetComponentInChildren<SettlerUI>().ShowSelectedUI();
+            go.GetComponentInChildren<ControllableUI>().ShowSelectedUI();
             go.GetComponent<ControllableUnitAudio>().PlaySelectionSound();
             go.AddComponent<SelectionComponent>();
         }
     }
 
-    public void Deselect(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (selectedUnits.ContainsKey(id))
         {
             Destroy(selectedUnits[id].GetComponent<SelectionComponent>());
-            go.GetComponentInChildren<SettlerUI>().HideSelectedUI();
+            go.GetComponentInChildren<ControllableUI>().HideSelectedUI();
             selectedUnits.Remove(id);
         }
     }
@@ -36,13 +36,13 @@ public class SelectedUnitDictionary : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            foreach (KeyValuePair<int, GameObject> pair in selectedUnits)
+            foreach (KeyValuePair<int, GameObject> unit in selectedUnits)
             {
                 //Check if object has not been destroyed yet
-                if (pair.Value != null)
+                if (unit.Value != null)
                 {
-                    pair.Value.GetComponentInChildren<SettlerUI>().HideSelectedUI();
-                    Destroy(selectedUnits[pair.Key].GetComponent<SelectionComponent>());
+                    unit.Value.GetComponentInChildren<ControllableUI>().HideSelectedUI();
+                    Destroy(selectedUnits[unit.Key].GetComponent<SelectionComponent>());
                 }
             }
             //Table needs to be cleared on top of destroy selectioncomponents

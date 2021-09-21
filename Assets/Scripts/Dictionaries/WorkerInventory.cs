@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WorkerInventory : MonoBehaviour
+public class WorkerInventory : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> inventory = new Dictionary<int, GameObject>();
     private int amountOfLogs;
@@ -26,7 +26,7 @@ public class WorkerInventory : MonoBehaviour
         }
     }
 
-    public void RemoveFromTable(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (inventory.ContainsKey(id))
@@ -55,7 +55,6 @@ public class WorkerInventory : MonoBehaviour
         }
     }
 
-    //REFACTOR NEEDED IN FUTURE
     public GameObject ReturnResource()
     {
         GameObject toReturn = new GameObject();
@@ -81,29 +80,6 @@ public class WorkerInventory : MonoBehaviour
             return false;
         }
     }
-    public bool CarryingLogs()
-    {
-        if (amountOfLogs > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public bool CarryingCobble()
-    {
-        if (amountOfCobbles > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public Dictionary<int, GameObject> GetTable()
     {
         return inventory;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LocalStorageDictionary : MonoBehaviour
+public class LocalStorageDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> resourcesInLocalStorage = new Dictionary<int, GameObject>();
     private UIManager ui;
@@ -31,7 +31,7 @@ public class LocalStorageDictionary : MonoBehaviour
             ui.UpdateStorage(this);
         }
     }
-    public void RemoveFromStorage(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (resourcesInLocalStorage.ContainsKey(id))

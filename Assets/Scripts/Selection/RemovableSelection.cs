@@ -78,11 +78,11 @@ public class RemovableSelection : MonoBehaviour
             {
                 if (selectedTable.Contains(hit.transform.gameObject))
                 {
-                    selectedTable.Deselect(hit.transform.gameObject);
+                    selectedTable.Remove(hit.transform.gameObject);
                 }
                 else
                 {
-                    selectedTable.AddSelected(hit.transform.gameObject);
+                    selectedTable.Add(hit.transform.gameObject);
                 }
             }
             //Select only one unit, therefore also deselecting all other units
@@ -97,7 +97,7 @@ public class RemovableSelection : MonoBehaviour
                     //TODO: small bug when multiple are selecting and you then try to only select 1 tree who was already selected
                     //The tree you click on doesnt get selected until you click again afterwards
                     selectedTable.DeselectAll();
-                    selectedTable.AddSelected(hit.transform.gameObject);
+                    selectedTable.Add(hit.transform.gameObject);
                 }
             }
         }
@@ -235,6 +235,6 @@ public class RemovableSelection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        selectedTable.AddSelected(other.gameObject);
+        selectedTable.Add(other.gameObject);
     }
 }

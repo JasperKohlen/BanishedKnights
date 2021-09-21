@@ -28,7 +28,7 @@ public class StructureBuild : MonoBehaviour
         resources = EventSystem.current.GetComponent<SelectedDictionary>();
 
         structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
-        structsToBuild.AddStruct(gameObject);
+        structsToBuild.Add(gameObject);
 
         position_To_Place = prefab.position;
         rotation_To_Place = prefab.rotation;
@@ -37,7 +37,7 @@ public class StructureBuild : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Removable"))
         {
-            resources.AddSelected(other.gameObject);
+            resources.Add(other.gameObject);
         }
         if (other.gameObject.tag.Equals("Worker") &&
             other.gameObject.GetComponent<Worker>().inventory.HoldingResource() &&
@@ -102,7 +102,7 @@ public class StructureBuild : MonoBehaviour
     void CompleteBuilding()
     {
         ConsumeResources();
-        structsToBuild.RemoveFromTable(gameObject);
+        structsToBuild.Remove(gameObject);
 
         Instantiate(prefab.Resulting_Building, position_To_Place, rotation_To_Place);
         Destroy(gameObject);

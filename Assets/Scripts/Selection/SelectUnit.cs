@@ -45,11 +45,11 @@ public class SelectUnit : MonoBehaviour
             {
                 if (selectedTable.Contains(hit.transform.gameObject))
                 {
-                    selectedTable.Deselect(hit.transform.gameObject);
+                    selectedTable.Remove(hit.transform.gameObject);
                 }
                 else
                 {
-                    selectedTable.AddSelected(hit.transform.gameObject);
+                    selectedTable.Add(hit.transform.gameObject);
                 }
             }
             //Select only one unit, also deselecting all other units
@@ -62,7 +62,7 @@ public class SelectUnit : MonoBehaviour
                 else
                 {
                     selectedTable.DeselectAll();
-                    selectedTable.AddSelected(hit.transform.gameObject);
+                    selectedTable.Add(hit.transform.gameObject);
                     Debug.Log("Unit selected");
 
                 }

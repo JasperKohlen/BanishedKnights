@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StorageBuildingsDictionary : MonoBehaviour
+public class StorageBuildingsDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> storageHouses = new Dictionary<int, GameObject>();
 
@@ -15,7 +15,7 @@ public class StorageBuildingsDictionary : MonoBehaviour
             storageHouses.Add(id, go);
         }
     }
-    public void RemoveFromTable(GameObject go)
+    public void Remove(GameObject go)
     {
         int id = go.GetInstanceID();
         if (storageHouses.ContainsKey(id))

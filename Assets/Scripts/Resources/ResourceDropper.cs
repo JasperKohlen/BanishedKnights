@@ -29,12 +29,12 @@ public class ResourceDropper : MonoBehaviour
         //Only remove removable when selected and the collider is a worker who is in the removing state.
         if (other.gameObject.tag.Equals("Worker") && selectedTable.Contains(gameObject) && other.GetComponent<Worker>().state == State.REMOVING)
         {
-            selectedTable.Deselect(gameObject);
+            selectedTable.Remove(gameObject);
 
             worker = other.gameObject.GetComponent<Worker>();
 
             GameObject resource = Instantiate(prefab, objectPosition, Quaternion.identity);
-            worker.resourceToDeliver.AddResource(resource);
+            worker.resourceToDeliver.Add(resource);
 
             PlayBreakSound();
             gameObject.GetComponent<MeshRenderer>().enabled = false;
