@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ff041f0180f794e8b519b1a14a5b24, type: 3}
   m_Name: Soldier
   m_EditorClassIdentifier: 
+  logsRequired: 2
+  cobblesRequired: 0
+  unitType: {fileID: 579719337409844023, guid: eb65dba83c1812e45af6e6ffa3d85069, type: 3}
   aggroRange: 30
   atkRange: 3
   attackDmg: 10

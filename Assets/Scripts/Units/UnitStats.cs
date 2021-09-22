@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/UnitStats")]
 public class UnitStats : ScriptableObject
 {
+    public int logsRequired;
+    public int cobblesRequired;
+
+    public GameObject unitType;
+
     public float aggroRange;
     public float atkRange;
     public float attackDmg;

@@ -10,16 +10,22 @@ public class UIManager : MonoBehaviour
 {
     RemovableSelection removableSelection;
 
-    public GameObject removeBtn;
-    public GameObject removeDestroyPanel;
+    [SerializeField] private GameObject removeBtn;
+    [SerializeField] private GameObject removeDestroyPanel;
+    
+    [SerializeField] private GameObject houseBlueprint;
+    [SerializeField] private GameObject storageBlueprint;
+    [SerializeField] private GameObject barracksBlueprint;
+    
+    [SerializeField] private GameObject storageMenu;
+    [SerializeField] private GameObject barracksMenu;
+    [SerializeField] private TMP_Text logsTxt;
+    [SerializeField] private TMP_Text cobblesTxt;
+    [SerializeField] private TMP_Text barracksLogsTxt;
+    [SerializeField] private TMP_Text barracksCobblesTxt;
+    [SerializeField] private Button barracksOrderBtn;
 
-    public GameObject houseBlueprint;
-    public GameObject storageBlueprint;
-    public GameObject barracksBlueprint;
-
-    public GameObject storageMenu;
-    public TMP_Text logsTxt;
-    public TMP_Text cobblesTxt;
+    private BarracksController selectedBarracks;
 
     private void Start()
     {
@@ -93,7 +99,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region stats
+    #region structure stats
 
     public void OpenStorageMenu(LocalStorageDictionary localStorage)
     {
@@ -101,15 +107,42 @@ public class UIManager : MonoBehaviour
         logsTxt.text = "Logs : " + localStorage.GetLogsCount();
         cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
     }
+
     public void CloseStorageMenu()
     {
         storageMenu.SetActive(false);
     }
 
-    public void UpdateStorage(LocalStorageDictionary localStorage)
+    public void UpdateLocalStorage(LocalStorageDictionary localStorage)
     {
         logsTxt.text = "Logs : " + localStorage.GetLogsCount();
         cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
     }
+
+    public void OpenBarracksMenu(LocalStorageDictionary localStorage)
+    {
+        selectedBarracks = localStorage.gameObject.GetComponent<BarracksController>();
+        barracksMenu.SetActive(true);
+        barracksLogsTxt.text = "Logs : " + localStorage.GetLogsCount();
+        barracksCobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
+    }
+
+    public void CloseBarracksMenu()
+    {
+        barracksMenu.SetActive(false);
+    }
+
+    public void UpdateBarracksMenu(LocalStorageDictionary localStorage)
+    {
+        barracksLogsTxt.text = "Logs : " + localStorage.GetLogsCount();
+        barracksCobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
+    }
+
+    public void OrderSoldier()
+    {
+        int logsNeeded = barracksOrderBtn.GetComponent<OrderBtnComponent>().resultingUnit.logsRequired;
+        selectedBarracks.MakeOrder(logsNeeded, barracksOrderBtn.GetComponent<OrderBtnComponent>().resultingUnit.unitType);
+    }
+
     #endregion
 }

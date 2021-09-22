@@ -78,10 +78,18 @@ public class SelectUnit : MonoBehaviour
             Debug.Log("Storage selected");
             ui.OpenStorageMenu(hit.transform.GetComponent<LocalStorageDictionary>());
         }
-        //When you dont click on a unit
-        else if (!Input.GetKey(KeyCode.LeftShift))
+        else
         {
             ui.CloseStorageMenu();
+        }
+        if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag.Equals("Barracks"))
+        {
+            Debug.Log("Barracks selected");
+            ui.OpenBarracksMenu(hit.transform.GetComponent<LocalStorageDictionary>());
+        }
+        else
+        {
+            ui.CloseBarracksMenu();
         }
     }
 }

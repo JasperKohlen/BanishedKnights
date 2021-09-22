@@ -24518,6 +24518,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3666647666753291329, guid: 826d7678cdf0dd54e9b38afa4c46fa9a, type: 3}
   m_PrefabInstance: {fileID: 459258703}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &910359171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4780344020815506786, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+  m_PrefabInstance: {fileID: 2145204552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &911758164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6937681271457043120, guid: 9b5b6c2eaedc6e24c916c891c2300d9f, type: 3}
@@ -38478,6 +38489,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4361c205d7e1c4d859e581bbecff58, type: 3}
+--- !u!1 &1415083978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8643092187011383781, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+  m_PrefabInstance: {fileID: 2145204552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1418386857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3666647666753291329, guid: 826d7678cdf0dd54e9b38afa4c46fa9a, type: 3}
@@ -42437,7 +42453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568015970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.3999996, z: 0}
+  m_LocalPosition: {x: 0, y: -22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 914111411}
@@ -57527,6 +57543,7 @@ GameObject:
   - component: {fileID: 2090779813}
   - component: {fileID: 2090779814}
   - component: {fileID: 2090779815}
+  - component: {fileID: 2090779816}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -57652,6 +57669,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c16432a055d3146be27a7be79fa5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2090779816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090779806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e911f0198f7f92340b1f04113c6029a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2091262020
@@ -59459,12 +59488,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1855318061}
     - target: {fileID: 5502567129983909050, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: barracksMenu
+      value: 
+      objectReference: {fileID: 1415083978}
+    - target: {fileID: 5502567129983909050, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: barracksLogsTxt
+      value: 
+      objectReference: {fileID: 910359171}
+    - target: {fileID: 5502567129983909050, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
       propertyPath: barracksBlueprint
       value: 
       objectReference: {fileID: 7453335177828008765, guid: dca19a07325721643a6521c068141c3e, type: 3}
     - target: {fileID: 5769811520359742459, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364368169825097435, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OrderSoldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643092187011383781, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1737795986183823510, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}

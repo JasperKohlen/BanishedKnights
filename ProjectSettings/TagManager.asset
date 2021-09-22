@@ -13,6 +13,8 @@ TagManager:
   - Controllable
   - Resource
   - Enemy
+  - ToBuild
+  - Barracks
   layers:
   - Default
   - TransparentFX

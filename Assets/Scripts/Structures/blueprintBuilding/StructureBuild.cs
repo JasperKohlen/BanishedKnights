@@ -10,7 +10,7 @@ public class StructureBuild : MonoBehaviour
     private List<GameObject> deliveredObjects = new List<GameObject>();
 
     [Header("Scriptable Object")]
-    [SerializeField] private BlueprintSO prefab;
+    [SerializeField] private BlueprintSO so;
 
     private Worker worker;
 
@@ -30,8 +30,8 @@ public class StructureBuild : MonoBehaviour
         structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
         structsToBuild.Add(gameObject);
 
-        position_To_Place = prefab.position;
-        rotation_To_Place = prefab.rotation;
+        position_To_Place = so.position;
+        rotation_To_Place = so.rotation;
     }
     private void OnTriggerStay(Collider other)
     {
@@ -69,7 +69,7 @@ public class StructureBuild : MonoBehaviour
         //Debug.Log("Logs needed " + logsNeeded);
         //Debug.Log("cobbles delivered " + deliveredcobbles);
         //Debug.Log("cobbles needed " + cobblesNeeded);
-        if (deliveredLogs >= prefab.logsNeeded && deliveredcobbles >= prefab.cobblesNeeded)
+        if (deliveredLogs >= so.logsNeeded && deliveredcobbles >= so.cobblesNeeded)
         {
             CompleteBuilding();
         }
@@ -77,7 +77,7 @@ public class StructureBuild : MonoBehaviour
 
     public bool AllLogsDelivered()
     {
-        if (deliveredLogs >= prefab.logsNeeded)
+        if (deliveredLogs >= so.logsNeeded)
         {
             return true;
         }
@@ -89,7 +89,7 @@ public class StructureBuild : MonoBehaviour
 
     public bool AllCobblesDelivered()
     {
-        if (deliveredcobbles >= prefab.cobblesNeeded)
+        if (deliveredcobbles >= so.cobblesNeeded)
         {
             return true;
         }
@@ -104,7 +104,7 @@ public class StructureBuild : MonoBehaviour
         ConsumeResources();
         structsToBuild.Remove(gameObject);
 
-        Instantiate(prefab.Resulting_Building, position_To_Place, rotation_To_Place);
+        Instantiate(so.Resulting_Building, position_To_Place, rotation_To_Place);
         Destroy(gameObject);
     }
 
@@ -114,5 +114,15 @@ public class StructureBuild : MonoBehaviour
         {
             Destroy(item);
         }
+    }
+
+    public float GetPctComplete()
+    {
+        int totalNeeded = so.logsNeeded + so.cobblesNeeded;
+        int totalDelivered = deliveredLogs + deliveredcobbles;
+
+        float pct;
+        pct = (float)totalDelivered / (float)totalNeeded;
+        return pct;
     }
 }

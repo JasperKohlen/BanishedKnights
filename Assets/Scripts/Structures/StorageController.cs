@@ -7,14 +7,12 @@ using UnityEngine.EventSystems;
 public class StorageController : MonoBehaviour
 {
     private StorageBuildingsDictionary storages;
-    private LocalStorageDictionary localInv;
 
     private Worker worker;
     private void Start()
     {
         storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
         storages.Add(gameObject);
-        localInv = gameObject.AddComponent<LocalStorageDictionary>();
     }
     private void OnTriggerStay(Collider other)
     {
