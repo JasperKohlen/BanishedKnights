@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ff041f0180f794e8b519b1a14a5b24, type: 3}
   m_Name: Barbarian
   m_EditorClassIdentifier: 
+  logsRequired: 0
+  unitType: {fileID: 6734179170193490804, guid: de5bfb92df74c1542b6f911635e6cfce, type: 3}
   aggroRange: 50
   atkRange: 3
   attackDmg: 10

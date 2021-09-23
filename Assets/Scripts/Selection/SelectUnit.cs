@@ -68,7 +68,7 @@ public class SelectUnit : MonoBehaviour
                 }
             }
         }
-        else
+        else if(!Input.GetKey(KeyCode.LeftShift))
         {
             selectedTable.DeselectAll();
         }
@@ -87,7 +87,7 @@ public class SelectUnit : MonoBehaviour
             Debug.Log("Barracks selected");
             ui.OpenBarracksMenu(hit.transform.GetComponent<LocalStorageDictionary>());
         }
-        else
+        else if (!EventSystem.current.IsPointerOverGameObject())
         {
             ui.CloseBarracksMenu();
         }

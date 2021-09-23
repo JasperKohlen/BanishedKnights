@@ -6,7 +6,6 @@ using UnityEngine;
 public class UnitStats : ScriptableObject
 {
     public int logsRequired;
-    public int cobblesRequired;
 
     public GameObject unitType;
 

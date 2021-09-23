@@ -24,7 +24,7 @@ public class StorageController : MonoBehaviour
             {
                 worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
             }
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_TO_BUILD)
+            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE)
             {
                 worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
             }

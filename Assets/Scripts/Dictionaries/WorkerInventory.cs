@@ -70,8 +70,18 @@ public class WorkerInventory : MonoBehaviour, IDictionary
     }
     public bool HoldingResource()
     {
-
         if (inventory.Any(item => item.Value.CompareTag("Resource")))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool HoldingLogs()
+    {
+        if (inventory.Any(item => item.Value.name.Contains("Logs")))
         {
             return true;
         }

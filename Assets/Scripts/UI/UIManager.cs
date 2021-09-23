@@ -21,8 +21,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject barracksMenu;
     [SerializeField] private TMP_Text logsTxt;
     [SerializeField] private TMP_Text cobblesTxt;
+
     [SerializeField] private TMP_Text barracksLogsTxt;
-    [SerializeField] private TMP_Text barracksCobblesTxt;
+    [SerializeField] private TMP_Text barracksOrderedSoldiersTxt;
+    [SerializeField] private TMP_Text barracksLogsNeededTxt;
+    [SerializeField] private TMP_Text barracksSoldierRecipeTxt;
     [SerializeField] private Button barracksOrderBtn;
 
     private BarracksController selectedBarracks;
@@ -30,6 +33,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         removableSelection = EventSystem.current.gameObject.GetComponent<RemovableSelection>();
+        UnitTrainingCost();
     }
 
     //Open the menu with all remove and destroy buttons
@@ -117,6 +121,7 @@ public class UIManager : MonoBehaviour
     {
         logsTxt.text = "Logs : " + localStorage.GetLogsCount();
         cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
+        barracksLogsTxt.text = "Logs : " + localStorage.GetLogsCount();
     }
 
     public void OpenBarracksMenu(LocalStorageDictionary localStorage)
@@ -124,7 +129,6 @@ public class UIManager : MonoBehaviour
         selectedBarracks = localStorage.gameObject.GetComponent<BarracksController>();
         barracksMenu.SetActive(true);
         barracksLogsTxt.text = "Logs : " + localStorage.GetLogsCount();
-        barracksCobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
     }
 
     public void CloseBarracksMenu()
@@ -132,16 +136,26 @@ public class UIManager : MonoBehaviour
         barracksMenu.SetActive(false);
     }
 
-    public void UpdateBarracksMenu(LocalStorageDictionary localStorage)
+    public void UpdateBarracksMenu(OrderDictionary order)
     {
-        barracksLogsTxt.text = "Logs : " + localStorage.GetLogsCount();
-        barracksCobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
+        barracksLogsNeededTxt.text = "of " + order.LogsNeeded();
+        barracksOrderedSoldiersTxt.text = "Soldiers: " + order.GetTable().Count;
     }
 
     public void OrderSoldier()
     {
-        int logsNeeded = barracksOrderBtn.GetComponent<OrderBtnComponent>().resultingUnit.logsRequired;
-        selectedBarracks.MakeOrder(logsNeeded, barracksOrderBtn.GetComponent<OrderBtnComponent>().resultingUnit.unitType);
+        int logsNeeded = barracksOrderBtn.GetComponent<OrderBtnComponent>().unit.logsRequired;
+        selectedBarracks.MakeOrder(logsNeeded, barracksOrderBtn.GetComponent<OrderBtnComponent>().unit.unitType);
+    }
+
+    public void CancelSoldierOrder()
+    {
+        selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder();
+    }
+
+    public void UnitTrainingCost()
+    {
+        barracksSoldierRecipeTxt.text = "Cost per unit: " + barracksOrderBtn.GetComponent<OrderBtnComponent>().unit.logsRequired + " logs and 1 worker";
     }
 
     #endregion

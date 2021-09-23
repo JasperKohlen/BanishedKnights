@@ -13,6 +13,7 @@ public class Worker : MonoBehaviour
     private SelectedDictionary selectedTable;
     private StorageBuildingsDictionary storages;
     private ToBuildDictionary structs;
+    private OrderDictionary orders;
     [HideInInspector] public WorkerInventory inventory;
 
     private List<GameObject> sortedResources;
@@ -35,6 +36,7 @@ public class Worker : MonoBehaviour
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
         storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
         structs = EventSystem.current.GetComponent<ToBuildDictionary>();
+        orders = EventSystem.current.GetComponent<OrderDictionary>();
 
         resourceToDeliver = gameObject.AddComponent<ResourceDictionary>();
         inventory = gameObject.AddComponent<WorkerInventory>();
@@ -59,7 +61,7 @@ public class Worker : MonoBehaviour
                 break;
             case State.DESTROYING:
                 break;
-            case State.COLLECTING_TO_BUILD:
+            case State.COLLECTING_FROM_STORAGE:
                 NavigateToCollect();
                 break;
             case State.DELIVERING_TO_BUILD:
@@ -67,6 +69,9 @@ public class Worker : MonoBehaviour
                 break;
             case State.DELIVERING_TO_STORAGE:
                 PrepareToDeliverToStorage();
+                break;
+            case State.DELIVERING_TO_BARRACKS:
+                DeliverToBarracks();
                 break;
             default:
                 ReturnState();
@@ -85,14 +90,19 @@ public class Worker : MonoBehaviour
             state = State.REMOVING;
             return state;
         }
+        if (OrdersAvailable() && inventory.HoldingLogs() && !isStorage)
+        {
+            state = State.DELIVERING_TO_BARRACKS;
+            return state;
+        }
         if (structs.Available() && inventory.HoldingResource() && !isStorage)
         {
             state = State.DELIVERING_TO_BUILD;
             return state;
         }
-        if (structs.Available() && !inventory.HoldingResource())
+        if (structs.Available() && !inventory.HoldingResource() || OrdersAvailable())
         {
-            state = State.COLLECTING_TO_BUILD;
+            state = State.COLLECTING_FROM_STORAGE;
             return state;
         }
         if (resourceToDeliver.GetTable().Count > 0 || isStorage)
@@ -128,11 +138,11 @@ public class Worker : MonoBehaviour
 
         if (CanDeliverLogsToBuild())
         {
-            destination = FindDeliverLogsToBuild();
+            destination = FindSctructureNeedingLogs();
         }
         if (CanDeliverCobblesToBuild())
         {
-            destination = FindDeliverCobblesToBuild();
+            destination = FindStructureNeedingCobbles();
         }
         if (ShouldDeliverToStorage())
         {
@@ -190,9 +200,14 @@ public class Worker : MonoBehaviour
         isStorage = false;
     }
 
+    void DeliverToBarracks()
+    {
+        agent.SetDestination(FindBarracksWithOrder());
+    }
+
     #region navigation
     //Find the closest structure that still needs cobbles
-    private Vector3 FindDeliverCobblesToBuild()
+    private Vector3 FindStructureNeedingCobbles()
     {
         List<Vector3> blueprints = new List<Vector3>();
         Vector3 structToDeliverTo = transform.position;
@@ -210,7 +225,7 @@ public class Worker : MonoBehaviour
     }
 
     //Find the closest structure that still needs logs
-    private Vector3 FindDeliverLogsToBuild()
+    private Vector3 FindSctructureNeedingLogs()
     {
         List<Vector3> blueprints = new List<Vector3>();
         Vector3 structToDeliverTo = transform.position;
@@ -253,6 +268,23 @@ public class Worker : MonoBehaviour
         return destination;
     }
 
+    private Vector3 FindBarracksWithOrder()
+    {
+        Vector3 destination = transform.position;
+        List<GameObject> barracksWithOrders = new List<GameObject>();
+
+        foreach (var order in FindObjectsOfType<OrderDictionary>())
+        {
+            if (order.Available())
+            {
+                barracksWithOrders.Add(order.gameObject);
+            }
+        }
+        barracksWithOrders = barracksWithOrders.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+        destination = barracksWithOrders.First().transform.position;
+
+        return destination;
+    }
     #endregion
 
     #region Sorting
@@ -336,5 +368,20 @@ public class Worker : MonoBehaviour
         }
     }
 
+    private bool OrdersAvailable()
+    {
+        if (FindObjectsOfType<OrderDictionary>() != null)
+        {
+
+            foreach (var order in FindObjectsOfType<OrderDictionary>())
+            {
+                if (order.Available())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     #endregion
 }

@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 121844582194038588}
   - component: {fileID: 5409111031970477630}
   - component: {fileID: 3280972338230687363}
+  - component: {fileID: 2983262317148440572}
   m_Layer: 0
   m_Name: MainStructure
   m_TagString: Barracks
@@ -383,7 +384,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logs: {fileID: 3191774970260757671, guid: 719e40e344e9a6c4ca7000b6f596a943, type: 3}
-  cobbles: {fileID: 1727691030728211335, guid: d4cf25e3d0e6bd540952a27ea7c3ffa7, type: 3}
 --- !u!114 &3280972338230687363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +394,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d353d1b3e7c90224187cb684572466d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2983262317148440572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3728383209230079662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e911f0198f7f92340b1f04113c6029a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4445144007765216414

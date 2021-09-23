@@ -9,7 +9,6 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
     private UIManager ui;
     private int logs;
     private int cobbles;
-    private int workers;
     private void Start()
     {
         ui = FindObjectOfType<UIManager>();
@@ -28,10 +27,6 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
             {
                 cobbles++;
             }
-            if (go.name.Contains("Worker"))
-            {
-                workers++;
-            }
             resourcesInLocalStorage.Add(id, go);
             ui.UpdateLocalStorage(this);
         }
@@ -48,10 +43,6 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
             if (go.name.Contains("Cobbles"))
             {
                 cobbles--;
-            }
-            if (go.name.Contains("Worker"))
-            {
-                workers--;
             }
             resourcesInLocalStorage.Remove(id);
             ui.UpdateLocalStorage(this);

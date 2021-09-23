@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class OrderBtnComponent : MonoBehaviour
 {
-    [SerializeField] public UnitStats resultingUnit;
+    [SerializeField] public UnitStats unit;
 }
