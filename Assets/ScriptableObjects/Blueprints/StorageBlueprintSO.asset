@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb14380b9def32a49b37f412c62da122, type: 3}
   m_Name: StorageBlueprintSO
   m_EditorClassIdentifier: 
-  logsNeeded: 8
-  cobblesNeeded: 4
+  logsNeeded: 1
+  cobblesNeeded: 0
   Height: 3
   Width: 4
   Resulting_Building: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
-  position: {x: -5, y: 0, z: -85}
+  position: {x: 40, y: 0, z: -65}
   rotation: {x: 0, y: 0, z: 0, w: 1}

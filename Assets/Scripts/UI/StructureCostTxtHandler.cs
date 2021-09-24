@@ -14,10 +14,4 @@ public class StructureCostTxtHandler : MonoBehaviour
         logsCost.text = "Logs: " + blueprintRecipe.logsNeeded;
         cobblesCost.text = "Cobbles: " + blueprintRecipe.cobblesNeeded;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

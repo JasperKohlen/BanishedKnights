@@ -21,6 +21,7 @@ public class Settler : MonoBehaviour
         PlacePrefab(housePrefab, houseSO, 5, 0);
         PlacePrefab(housePrefab, houseSO, -3, 0);
         PlacePrefab(storagePrefab, storageSO, 0, 3);
+        SettleChecker.settled = true;
 
         Destroy(gameObject);
     }

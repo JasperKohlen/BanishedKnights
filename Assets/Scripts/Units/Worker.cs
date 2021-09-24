@@ -13,7 +13,6 @@ public class Worker : MonoBehaviour
     private SelectedDictionary selectedTable;
     private StorageBuildingsDictionary storages;
     private ToBuildDictionary structs;
-    private OrderDictionary orders;
     [HideInInspector] public WorkerInventory inventory;
 
     private List<GameObject> sortedResources;
@@ -26,8 +25,8 @@ public class Worker : MonoBehaviour
     private int movSpeed;
 
     private NavMeshAgent agent;
-    private bool isStorage;
-    private bool isCollecting;
+    private bool toStorage;
+    private bool toBarracks;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +35,6 @@ public class Worker : MonoBehaviour
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
         storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
         structs = EventSystem.current.GetComponent<ToBuildDictionary>();
-        orders = EventSystem.current.GetComponent<OrderDictionary>();
 
         resourceToDeliver = gameObject.AddComponent<ResourceDictionary>();
         inventory = gameObject.AddComponent<WorkerInventory>();
@@ -59,10 +57,8 @@ public class Worker : MonoBehaviour
             case State.REMOVING:
                 NavigateToRemovable();
                 break;
-            case State.DESTROYING:
-                break;
             case State.COLLECTING_FROM_STORAGE:
-                NavigateToCollect();
+                NavigateToStorage();
                 break;
             case State.DELIVERING_TO_BUILD:
                 DeliverToBuild();
@@ -90,22 +86,28 @@ public class Worker : MonoBehaviour
             state = State.REMOVING;
             return state;
         }
-        if (OrdersAvailable() && inventory.HoldingLogs() && !isStorage)
-        {
-            state = State.DELIVERING_TO_BARRACKS;
-            return state;
-        }
-        if (structs.Available() && inventory.HoldingResource() && !isStorage)
+        if (structs.Available() && inventory.HoldingResource() && !toStorage)
         {
             state = State.DELIVERING_TO_BUILD;
             return state;
         }
-        if (structs.Available() && !inventory.HoldingResource() || OrdersAvailable())
+        if (structs.Available() && !inventory.HoldingResource())
         {
             state = State.COLLECTING_FROM_STORAGE;
             return state;
         }
-        if (resourceToDeliver.GetTable().Count > 0 || isStorage)
+        if (OrdersAvailable() && !inventory.HoldingResource())
+        {
+            toBarracks = true;
+            state = State.COLLECTING_FROM_STORAGE;
+            return state;
+        }
+        if (OrdersAvailable() && inventory.HoldingLogs())
+        {
+            state = State.DELIVERING_TO_BARRACKS;
+            return state;
+        }
+        if (resourceToDeliver.GetTable().Count > 0 || toStorage)
         {
             state = State.DELIVERING_TO_STORAGE;
             return state;
@@ -120,22 +122,21 @@ public class Worker : MonoBehaviour
     }
 
     //Get Resources from storage if not holding and available in storages
-    private void NavigateToCollect()
+    private void NavigateToStorage()
     {
         agent.SetDestination(FindStorageToCollectFrom());
     }
-    //Called when entering storage trigger and worker is in the collecting_to_build state
+    //Called when entering storage trigger and worker is in the collecting_from_storage state
     public void CollectResource(LocalStorageDictionary storageInv)
     {
         resourceToDeliver.Add(storageInv.ReturnResource(neededResource));
         PickupResource(resourceToDeliver.Get());
         storageInv.Remove(resourceToDeliver.Get());
+        toBarracks = false;
     }
     //Finds needed resource and delivers it to a construction site
     void DeliverToBuild()
     {
-        //PickupResource(resourceToDeliver.Get());
-
         if (CanDeliverLogsToBuild())
         {
             destination = FindSctructureNeedingLogs();
@@ -146,7 +147,7 @@ public class Worker : MonoBehaviour
         }
         if (ShouldDeliverToStorage())
         {
-            isStorage = true;
+            toStorage = true;
         }
 
         agent.SetDestination(destination);
@@ -197,7 +198,7 @@ public class Worker : MonoBehaviour
         //Remove from the toDeliver dictionary
         resourceToDeliver.GetTable().ToList().First().Value.gameObject.transform.position = new Vector3(9999, 9999, 9999);
         resourceToDeliver.Remove(resourceToDeliver.Get());
-        isStorage = false;
+        toStorage = false;
     }
 
     void DeliverToBarracks()
@@ -245,9 +246,21 @@ public class Worker : MonoBehaviour
     private Vector3 FindStorageToCollectFrom()
     {
         Vector3 destination = transform.position;
-        foreach (var toBuild in structs.GetTable())
+        if (toBarracks)
         {
             foreach (var storage in storages.GetTable())
+            {
+                if (storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
+                {
+                    neededResource = "Logs";
+                    destination = GetNearestStorage();
+                    return destination;
+                }
+            }
+        }
+        foreach (var storage in storages.GetTable())
+        {
+            foreach (var toBuild in structs.GetTable())
             {
                 //If a buildable requires logs and a storage house has atleast one log
                 if (!toBuild.Value.GetComponent<StructureBuild>().AllLogsDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)

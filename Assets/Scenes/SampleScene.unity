@@ -18582,6 +18582,7 @@ GameObject:
   - component: {fileID: 686610481}
   - component: {fileID: 686610484}
   - component: {fileID: 686610485}
+  - component: {fileID: 686610486}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -18682,6 +18683,19 @@ MonoBehaviour:
   mouseColliderMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &686610486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686610478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb7f02a9d0959346bd8c9f001c8d373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1107814455}
 --- !u!4 &687104404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3666647666753291329, guid: 826d7678cdf0dd54e9b38afa4c46fa9a, type: 3}
@@ -29635,6 +29649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 826d7678cdf0dd54e9b38afa4c46fa9a, type: 3}
+--- !u!1 &1107814455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5769811520359742459, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+  m_PrefabInstance: {fileID: 2145204552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1108111442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30802,7 +30821,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5502567129983909050, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
   m_PrefabInstance: {fileID: 2145204552}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1107814455}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9947c98f81e27a84081be5333f8c9cc8, type: 3}
@@ -58472,6 +58491,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 2039877929247492504, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.30004883
+      objectReference: {fileID: 0}
     - target: {fileID: 2535196738387387590, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -58607,6 +58630,10 @@ PrefabInstance:
     - target: {fileID: 5769811520359742459, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5769811520359742459, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8364368169825097435, guid: e93f5409ed8b0fc408e3b4daf0dbe9e0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

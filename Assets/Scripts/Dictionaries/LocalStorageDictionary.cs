@@ -9,6 +9,7 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
     private UIManager ui;
     private int logs;
     private int cobbles;
+    public bool isSelected;
     private void Start()
     {
         ui = FindObjectOfType<UIManager>();
@@ -28,7 +29,10 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
                 cobbles++;
             }
             resourcesInLocalStorage.Add(id, go);
-            ui.UpdateLocalStorage(this);
+            if (isSelected)
+            {
+                ui.UpdateLocalStorage(this);
+            }
         }
     }
     public void Remove(GameObject go)
@@ -45,7 +49,10 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
                 cobbles--;
             }
             resourcesInLocalStorage.Remove(id);
-            ui.UpdateLocalStorage(this);
+            if (isSelected)
+            {
+                ui.UpdateLocalStorage(this);
+            }
         }
     }
     public int GetLogsCount()
@@ -61,10 +68,13 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
         GameObject toReturn = new GameObject();
         foreach (var item in resourcesInLocalStorage)
         {
-            if (item.Value.gameObject.name.Contains(neededResource))
+            if (item.Value != null)
             {
-                Debug.Log("Returning: " + item.Value.gameObject.ToString());
-                toReturn = item.Value.gameObject;
+                if (item.Value.gameObject.name.Contains(neededResource))
+                {
+                    Debug.Log("Returning: " + item.Value.gameObject.ToString());
+                    toReturn = item.Value.gameObject;
+                }
             }
         }
         return toReturn;
