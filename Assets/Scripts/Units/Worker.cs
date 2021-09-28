@@ -26,7 +26,7 @@ public class Worker : MonoBehaviour
 
     private NavMeshAgent agent;
     private bool toStorage;
-    private bool toBarracks;
+    public bool toBarracks;
 
     // Start is called before the first frame update
     void Start()
@@ -139,7 +139,7 @@ public class Worker : MonoBehaviour
     {
         if (CanDeliverLogsToBuild())
         {
-            destination = FindSctructureNeedingLogs();
+            destination = FindStructureNeedingLogs();
         }
         if (CanDeliverCobblesToBuild())
         {
@@ -226,7 +226,7 @@ public class Worker : MonoBehaviour
     }
 
     //Find the closest structure that still needs logs
-    private Vector3 FindSctructureNeedingLogs()
+    private Vector3 FindStructureNeedingLogs()
     {
         List<Vector3> blueprints = new List<Vector3>();
         Vector3 structToDeliverTo = transform.position;
@@ -246,14 +246,14 @@ public class Worker : MonoBehaviour
     private Vector3 FindStorageToCollectFrom()
     {
         Vector3 destination = transform.position;
-        if (toBarracks)
+        if (toBarracks && storages.GetTable().Any(s => s.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0))
         {
             foreach (var storage in storages.GetTable())
             {
                 if (storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
                 {
                     neededResource = "Logs";
-                    destination = GetNearestStorage();
+                    destination = storage.Value.transform.position;
                     return destination;
                 }
             }

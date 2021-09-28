@@ -6,11 +6,10 @@ using CodeMonkey.Utils;
 public class GridSystem : MonoBehaviour
 {
     public CustomGrid<GridObject> grid;
-    //CustomGrid<StringGridObject> gridString;
     // Start is called before the first frame update
     void Start()
     {
-        grid = new CustomGrid<GridObject>(67, 75, 5f, new Vector3(-150,0,-150), (CustomGrid<GridObject> o, int x, int z) => new GridObject(o, x, z));
+        grid = new CustomGrid<GridObject>(100, 100, 5f, new Vector3(-250,0,-250), (CustomGrid<GridObject> o, int x, int z) => new GridObject(o, x, z));
     }
 }
 

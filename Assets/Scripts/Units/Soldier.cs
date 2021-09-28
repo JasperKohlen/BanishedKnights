@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class Soldier : UnitHealth
 {
+    private Animator anim;
     private SoldierDictionary soldiers;
     private SelectedUnitDictionary selectedUnits;
     private GameObject currentTarget;
@@ -18,6 +19,7 @@ public class Soldier : UnitHealth
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         soldiers = EventSystem.current.GetComponent<SoldierDictionary>();
         selectedUnits = FindObjectOfType<SelectedUnitDictionary>();
         soldiers.Add(gameObject);
@@ -80,6 +82,7 @@ public class Soldier : UnitHealth
 
         if (attackTimer >= stats.attackDelay)
         {
+            anim.Play("SwordSlash");
             currentTarget.GetComponent<BarbarianAI>().TakeDamage(stats.attackDmg);
             attackTimer = 0;
         }

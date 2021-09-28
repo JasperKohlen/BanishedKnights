@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private GameObject storageMenu;
     [SerializeField] private GameObject barracksMenu;
+    [SerializeField] private GameObject instructionsMenu;
     [SerializeField] private TMP_Text logsTxt;
     [SerializeField] private TMP_Text cobblesTxt;
 
@@ -67,6 +68,18 @@ public class UIManager : MonoBehaviour
         {
             removableSelection.enabled = true;
             removeBtn.GetComponent<Image>().color = Color.grey;
+        }
+    }
+
+    public void HandleInstructionsMenu()
+    {
+        if (!instructionsMenu.activeSelf)
+        {
+            instructionsMenu.SetActive(true);
+        }
+        else
+        {
+            instructionsMenu.SetActive(false);
         }
     }
 

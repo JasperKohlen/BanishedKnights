@@ -24,7 +24,12 @@ public class StorageController : MonoBehaviour
             {
                 worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
             }
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE)
+            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE && other.GetComponent<Worker>().toBarracks == false)
+            {
+                worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
+            }
+            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE && 
+                other.GetComponent<Worker>().toBarracks == true && this.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
             {
                 worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
             }

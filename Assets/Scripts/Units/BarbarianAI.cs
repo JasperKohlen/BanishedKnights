@@ -10,6 +10,7 @@ public class BarbarianAI : UnitHealth
     private SoldierDictionary enemies;
     private GameObject currentTarget;
     private NavMeshAgent agent;
+    private Animator anim;
     private bool aggro;
     private float radius = 100f;
     private float attackTimer;
@@ -18,6 +19,7 @@ public class BarbarianAI : UnitHealth
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         enemies = EventSystem.current.GetComponent<SoldierDictionary>();
         agent = GetComponent<NavMeshAgent>();
         attackTimer = stats.attackDelay;
@@ -76,6 +78,7 @@ public class BarbarianAI : UnitHealth
         attackTimer += Time.deltaTime;
         if (attackTimer >= stats.attackDelay)
         {
+            anim.Play("BarbarianSwordSlash");
             Debug.Log("Barbarian: Attacking!");
             currentTarget.GetComponent<Soldier>().TakeDamage(stats.attackDmg);
             attackTimer = 0;
