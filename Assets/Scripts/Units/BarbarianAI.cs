@@ -28,7 +28,8 @@ public class BarbarianAI : UnitHealth
     // Update is called once per frame
     void Update()
     {
-        Collider[] hits = Physics.OverlapSphere(camp.position, stats.aggroRange, LayerMask.GetMask("Units"));
+        GetComponent<NavMeshAgent>().isStopped = false;
+        Collider[] hits = Physics.OverlapSphere(camp.position, 20f, LayerMask.GetMask("Units"));
         if (hits.Any(s => s.gameObject.layer == 6))
         {
             FindEnemies();
@@ -51,14 +52,15 @@ public class BarbarianAI : UnitHealth
         {
             foreach (var enemy in enemies.GetTable().ToList())
             {
-                var distanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
+                var enemyDistanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
                 var distanceToEnemy = (transform.position - enemy.Value.transform.position).magnitude;
 
-                if (distanceToCamp <= stats.aggroRange)
+                if (enemyDistanceToCamp <= stats.aggroRange)
                 {
                     SetAggro(enemy.Value);
                     if (distanceToEnemy <= stats.atkRange)
                     {
+                        GetComponent<NavMeshAgent>().isStopped = true;
                         agent.SetDestination(transform.position);
                         Attack();
                     }

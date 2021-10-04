@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    RemovableSelection removableSelection;
+    HarvestSelection removableSelection;
 
     [SerializeField] private GameObject removeBtn;
     [SerializeField] private GameObject removeDestroyPanel;
@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        removableSelection = EventSystem.current.gameObject.GetComponent<RemovableSelection>();
+        removableSelection = EventSystem.current.gameObject.GetComponent<HarvestSelection>();
         UnitTrainingCost();
     }
 

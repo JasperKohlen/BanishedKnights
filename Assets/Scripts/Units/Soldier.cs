@@ -33,6 +33,7 @@ public class Soldier : UnitHealth
         Collider[] hits = Physics.OverlapSphere(transform.position, stats.aggroRange);
         float distanceToEnemy;
         destination = transform.position;
+        GetComponent<NavMeshAgent>().isStopped = false;
 
         if (currentTarget != null)
         {
@@ -42,6 +43,7 @@ public class Soldier : UnitHealth
             distanceToEnemy = (transform.position - destination).magnitude;
             if (distanceToEnemy <= stats.atkRange)
             {
+                GetComponent<NavMeshAgent>().isStopped = true;
                 destination = transform.position;
                 Attack();
             }

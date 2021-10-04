@@ -40,32 +40,13 @@ public class SelectUnit : MonoBehaviour
         //Casts a ray when clicking
         if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag.Equals("Controllable"))
         {
-            //Specifically select multiple units
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (selectedTable.Contains(hit.transform.gameObject))
             {
-                if (selectedTable.Contains(hit.transform.gameObject))
-                {
-                    selectedTable.Remove(hit.transform.gameObject);
-                }
-                else
-                {
-                    selectedTable.Add(hit.transform.gameObject);
-                }
+                selectedTable.Remove(hit.transform.gameObject);
             }
-            //Select only one unit, also deselecting all other units
             else
             {
-                if (selectedTable.Contains(hit.transform.gameObject))
-                {
-                    selectedTable.DeselectAll();
-                }
-                else
-                {
-                    selectedTable.DeselectAll();
-                    selectedTable.Add(hit.transform.gameObject);
-                    Debug.Log("Unit selected");
-
-                }
+                selectedTable.Add(hit.transform.gameObject);
             }
         }
         else if(!Input.GetKey(KeyCode.LeftShift))

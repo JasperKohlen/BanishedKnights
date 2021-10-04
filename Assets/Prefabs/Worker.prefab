@@ -220,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 4032477431198147844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -51.31, y: -3.0933342, z: -41.48}
-  m_LocalScale: {x: 2.3222, y: 2.3222, z: 2.3222}
+  m_LocalScale: {x: 2.0554955, y: 2.0554955, z: 2.0554955}
   m_Children:
   - {fileID: 4032477430757871883}
   - {fileID: 4032477430660865980}
@@ -273,6 +273,7 @@ MonoBehaviour:
   inventory: {fileID: 0}
   state: 0
   movSpeed: 5
+  toBarracks: 0
 --- !u!114 &5331583926416820219
 MonoBehaviour:
   m_ObjectHideFlags: 0
