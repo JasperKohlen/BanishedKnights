@@ -15,7 +15,7 @@ MonoBehaviour:
   logsRequired: 3
   unitType: {fileID: 0}
   aggroRange: 30
-  atkRange: 10
+  atkRange: 50
   attackDmg: 10
   attackDelay: 4
   maxHealth: 20
