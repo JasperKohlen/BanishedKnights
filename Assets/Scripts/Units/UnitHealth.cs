@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class UnitHealth : MonoBehaviour
 {
-    public UnitStats stats;
+    public UnitStats statsSO;
     private float currentHealth;
 
     #region Healthbar variables
@@ -15,17 +15,17 @@ public abstract class UnitHealth : MonoBehaviour
     #endregion
     private void Awake()
     {
-        currentHealth = stats.maxHealth;
+        currentHealth = statsSO.maxHealth;
     }
     public void TakeDamage(float amount)
     {
-        if (amount - stats.armor <= 0)
+        if (amount - statsSO.armor <= 0)
         {
             amount = 1;
         }
         else
         {
-            amount -= stats.armor;
+            amount -= statsSO.armor;
         }
         Debug.Log(gameObject.name + " Taking " + amount + " dmg");
         Debug.Log(gameObject.name + " now has " + currentHealth + " hp left");
@@ -47,7 +47,7 @@ public abstract class UnitHealth : MonoBehaviour
         float prePctChange = healthBar.fillAmount;
         float elapsed = 0f;
 
-        pctHealth = currentHealth / stats.maxHealth;
+        pctHealth = currentHealth / statsSO.maxHealth;
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;

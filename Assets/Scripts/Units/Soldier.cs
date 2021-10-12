@@ -25,12 +25,12 @@ public class Soldier : UnitHealth
         soldiers.Add(gameObject);
 
         agent = GetComponent<NavMeshAgent>();
-        attackTimer = stats.attackDelay;
+        attackTimer = statsSO.attackDelay;
     }
 
     private void Update()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, stats.aggroRange);
+        Collider[] hits = Physics.OverlapSphere(transform.position, statsSO.aggroRange);
         float distanceToEnemy;
         destination = transform.position;
         GetComponent<NavMeshAgent>().isStopped = false;
@@ -41,7 +41,7 @@ public class Soldier : UnitHealth
             agent.SetDestination(destination);
 
             distanceToEnemy = (transform.position - destination).magnitude;
-            if (distanceToEnemy <= stats.atkRange)
+            if (distanceToEnemy <= statsSO.atkRange)
             {
                 GetComponent<NavMeshAgent>().isStopped = true;
                 destination = transform.position;
@@ -82,10 +82,10 @@ public class Soldier : UnitHealth
     {
         attackTimer += Time.deltaTime;
 
-        if (attackTimer >= stats.attackDelay)
+        if (attackTimer >= statsSO.attackDelay)
         {
             anim.Play("SwordSlash");
-            currentTarget.GetComponent<BarbarianAI>().TakeDamage(stats.attackDmg);
+            currentTarget.GetComponent<BarbarianAI>().TakeDamage(statsSO.attackDmg);
             attackTimer = 0;
         }
     }

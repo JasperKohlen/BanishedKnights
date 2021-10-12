@@ -38,12 +38,11 @@ public class UIManager : MonoBehaviour
     }
 
     //Open the menu with all remove and destroy buttons
-    public void HandleRemoveDestroyPanel()
+    public void HandleHarvestPanel()
     {
         //Disable remove-panel
         if (removeDestroyPanel.activeSelf)
         {
-            removeBtn.GetComponent<Image>().color = Color.white;
             removableSelection.enabled = false;
             removeDestroyPanel.SetActive(false);
         }
@@ -51,25 +50,27 @@ public class UIManager : MonoBehaviour
         else if (!removeDestroyPanel.activeSelf)
         {
             removeDestroyPanel.SetActive(true);
+            removeBtn.GetComponent<Image>().color = Color.grey;
+            removableSelection.enabled = true;
         }
     }
 
-    //Enable/Disable resource removal selection
-    public void HandleRemovableSelection()
-    {
-        //Disable removable selection
-        if (removableSelection.enabled == true)
-        {
-            removeBtn.GetComponent<Image>().color = Color.white;
-            removableSelection.enabled = false;
-        }
-        //Enable removable selection
-        else
-        {
-            removableSelection.enabled = true;
-            removeBtn.GetComponent<Image>().color = Color.grey;
-        }
-    }
+    ////Enable/Disable resource removal selection
+    //public void HandleHarvestSelection()
+    //{
+    //    //Disable removable selection
+    //    if (removableSelection.enabled == true)
+    //    {
+    //        removeBtn.GetComponent<Image>().color = Color.white;
+    //        removableSelection.enabled = false;
+    //    }
+    //    //Enable removable selection
+    //    else
+    //    {
+    //        removableSelection.enabled = true;
+    //        removeBtn.GetComponent<Image>().color = Color.grey;
+    //    }
+    //}
 
     public void HandleInstructionsMenu()
     {

@@ -22,7 +22,7 @@ public class BarbarianAI : UnitHealth
         anim = GetComponent<Animator>();
         enemies = EventSystem.current.GetComponent<SoldierDictionary>();
         agent = GetComponent<NavMeshAgent>();
-        attackTimer = stats.attackDelay;
+        attackTimer = statsSO.attackDelay;
     }
 
     // Update is called once per frame
@@ -55,10 +55,10 @@ public class BarbarianAI : UnitHealth
                 var enemyDistanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
                 var distanceToEnemy = (transform.position - enemy.Value.transform.position).magnitude;
 
-                if (enemyDistanceToCamp <= stats.aggroRange)
+                if (enemyDistanceToCamp <= statsSO.aggroRange)
                 {
                     SetAggro(enemy.Value);
-                    if (distanceToEnemy <= stats.atkRange)
+                    if (distanceToEnemy <= statsSO.atkRange)
                     {
                         GetComponent<NavMeshAgent>().isStopped = true;
                         agent.SetDestination(transform.position);
@@ -78,11 +78,11 @@ public class BarbarianAI : UnitHealth
     private void Attack()
     {
         attackTimer += Time.deltaTime;
-        if (attackTimer >= stats.attackDelay)
+        if (attackTimer >= statsSO.attackDelay)
         {
             anim.Play("BarbarianSwordSlash");
             Debug.Log("Barbarian: Attacking!");
-            currentTarget.GetComponent<Soldier>().TakeDamage(stats.attackDmg);
+            currentTarget.GetComponent<Soldier>().TakeDamage(statsSO.attackDmg);
             attackTimer = 0;
         }
     }
