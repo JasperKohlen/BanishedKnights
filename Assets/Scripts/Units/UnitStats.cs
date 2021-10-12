@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/UnitStats")]
 public class UnitStats : ScriptableObject
 {
+    public int id;
     public int logsRequired;
 
     public GameObject unitType;

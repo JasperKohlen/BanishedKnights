@@ -48,6 +48,7 @@ public class UIBarracksManager : MonoBehaviour
 
     public void OrderSwordman()
     {
+        //GameObject unit = Instantiate(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType, new Vector3(9999,9999,9999), Quaternion.identity);
         selectedBarracks.MakeOrder(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void OrderBowman()
