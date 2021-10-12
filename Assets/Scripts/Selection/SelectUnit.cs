@@ -8,6 +8,7 @@ public class SelectUnit : MonoBehaviour
     private SelectedUnitDictionary selectedTable;
     RaycastHit hit;
     [SerializeField] UIManager ui;
+    [SerializeField] UIBarracksManager barracksUI;
 
     Vector3 p1;
 
@@ -73,11 +74,11 @@ public class SelectUnit : MonoBehaviour
         {
             Debug.Log("Barracks selected");
             hit.transform.gameObject.GetComponent<LocalStorageDictionary>().isSelected = true;
-            ui.OpenBarracksMenu(hit.transform.GetComponent<LocalStorageDictionary>());
+            barracksUI.OpenBarracksMenu(hit.transform.GetComponent<LocalStorageDictionary>());
         }
         else if (!EventSystem.current.IsPointerOverGameObject())
         {
-            ui.CloseBarracksMenu();
+            barracksUI.CloseBarracksMenu();
 
             //foreach (var item in FindObjectsOfType<LocalStorageDictionary>())
             //{

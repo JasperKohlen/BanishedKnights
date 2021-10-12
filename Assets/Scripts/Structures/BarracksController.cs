@@ -32,32 +32,19 @@ public class BarracksController : MonoBehaviour
         }
     }
 
-    public void MakeOrder(int logsNeeded,  GameObject unit)
+    public void MakeOrder(GameObject unit)
     {
-        List<GameObject> order = new List<GameObject>();
-        for (int i = 0; i < logsNeeded; i++)
-        {
-            order.Add(logs);
-        }
-        order.Add(unit);
-        
-        Debug.Log("Ordered a " + unit + " | " + "Logs needed: " + logsNeeded);
-
-        orders.Add(order);
+        orders.Add(unit);
+        Debug.Log("Ordered a " + unit + " | " + "Logs needed: " + unit.GetComponent<Soldier>().statsSO.logsRequired);
     }
 
     private void CompareInventoryAndOrder(GameObject worker)
     {
-        int logs = 0;
-        foreach (var item in orders.GetTable().First().Value)
+        foreach (var item in orders.GetTable())
         {
-            if (item.name.Contains("Logs"))
+            if (ItemsAvailableInStorage(item.Value.GetComponent<Soldier>().statsSO.logsRequired) && item.Value.GetComponent<Controllable>())
             {
-                logs++;
-            }
-            if (ItemsAvailableInStorage(logs) && item.GetComponent<Controllable>())
-            {
-                TrainSoldier(item, worker);
+                TrainSoldier(item.Value, worker);
             }
         }
     }
@@ -78,13 +65,9 @@ public class BarracksController : MonoBehaviour
     {
         Destroy(worker);
         Instantiate(unit, worker.transform.position, Quaternion.identity);
-
-        foreach (var item in orders.GetTable().First().Value)
+        for (int i = 0; i < unit.GetComponent<Soldier>().statsSO.logsRequired; i++)
         {
-            if (item.name.Contains("Logs"))
-            {
-                barracksInv.Remove(barracksInv.ReturnResource(item.name));
-            }
+            barracksInv.Remove(barracksInv.ReturnResource("Logs"));
         }
 
         orders.Remove(orders.GetTable().First().Value);

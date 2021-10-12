@@ -5,26 +5,37 @@ using UnityEngine;
 
 public class OrderDictionary : MonoBehaviour
 {
-    private Dictionary<int, List<GameObject>> orders = new Dictionary<int, List<GameObject>>();
-    private UIManager ui;
+    private Dictionary<int, GameObject> orders = new Dictionary<int,GameObject>();
+    private UIBarracksManager ui;
+
+    private int swordmen = 0;
+    private int bowmen = 0;
     private void Start()
     {
-        ui = FindObjectOfType<UIManager>();
+        ui = FindObjectOfType<UIBarracksManager>();
     }
-    public void Add(List<GameObject> order)
+    public void Add(GameObject unit)
     {
-        int id = order.GetHashCode();
+        int id = unit.GetInstanceID();
 
         if (!orders.ContainsKey(id))
         {
-            Debug.Log("Order");
-            orders.Add(id, order);
+            orders.Add(id, unit);
             ui.UpdateBarracksMenu(this);
+
+            if (unit.GetComponent<SwordmanComponent>())
+            {
+                swordmen += 1;
+            }
+            if (unit.GetComponent<BowmanComponent>())
+            {
+                bowmen += 1;
+            }
         }
     }
-    public void Remove(List<GameObject> order)
+    public void Remove(GameObject unit)
     {
-        int id = order.GetHashCode();
+        int id = unit.GetInstanceID();
         if (orders.ContainsKey(id))
         {
             orders.Remove(id);
@@ -36,7 +47,7 @@ public class OrderDictionary : MonoBehaviour
     {
         if (orders.Count != 0)
         {
-            List<GameObject> orderToRemove = orders.First().Value;
+            GameObject orderToRemove = orders.First().Value;
             Remove(orderToRemove);
             ui.UpdateBarracksMenu(this);
         }
@@ -45,15 +56,9 @@ public class OrderDictionary : MonoBehaviour
     public int LogsNeeded()
     {
         int logs = 0;
-        foreach (var order in orders)
+        foreach (var unit in orders)
         {
-            foreach (var item in order.Value)
-            {
-                if (item.name.Contains("Logs"))
-                {
-                    logs++;
-                }
-            }
+            logs += unit.Value.GetComponent<Soldier>().statsSO.logsRequired;
         }
         return logs;
     }
@@ -69,7 +74,16 @@ public class OrderDictionary : MonoBehaviour
             return false;
         }
     }
-    public Dictionary<int, List<GameObject>> GetTable()
+    public int GetSwordmanCount()
+    {
+        return swordmen;
+    }
+
+    public int GetBowmanCount()
+    {
+        return bowmen;
+    }
+    public Dictionary<int, GameObject> GetTable()
     {
         return orders;
     }

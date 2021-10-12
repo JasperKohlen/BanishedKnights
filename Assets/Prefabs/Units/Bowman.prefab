@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 2700943534844976849}
   - component: {fileID: 5617193685416771597}
   - component: {fileID: 3339986164158553076}
+  - component: {fileID: 971176172527987660}
   - component: {fileID: 1879020291139344499}
   - component: {fileID: 1761707488377199249}
   - component: {fileID: 8568588597722748377}
@@ -725,6 +726,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsSO: {fileID: 11400000, guid: c2d3b3b7e618b514bacae116a8872561, type: 2}
   healthBar: {fileID: 7866800881298978605}
+--- !u!114 &971176172527987660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501381058653441901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e78d77a6841ec24d8166cf599e10ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &1879020291139344499
 AudioSource:
   m_ObjectHideFlags: 0

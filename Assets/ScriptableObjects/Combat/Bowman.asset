@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Bowman
   m_EditorClassIdentifier: 
   logsRequired: 3
-  unitType: {fileID: 0}
+  unitType: {fileID: 1501381058653441901, guid: 2a978670bf541984fb7487d6f4699527, type: 3}
   aggroRange: 30
-  atkRange: 50
+  atkRange: 25
   attackDmg: 10
   attackDelay: 4
   maxHealth: 20
