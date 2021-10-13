@@ -70,7 +70,7 @@ public class BarracksController : MonoBehaviour
             barracksInv.Remove(barracksInv.ReturnResource("Logs"));
         }
 
-        orders.Remove(orders.GetTable().First().Value);
+        orders.RemoveFirstOrder(unit);
         Debug.Log(orders.GetTable().Count + " orders");
     }
 }

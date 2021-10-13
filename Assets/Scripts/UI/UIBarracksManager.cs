@@ -48,16 +48,19 @@ public class UIBarracksManager : MonoBehaviour
 
     public void OrderSwordman()
     {
-        //GameObject unit = Instantiate(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType, new Vector3(9999,9999,9999), Quaternion.identity);
         selectedBarracks.MakeOrder(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void OrderBowman()
     {
         selectedBarracks.MakeOrder(OrderBowmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
-    public void CancelOrder()
+    public void CancelSwordmanOrder()
     {
-        selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder();
+        selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
+    }
+    public void CancelBowmanOrder()
+    {
+        selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder(OrderBowmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void UnitTrainingCost()
     {

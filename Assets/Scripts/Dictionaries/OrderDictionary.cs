@@ -20,59 +20,44 @@ public class OrderDictionary : MonoBehaviour
 
         if (!orders.ContainsKey(id))
         {
-            if (unit.GetComponent<SwordmanComponent>())
-            {
-                swordmen += 1;
-                Debug.Log("Added swordsman order");
-            }
-            if (unit.GetComponent<BowmanComponent>())
-            {
-                bowmen += 1;
-                Debug.Log("Added Bowman order");
-            }
             orders.Add(id, unit);
         }
+        CountIndividualSoldiers();
         ui.UpdateBarracksMenu(this);
     }
-    public void Remove(GameObject unit)
+    private void Remove(GameObject unit)
     {
-        int id = unit.GetComponent<Soldier>().statsSO.id;
-        if (orders.ContainsKey(id))
+        //Foreach is utilized because of a bug with the unit id, therefore i check if the object is the same
+        foreach (var item in orders)
         {
-            if (unit.GetComponent<SwordmanComponent>())
+            if (item.Value == unit)
             {
-                swordmen -= 1;
-                Debug.Log("Removed swordsman order");
+                orders.Remove(item.Key);
+                break;
             }
-            if (unit.GetComponent<BowmanComponent>())
-            {
-                bowmen -= 1;
-                Debug.Log("Removed Bowman order");
-            }
-            orders.Remove(id);
-            ui.UpdateBarracksMenu(this);
         }
     }
 
-    public void RemoveFirstOrder()
+    public void RemoveFirstOrder(GameObject unit)
     {
         if (orders.Count != 0)
         {
-            GameObject orderToRemove = orders.First().Value;
+            GameObject orderToRemove = null;
 
-            if (orderToRemove.GetComponent<SwordmanComponent>())
+            if(unit.GetComponent<SwordmanComponent>())
             {
-                swordmen -= 1;
-                Debug.Log("Removed swordsman order");
+                orderToRemove = orders.Where(s => s.Value.GetComponent<SwordmanComponent>()).First().Value;
             }
-            if (orderToRemove.GetComponent<BowmanComponent>())
+            if (unit.GetComponent<BowmanComponent>())
             {
-                bowmen -= 1;
-                Debug.Log("Removed Bowman order");
+                orderToRemove = orders.Where(s => s.Value.GetComponent<BowmanComponent>()).First().Value;
             }
-
-            Remove(orderToRemove);
-            ui.UpdateBarracksMenu(this);
+            if (orderToRemove != null)
+            {
+                Remove(orderToRemove);
+                CountIndividualSoldiers();
+                ui.UpdateBarracksMenu(this);
+            }
         }
     }
 
@@ -108,6 +93,24 @@ public class OrderDictionary : MonoBehaviour
         }
         unit.GetComponent<Soldier>().statsSO.id = id;
         return id;
+    }
+    private void CountIndividualSoldiers()
+    {
+        swordmen = 0;
+        bowmen = 0;
+
+        foreach (var item in orders)
+        {
+
+            if (item.Value.GetComponent<SwordmanComponent>())
+            {
+                swordmen += 1;
+            }
+            if (item.Value.GetComponent<BowmanComponent>())
+            {
+                bowmen += 1;
+            }
+        }
     }
 
     public int GetSwordmanCount()

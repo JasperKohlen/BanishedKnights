@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject removeDestroyPanel;
        
     [SerializeField] private GameObject storageMenu;
+    [SerializeField] private GameObject globalStorageMenu;
     [SerializeField] private GameObject instructionsMenu;
     [SerializeField] private TMP_Text logsTxt;
     [SerializeField] private TMP_Text cobblesTxt;
@@ -52,6 +53,17 @@ public class UIManager : MonoBehaviour
         else
         {
             instructionsMenu.SetActive(false);
+        }
+    }
+    public void HandleGlobalStorageMenu()
+    {
+        if (!globalStorageMenu.activeSelf)
+        {
+            globalStorageMenu.SetActive(true);
+        }
+        else
+        {
+            globalStorageMenu.SetActive(false);
         }
     }
 
