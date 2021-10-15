@@ -14,14 +14,6 @@ public class WorkerInventory : MonoBehaviour, IDictionary
 
         if (!inventory.ContainsKey(id))
         {
-            if (go.name.Contains("Logs"))
-            {
-                amountOfLogs++;
-            }
-            if (go.name.Contains("Cobbles"))
-            {
-                amountOfCobbles++;
-            }
             inventory.Add(id, go);
         }
     }
@@ -31,14 +23,6 @@ public class WorkerInventory : MonoBehaviour, IDictionary
         int id = go.GetInstanceID();
         if (inventory.ContainsKey(id))
         {
-            if (go.name.Contains("Logs"))
-            {
-                amountOfLogs--;
-            }
-            if (go.name.Contains("Cobbles"))
-            {
-                amountOfCobbles--;
-            }
             inventory.Remove(id);
         }
     }
@@ -81,7 +65,18 @@ public class WorkerInventory : MonoBehaviour, IDictionary
     }
     public bool HoldingLogs()
     {
-        if (inventory.Any(item => item.Value.name.Contains("Logs")))
+        if (inventory.Any(item => item.Value.GetComponent<LogComponent>()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool HoldingCobbles()
+    {
+        if (inventory.Any(item => item.Value.GetComponent<CobbleComponent>()))
         {
             return true;
         }

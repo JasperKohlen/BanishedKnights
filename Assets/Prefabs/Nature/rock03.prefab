@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8451197154485841459}
   - component: {fileID: 6995670249249620925}
   - component: {fileID: 1646855043748768673}
+  - component: {fileID: 4745035217122127825}
   - component: {fileID: 5862529871598311627}
   - component: {fileID: 6634993032899355123}
   m_Layer: 0
@@ -110,10 +111,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eada2d80297f5d4b912bde887c7c193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1727691030728211335, guid: d4cf25e3d0e6bd540952a27ea7c3ffa7, type: 3}
   source: {fileID: 5862529871598311627}
   breakSounds:
   - {fileID: 8300000, guid: fd4be73b51bfea84497d312fb61c525a, type: 3}
+--- !u!114 &4745035217122127825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8437873955070239185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecaedd3160ed724299d8fa53c1ad61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: {fileID: 1727691030728211335, guid: d4cf25e3d0e6bd540952a27ea7c3ffa7, type: 3}
+  harvested: 0
+  isTarget: 0
 --- !u!82 &5862529871598311627
 AudioSource:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
     private UIManager ui;
     private int logs;
     private int cobbles;
-    public bool isSelected;
+
     private void Start()
     {
         ui = FindObjectOfType<UIManager>();
@@ -23,16 +23,14 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
             if (go.name.Contains("Logs"))
             {
                 logs++;
+                Debug.Log("Added logs, now: " + logs);
             }
             if (go.name.Contains("Cobbles"))
             {
                 cobbles++;
             }
             resourcesInLocalStorage.Add(id, go);
-            if (isSelected)
-            {
-                ui.UpdateLocalStorage(this);
-            }
+            ui.UpdateLocalStorage(this);
         }
     }
     public void Remove(GameObject go)
@@ -49,20 +47,19 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
                 cobbles--;
             }
             resourcesInLocalStorage.Remove(id);
-            if (isSelected)
-            {
-                ui.UpdateLocalStorage(this);
-            }
+            ui.UpdateLocalStorage(this);
         }
     }
     public int GetLogsCount()
     {
+        Debug.Log(logs + " asoka");
         return logs;
     }
     public int GetCobblesCount()
     {
         return cobbles;
     }
+
     public GameObject ReturnResource(string neededResource)
     {
         GameObject toReturn = new GameObject();

@@ -60,7 +60,7 @@ public class GlobalInvManager : MonoBehaviour
 
     private void GetWorkerCount()
     {
-        List<Worker> workers = FindObjectsOfType<Worker>().ToList();
+        List<WorkerScript> workers = FindObjectsOfType<WorkerScript>().ToList();
         foreach (var item in workers)
         {
             workersCount++;

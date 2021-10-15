@@ -58,32 +58,20 @@ public class SelectUnit : MonoBehaviour
         if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag.Equals("Storage"))
         {
             Debug.Log("Storage selected");
-            hit.transform.gameObject.GetComponent<LocalStorageDictionary>().isSelected = true;
             ui.OpenStorageMenu(hit.transform.GetComponent<LocalStorageDictionary>());
         }
         else
         {
             ui.CloseStorageMenu();
-
-            //foreach (var item in FindObjectsOfType<LocalStorageDictionary>())
-            //{
-            //    item.isSelected = false;
-            //}
         }
         if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.tag.Equals("Barracks"))
         {
             Debug.Log("Barracks selected");
-            hit.transform.gameObject.GetComponent<LocalStorageDictionary>().isSelected = true;
             barracksUI.OpenBarracksMenu(hit.transform.GetComponent<LocalStorageDictionary>());
         }
         else if (!EventSystem.current.IsPointerOverGameObject())
         {
             barracksUI.CloseBarracksMenu();
-
-            //foreach (var item in FindObjectsOfType<LocalStorageDictionary>())
-            //{
-            //    item.isSelected = false;
-            //}
         }
     }
 }

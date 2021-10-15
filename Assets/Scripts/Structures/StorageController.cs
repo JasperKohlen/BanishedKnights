@@ -7,32 +7,21 @@ using UnityEngine.EventSystems;
 public class StorageController : MonoBehaviour
 {
     private StorageBuildingsDictionary storages;
+    private LocalStorageDictionary localInv;
 
     private Worker worker;
     private void Start()
     {
         storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
         storages.Add(gameObject);
+        localInv = gameObject.AddComponent<LocalStorageDictionary>();
     }
-    private void OnTriggerStay(Collider other)
+    public bool IsFull()
     {
-        if (other != null)
-        {
-            worker = other.GetComponent<Worker>();
-
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.DELIVERING_TO_STORAGE)
-            {
-                worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
-            }
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE && other.GetComponent<Worker>().toBarracks == false)
-            {
-                worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
-            }
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.COLLECTING_FROM_STORAGE && 
-                other.GetComponent<Worker>().toBarracks == true && this.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
-            {
-                worker.CollectResource(gameObject.GetComponent<LocalStorageDictionary>());
-            }
-        }
+        return false;
+    }
+    public void AddToStorage(GameObject resource)
+    {
+        localInv.Add(resource);
     }
 }

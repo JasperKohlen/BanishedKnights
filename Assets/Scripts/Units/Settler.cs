@@ -7,7 +7,6 @@ public class Settler : MonoBehaviour
 {
     [SerializeField] private Transform housePrefab;
     [SerializeField] private Transform storagePrefab;
-    [SerializeField] private Transform workerPrefab;
     [SerializeField] private BlueprintSO houseSO;
     [SerializeField] private BlueprintSO storageSO;
 

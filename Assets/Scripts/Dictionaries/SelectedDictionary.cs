@@ -28,7 +28,16 @@ public class SelectedDictionary : MonoBehaviour, IDictionary
             selectedTable.Remove(id);
         }
     }
-
+    public void Deselect(GameObject go)
+    {
+        int id = go.GetInstanceID();
+        if (selectedTable.ContainsKey(id))
+        {
+            Destroy(selectedTable[id].GetComponent<SelectionComponent>());
+            go.GetComponent<HarvestableComponent>().isTarget = false;
+            selectedTable.Remove(id);
+        }
+    }
     public void DeselectAll()
     {
         if (!EventSystem.current.IsPointerOverGameObject())

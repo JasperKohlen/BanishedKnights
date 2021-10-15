@@ -39,36 +39,23 @@ public class StructureBuild : MonoBehaviour
         {
             resources.Add(other.gameObject);
         }
-        if (other.gameObject.tag.Equals("Worker") &&
-            other.gameObject.GetComponent<Worker>().inventory.HoldingResource() &&
-            other.GetComponent<Worker>().state == State.DELIVERING_TO_BUILD)
+    }
+    public void AddToStructure(GameObject resource)
+    {
+        if (resource.name.Contains("Logs"))
         {
-            worker = other.gameObject.GetComponent<Worker>();
-
-            if (worker.inventory.ReturnResource().name.Contains("Logs") && !AllLogsDelivered())
-            {
-                Debug.Log("Logs delivered: ");
-                deliveredObjects.Add(worker.resourceToDeliver.Get());
-                worker.PlaceResourceToBuild();
-                deliveredLogs++;
-            }
-            if (worker.inventory.ReturnResource().name.Contains("Cobbles") && !AllCobblesDelivered())
-            {
-                Debug.Log("Cobbles delivered: ");
-                deliveredObjects.Add(worker.resourceToDeliver.Get());
-                worker.PlaceResourceToBuild();
-                deliveredcobbles++;
-            }
-
-            CheckDeliveredResources();
+            deliveredLogs++;
         }
+        if (resource.name.Contains("Cobbles"))
+        {
+            deliveredcobbles++;
+        }
+
+        deliveredObjects.Add(resource);
+        CheckDeliveredResources();
     }
     void CheckDeliveredResources()
     {
-        //Debug.Log("Logs delivered " + deliveredLogs);
-        //Debug.Log("Logs needed " + logsNeeded);
-        //Debug.Log("cobbles delivered " + deliveredcobbles);
-        //Debug.Log("cobbles needed " + cobblesNeeded);
         if (deliveredLogs >= so.logsNeeded && deliveredcobbles >= so.cobblesNeeded)
         {
             CompleteBuilding();

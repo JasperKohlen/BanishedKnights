@@ -43,11 +43,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 7.75, y: 6.03, z: 5}
+  m_Extents: {x: 7.185, y: 6.03, z: 3.19}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 9.88, y: 3.92, z: 7.87}
+  m_Center: {x: 12.2, y: 4.57, z: 7.34}
   m_TimeToStationary: 0.5
 --- !u!1 &3277952335981381847
 GameObject:
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d353d1b3e7c90224187cb684572466d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSelected: 0
 --- !u!114 &8227666491570000972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 8190872493594342952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.67, y: 5.16, z: 7.02}
-  m_LocalScale: {x: 9.371749, y: 11.13346, z: 9.702278}
+  m_LocalScale: {x: 6.862088, y: 8.152031, z: 7.104105}
   m_Children: []
   m_Father: {fileID: 531159852797634537}
   m_RootOrder: 1
