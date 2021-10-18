@@ -17,14 +17,15 @@ public class DeliverToBuildAction : GoapAction
         addPrecondition("holdingResource", true);
         addPrecondition("structuresToBuild", true);
         addEffect("holdingResource", false);
-        addEffect("collectResources", true);
+        addEffect("deliverToBuild", true);
     }
     public override bool checkProceduralPrecondition(GameObject agent)
     {
         GameObject structToDeliverTo = null;
-
         foreach (var item in structs.GetTable())
         {
+            structToDeliverTo = item.Value;
+
             if (agent.GetComponent<WorkerScript>().inv.HoldingCobbles() && !item.Value.GetComponent<StructureBuild>().AllCobblesDelivered())
             {
                 structToDeliverTo = item.Value;

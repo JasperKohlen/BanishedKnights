@@ -52,19 +52,13 @@ public class GlobalInvManager : MonoBehaviour
     private void GetSoldiersCount()
     {
         List<Soldier> soldiers = FindObjectsOfType<Soldier>().ToList();
-        foreach (var item in soldiers)
-        {
-            soldiersCount++;
-        }
+            soldiersCount = soldiers.Count;
     }
 
     private void GetWorkerCount()
     {
         List<WorkerScript> workers = FindObjectsOfType<WorkerScript>().ToList();
-        foreach (var item in workers)
-        {
-            workersCount++;
-        }
+            workersCount = workers.Count;
     }
 
     private void GetResources()

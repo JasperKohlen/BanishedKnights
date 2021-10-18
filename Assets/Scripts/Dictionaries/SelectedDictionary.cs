@@ -25,15 +25,6 @@ public class SelectedDictionary : MonoBehaviour, IDictionary
         if (selectedTable.ContainsKey(id))
         {
             Destroy(selectedTable[id].GetComponent<SelectionComponent>());
-            selectedTable.Remove(id);
-        }
-    }
-    public void Deselect(GameObject go)
-    {
-        int id = go.GetInstanceID();
-        if (selectedTable.ContainsKey(id))
-        {
-            Destroy(selectedTable[id].GetComponent<SelectionComponent>());
             go.GetComponent<HarvestableComponent>().isTarget = false;
             selectedTable.Remove(id);
         }
@@ -47,6 +38,7 @@ public class SelectedDictionary : MonoBehaviour, IDictionary
                 //Check if object has not been destroyed yet
                 if (pair.Value != null)
                 {
+                    pair.Value.GetComponent<HarvestableComponent>().isTarget = false;
                     Destroy(selectedTable[pair.Key].GetComponent<SelectionComponent>());
                 }
             }

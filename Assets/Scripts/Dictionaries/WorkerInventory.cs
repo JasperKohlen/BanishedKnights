@@ -6,8 +6,11 @@ using UnityEngine;
 public class WorkerInventory : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> inventory = new Dictionary<int, GameObject>();
-    private int amountOfLogs;
-    private int amountOfCobbles;
+    private GameObject resource;
+    private void Start()
+    {
+        resource = null;
+    }
     public void Add(GameObject go)
     {
         int id = go.GetInstanceID();
@@ -15,6 +18,10 @@ public class WorkerInventory : MonoBehaviour, IDictionary
         if (!inventory.ContainsKey(id))
         {
             inventory.Add(id, go);
+        }
+        if (go.tag.Equals("Resource"))
+        {
+            resource = go;
         }
     }
 
@@ -25,36 +32,18 @@ public class WorkerInventory : MonoBehaviour, IDictionary
         {
             inventory.Remove(id);
         }
-    }
-
-    public bool Available()
-    {
-        if (inventory.Count == 0)
+        if (go.tag.Equals("Resource"))
         {
-            return false;
-        }
-        else
-        {
-            return true;
+            resource = null;
         }
     }
-
     public GameObject ReturnResource()
     {
-        GameObject toReturn = new GameObject();
-        foreach (var item in inventory.ToList())
-        {
-            if (item.Value.gameObject.tag.Equals("Resource"))
-            {
-                Debug.Log("Returning: " + item.Value.gameObject.ToString());
-                toReturn = item.Value.gameObject;
-            }
-        }
-        return toReturn;
+        return resource;
     }
     public bool HoldingResource()
     {
-        if (inventory.Any(item => item.Value.CompareTag("Resource")))
+        if (resource != null)
         {
             return true;
         }
@@ -65,25 +54,33 @@ public class WorkerInventory : MonoBehaviour, IDictionary
     }
     public bool HoldingLogs()
     {
-        if (inventory.Any(item => item.Value.GetComponent<LogComponent>()))
+        if (resource != null)
         {
-            return true;
+            if (resource.GetComponent<LogComponent>())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     public bool HoldingCobbles()
     {
-        if (inventory.Any(item => item.Value.GetComponent<CobbleComponent>()))
+        if (resource != null)
         {
-            return true;
+            if (resource.GetComponent<CobbleComponent>())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     public Dictionary<int, GameObject> GetTable()
     {

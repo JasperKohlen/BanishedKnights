@@ -24,24 +24,24 @@ public class HarvestResourceAction : GoapAction
         HarvestableComponent closest = null;
         float closestDist = 0f;
 
-        foreach (var resource in selectedTable.GetTable())
+        foreach (var harvestable in selectedTable.GetTable())
         {
-            if (!resource.Value.GetComponent<HarvestableComponent>().isTarget)
+            if (!harvestable.Value.GetComponent<HarvestableComponent>().isTarget)
             {
                 if (closest == null)
                 {
                     // first one, so choose it for now
-                    closest = resource.Value.GetComponent<HarvestableComponent>();
-                    closestDist = (resource.Value.gameObject.transform.position - agent.transform.position).magnitude;
+                    closest = harvestable.Value.GetComponent<HarvestableComponent>();
+                    closestDist = (harvestable.Value.gameObject.transform.position - agent.transform.position).magnitude;
                 }
                 else
                 {
                     // is this one closer than the last?
-                    float dist = (resource.Value.gameObject.transform.position - agent.transform.position).magnitude;
+                    float dist = (harvestable.Value.gameObject.transform.position - agent.transform.position).magnitude;
                     if (dist < closestDist)
                     {
-                        // we found a closer one, use it
-                        closest = resource.Value.GetComponent<HarvestableComponent>();
+                        //found a closer one, choose it
+                        closest = harvestable.Value.GetComponent<HarvestableComponent>();
                         closestDist = dist;
                     }
                 }
@@ -70,15 +70,14 @@ public class HarvestResourceAction : GoapAction
             ResourceDropper harvestable = targetHarvest.GetComponent<ResourceDropper>();
             GameObject resource = Instantiate(targetHarvest.resource);
 
+            //Deselect from selected resources
+            selectedTable.Remove(targetHarvest.gameObject);
             //Destroy harvestable
             harvestable.Break(targetHarvest);
 
             //Carry resource ingame
             worker.CarryResource(resource);
             isHarvested = true;
-
-            //Deselect from selected resources
-            selectedTable.Deselect(targetHarvest.gameObject);
 
             return true;
         }

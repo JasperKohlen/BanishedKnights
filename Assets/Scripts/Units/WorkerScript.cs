@@ -8,7 +8,14 @@ public class WorkerScript : Labourer
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
-        goal.Add(new KeyValuePair<string, object>("collectResources", true));
+        if (structsToBuild.GetTable().Count > 0)
+        {
+            goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
+        }
+        else
+        {
+            goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
+        }
 
         return goal;
     }
@@ -23,11 +30,6 @@ public class WorkerScript : Labourer
 
         //Place in worker inventory 
         inv.Add(resource);
-    }
-
-    public GameObject ReturnResourceInHands()
-    {
-        return inv.ReturnResource();
     }
 
     public void DropResource(GameObject resource)

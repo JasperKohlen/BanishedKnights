@@ -19,7 +19,7 @@ public class DeliverToStorageAction : GoapAction
         addPrecondition("holdingResource", true);
         addPrecondition("structuresToBuild", false);
         addEffect("holdingResource", false);
-        addEffect("collectResources", true);
+        addEffect("deliverToStorage", true);
     }
 
     public override bool checkProceduralPrecondition(GameObject agent)
@@ -47,8 +47,8 @@ public class DeliverToStorageAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        targetStorage.AddToStorage(agent.GetComponent<WorkerScript>().ReturnResourceInHands());
-        agent.GetComponent<WorkerScript>().DropResource(agent.GetComponent<WorkerScript>().ReturnResourceInHands());
+        targetStorage.AddToStorage(agent.GetComponent<WorkerInventory>().ReturnResource());
+        agent.GetComponent<WorkerScript>().DropResource(agent.GetComponent<WorkerInventory>().ReturnResource());
         delivered = true;
         return true;
     }

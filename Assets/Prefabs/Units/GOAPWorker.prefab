@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 7048865917446222962}
   - component: {fileID: 6878634005094406732}
   - component: {fileID: 6202548810243192546}
-  - component: {fileID: 7749772982565360351}
+  - component: {fileID: 6204503743777814833}
   - component: {fileID: 5748321604570088814}
+  - component: {fileID: 7749772982565360351}
   - component: {fileID: 5030081017821065709}
   m_Layer: 0
   m_Name: GOAPWorker
@@ -95,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd5eaeb0cd685345940c8e54f74e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  structsToBuild: {fileID: 0}
   inv: {fileID: 0}
 --- !u!114 &6878634005094406732
 MonoBehaviour:
@@ -120,9 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef74230f7373c9f438c7bfe1f95f8832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 1
+  cost: 2
   target: {fileID: 0}
---- !u!114 &7749772982565360351
+--- !u!114 &6204503743777814833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +133,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5030081017821065708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa4dee26fe7e7184585d84175e9d38da, type: 3}
+  m_Script: {fileID: 11500000, guid: f948956242c20194d817d0de1329a75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 3
+  cost: 1
   target: {fileID: 0}
 --- !u!114 &5748321604570088814
 MonoBehaviour:
@@ -148,7 +150,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01983310eb102a4ab7a6de4e4832912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 2
+  cost: 4
+  target: {fileID: 0}
+--- !u!114 &7749772982565360351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030081017821065708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4dee26fe7e7184585d84175e9d38da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 4
   target: {fileID: 0}
 --- !u!195 &5030081017821065709
 NavMeshAgent:

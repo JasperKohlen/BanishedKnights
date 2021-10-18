@@ -42,11 +42,11 @@ public class StructureBuild : MonoBehaviour
     }
     public void AddToStructure(GameObject resource)
     {
-        if (resource.name.Contains("Logs"))
+        if (resource.GetComponent<LogComponent>())
         {
             deliveredLogs++;
         }
-        if (resource.name.Contains("Cobbles"))
+        if (resource.GetComponent<CobbleComponent>())
         {
             deliveredcobbles++;
         }

@@ -52,7 +52,6 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
     }
     public int GetLogsCount()
     {
-        Debug.Log(logs + " asoka");
         return logs;
     }
     public int GetCobblesCount()
@@ -62,7 +61,7 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
 
     public GameObject ReturnResource(string neededResource)
     {
-        GameObject toReturn = new GameObject();
+        GameObject toReturn = null;
         foreach (var item in resourcesInLocalStorage)
         {
             if (item.Value != null)

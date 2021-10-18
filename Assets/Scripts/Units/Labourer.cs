@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public abstract class Labourer : MonoBehaviour, IGoap
 {
     private SelectedDictionary selected;
-    private ToBuildDictionary structsToBuild;
+    [HideInInspector] public ToBuildDictionary structsToBuild;
     [HideInInspector] public WorkerInventory inv;
     private NavMeshAgent agent;
 
@@ -36,8 +36,6 @@ public abstract class Labourer : MonoBehaviour, IGoap
 
         worldData.Add(new KeyValuePair<string, object>("resourcesSelected", selected.GetTable().Count > 0));
         worldData.Add(new KeyValuePair<string, object>("structuresToBuild", structsToBuild.GetTable().Count > 0));
-        worldData.Add(new KeyValuePair<string, object>("hasLogs", inv.HoldingLogs()));
-        worldData.Add(new KeyValuePair<string, object>("hasCobbles", inv.HoldingCobbles()));
         worldData.Add(new KeyValuePair<string, object>("holdingResource", inv.HoldingResource()));
 
         return worldData;
