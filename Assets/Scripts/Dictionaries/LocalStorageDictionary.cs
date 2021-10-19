@@ -75,6 +75,7 @@ public class LocalStorageDictionary : MonoBehaviour, IDictionary
         }
         return toReturn;
     }
+
     public Dictionary<int, GameObject> GetTable()
     {
         return resourcesInLocalStorage;

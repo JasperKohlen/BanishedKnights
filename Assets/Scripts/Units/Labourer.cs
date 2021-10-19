@@ -9,12 +9,14 @@ public abstract class Labourer : MonoBehaviour, IGoap
     private SelectedDictionary selected;
     [HideInInspector] public ToBuildDictionary structsToBuild;
     [HideInInspector] public WorkerInventory inv;
+    [HideInInspector] public StorageBuildingsDictionary storages;
     private NavMeshAgent agent;
 
     private void Start()
     {
         structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
         selected = EventSystem.current.GetComponent<SelectedDictionary>();
+        storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
         agent = GetComponent<NavMeshAgent>();
         inv = GetComponent<WorkerInventory>();
 

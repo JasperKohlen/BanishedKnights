@@ -10,9 +10,7 @@ public class StructureBuild : MonoBehaviour
     private List<GameObject> deliveredObjects = new List<GameObject>();
 
     [Header("Scriptable Object")]
-    [SerializeField] private BlueprintSO so;
-
-    private Worker worker;
+    public BlueprintSO so;
 
     private int deliveredLogs;
     private int deliveredcobbles;

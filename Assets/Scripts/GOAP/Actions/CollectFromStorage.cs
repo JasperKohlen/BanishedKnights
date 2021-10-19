@@ -16,24 +16,17 @@ public class CollectFromStorage : GoapAction
     }
     public CollectFromStorage()
     {
-        //Precondition: Storage that contains required item
+        //addPrecondition: Storage that contains required item
         addPrecondition("structuresToBuild", true);
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
     }
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        List<GameObject> sortedStorages = new List<GameObject>();
-        foreach (var item in storages.GetTable())
-        {
-            if (!item.Value.GetComponent<StorageController>().IsFull())
-            {
-                sortedStorages.Add(item.Value);
-            }
-        }
-        sortedStorages = sortedStorages.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
-        targetStorage = sortedStorages.First().GetComponent<StorageController>();
-        target = targetStorage.gameObject;
+        agent.GetComponent<WorkerScript>().FindStorageToCollectFrom(out target);
+        if (target == null) return false;
+
+        targetStorage = target.GetComponent<StorageController>();
 
         return targetStorage != null;
     }
@@ -48,8 +41,8 @@ public class CollectFromStorage : GoapAction
         WorkerScript worker = agent.GetComponent<WorkerScript>();
         LocalStorageDictionary storageInv = targetStorage.gameObject.GetComponent<LocalStorageDictionary>();
         //Improve this line obviously
-        GameObject resource = Instantiate(storageInv.ReturnResource("Logs"));
-        storageInv.Remove(storageInv.ReturnResource("Logs"));
+        GameObject resource = Instantiate(storageInv.ReturnResource(worker.GetNeededResource()));
+        storageInv.Remove(storageInv.ReturnResource(worker.GetNeededResource()));
 
         //Carry resource ingame
         worker.CarryResource(resource);

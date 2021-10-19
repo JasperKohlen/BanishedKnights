@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class WorkerScript : Labourer
 {
+    [HideInInspector] private string neededResource;
+
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
@@ -40,4 +44,52 @@ public class WorkerScript : Labourer
 
         inv.Remove(resource);
     }
+
+    public bool FindStorageToCollectFrom(out GameObject target)
+    {
+        foreach (var storage in storages.GetTable())
+        {
+            foreach (var toBuild in structsToBuild.GetTable())
+            {
+                //If a buildable requires logs and a storage house has atleast one log
+                if (!toBuild.Value.GetComponent<StructureBuild>().AllLogsDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
+                {
+                    neededResource = "Logs";
+                    storage.Value.GetComponent<StorageController>().AddToPickups(neededResource);
+
+                    if (storage.Value.GetComponent<StorageController>().NoMoreNeededOfResource(neededResource))
+                    {
+                        target = null;
+                        return false;
+                    }
+
+                    target = storage.Value.transform.gameObject;
+                    return true;
+                }
+                //If a buildable requires cobbles and a storage house has atleast one cobble
+                if (!toBuild.Value.GetComponent<StructureBuild>().AllCobblesDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetCobblesCount() > 0)
+                {
+                    neededResource = "Cobbles";
+                    storage.Value.GetComponent<StorageController>().AddToPickups(neededResource);
+
+                    if (storage.Value.GetComponent<StorageController>().NoMoreNeededOfResource(neededResource))
+                    {
+                        target = null;
+                        return false;
+                    }
+
+                    target = storage.Value.transform.gameObject;
+                    return true;
+                }
+            }
+        }
+        target = null;
+        return false;
+    }
+
+    public string GetNeededResource()
+    {
+        return neededResource;
+    }
+
 }
