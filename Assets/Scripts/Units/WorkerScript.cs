@@ -6,27 +6,27 @@ using UnityEngine.EventSystems;
 
 public class WorkerScript : Labourer
 {
-    [HideInInspector] private string neededResource;
+    private string neededResource;
+    private GameObject resourceToHarvest;
+    [HideInInspector] public GameObject structToDeliverTo;
 
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
-
-        if (structsToBuild.GetTable().Count > 0)
-        {
-            goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
-        }
-        else
+        if (structsToBuild.GetTable().Count <= 0)
         {
             goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
         }
-
+        else
+        {
+            goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
+        }
         return goal;
     }
 
     public void CarryResource(GameObject resource)
     {
-        //Carry resource ingame
+        //Carry resource
         resource.GetComponent<Rigidbody>().useGravity = false;
         resource.GetComponent<Rigidbody>().isKinematic = true;
         resource.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 3, this.gameObject.transform.position.z);
@@ -92,4 +92,13 @@ public class WorkerScript : Labourer
         return neededResource;
     }
 
+    public GameObject GetResourceToHarvest()
+    {
+        return resourceToHarvest;
+    }
+
+    public void SetResourceToHarvest(HarvestableComponent harvestable)
+    {
+        resourceToHarvest = harvestable.resource;
+    }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7048865917446222962}
   - component: {fileID: 6878634005094406732}
   - component: {fileID: 6202548810243192546}
+  - component: {fileID: 6652767715218797963}
   - component: {fileID: 6204503743777814833}
   - component: {fileID: 5748321604570088814}
   - component: {fileID: 7749772982565360351}
@@ -96,8 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd5eaeb0cd685345940c8e54f74e115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: {fileID: 0}
   structsToBuild: {fileID: 0}
   inv: {fileID: 0}
+  storages: {fileID: 0}
 --- !u!114 &6878634005094406732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +126,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 2
+  target: {fileID: 0}
+--- !u!114 &6652767715218797963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030081017821065708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4e04a2cbdd6354b97d889520752acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
   target: {fileID: 0}
 --- !u!114 &6204503743777814833
 MonoBehaviour:
@@ -164,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4dee26fe7e7184585d84175e9d38da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 4
+  cost: 6
   target: {fileID: 0}
 --- !u!195 &5030081017821065709
 NavMeshAgent:

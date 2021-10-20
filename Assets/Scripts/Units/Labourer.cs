@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public abstract class Labourer : MonoBehaviour, IGoap
 {
-    private SelectedDictionary selected;
+    [HideInInspector] public SelectedDictionary selected;
     [HideInInspector] public ToBuildDictionary structsToBuild;
     [HideInInspector] public WorkerInventory inv;
     [HideInInspector] public StorageBuildingsDictionary storages;

@@ -8,6 +8,10 @@ public class SelectedDictionary : MonoBehaviour, IDictionary
 {
     private Dictionary<int, GameObject> selectedTable = new Dictionary<int, GameObject>();
 
+    private void Start()
+    {
+        selectedTable.Clear();
+    }
     public void Add(GameObject go)
     {
         int id = go.GetInstanceID();

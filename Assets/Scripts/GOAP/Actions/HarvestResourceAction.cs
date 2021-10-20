@@ -8,14 +8,16 @@ public class HarvestResourceAction : GoapAction
 {
     private bool isHarvested = false;
     private SelectedDictionary selectedTable;
+    private ToBuildDictionary structsToBuild;
     private HarvestableComponent targetHarvest;
     private void Start()
     {
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
+        structsToBuild = EventSystem.current.GetComponent<ToBuildDictionary>();
     }
     public HarvestResourceAction()
     {
-        addPrecondition("resourcesSelected", true);
+        addPrecondition("structuresToBuild", true);
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
     }
@@ -23,36 +25,76 @@ public class HarvestResourceAction : GoapAction
     {
         HarvestableComponent closest = null;
         float closestDist = 0f;
-
-        foreach (var harvestable in selectedTable.GetTable())
+        IEnumerable<HarvestableComponent> harvestables = null;
+        if (structsToBuild.GetTable().Count > 0)
         {
-            if (!harvestable.Value.GetComponent<HarvestableComponent>().isTarget)
+            List<GameObject> sortedStructs = new List<GameObject>();
+            foreach (var item in structsToBuild.GetTable())
             {
-                if (closest == null)
+                sortedStructs.Add(item.Value);
+            }
+            sortedStructs = sortedStructs.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+            agent.GetComponent<WorkerScript>().structToDeliverTo = sortedStructs.First();
+        }
+        else
+        {
+            agent.GetComponent<WorkerScript>().structToDeliverTo = null;
+        }
+
+        if (agent.GetComponent<WorkerScript>().structToDeliverTo == null) return false;
+        if (structsToBuild.GetTable().Count <= 0) return false;
+
+        //Algorithm to find the nearest needed resource
+        #region algorithm
+        if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllLogsOrdered()
+            && agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllCobblesOrdered()) return false;
+
+        if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllLogsOrdered() == false)
+        {
+            harvestables = FindObjectsOfType<HarvestableComponent>().Where(s => s.resource.GetComponent<LogComponent>());
+            agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().OrderLogs();
+        }
+        else if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllCobblesOrdered() == false)
+        {
+            harvestables = FindObjectsOfType<HarvestableComponent>().Where(s => s.resource.GetComponent<CobbleComponent>());
+            agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().OrderCobbles();
+        }
+        if (harvestables != null)
+        {
+            foreach (var harvestable in harvestables)
+            {
+                if (!harvestable.isTarget)
                 {
-                    // first one, so choose it for now
-                    closest = harvestable.Value.GetComponent<HarvestableComponent>();
-                    closestDist = (harvestable.Value.gameObject.transform.position - agent.transform.position).magnitude;
-                }
-                else
-                {
-                    // is this one closer than the last?
-                    float dist = (harvestable.Value.gameObject.transform.position - agent.transform.position).magnitude;
-                    if (dist < closestDist)
+                    if (closest == null)
                     {
-                        //found a closer one, choose it
-                        closest = harvestable.Value.GetComponent<HarvestableComponent>();
-                        closestDist = dist;
+                        // first one, so choose it for now
+                        closest = harvestable;
+                        closestDist = (harvestable.gameObject.transform.position - agent.transform.position).magnitude;
+                    }
+                    else
+                    {
+                        // is this one closer than the last?
+                        float dist = (harvestable.gameObject.transform.position - agent.transform.position).magnitude;
+                        if (dist < closestDist)
+                        {
+                            //found a closer one, choose it
+                            closest = harvestable.GetComponent<HarvestableComponent>();
+                            closestDist = dist;
+                        }
                     }
                 }
             }
         }
+        #endregion algorithm end
 
         if (closest == null) return false;
 
         targetHarvest = closest;
         targetHarvest.isTarget = true;
         target = targetHarvest.gameObject;
+        targetHarvest.gameObject.AddComponent<SelectionComponent>();
+
+        agent.GetComponent<WorkerScript>().SetResourceToHarvest(targetHarvest);
 
         return closest != null;
     }

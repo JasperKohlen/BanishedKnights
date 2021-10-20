@@ -6,18 +6,12 @@ using UnityEngine.EventSystems;
 
 public class CollectFromStorage : GoapAction
 {
-    private StorageBuildingsDictionary storages;
     private bool isCollected = false;
     private StorageController targetStorage;
-    private GameObject neededResource;
-    private void Start()
-    {
-        storages = EventSystem.current.GetComponent<StorageBuildingsDictionary>();
-    }
+
     public CollectFromStorage()
     {
-        //addPrecondition: Storage that contains required item
-        addPrecondition("structuresToBuild", true);
+        //addPrecondition("structuresToBuild", true); condition should be there is the needed resource available in any storage
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
     }
@@ -40,7 +34,8 @@ public class CollectFromStorage : GoapAction
     {
         WorkerScript worker = agent.GetComponent<WorkerScript>();
         LocalStorageDictionary storageInv = targetStorage.gameObject.GetComponent<LocalStorageDictionary>();
-        //Improve this line obviously
+        
+        //Collect needed resource
         GameObject resource = Instantiate(storageInv.ReturnResource(worker.GetNeededResource()));
         storageInv.Remove(storageInv.ReturnResource(worker.GetNeededResource()));
 

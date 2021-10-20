@@ -15,6 +15,9 @@ public class StructureBuild : MonoBehaviour
     private int deliveredLogs;
     private int deliveredcobbles;
 
+    [HideInInspector] private int toDeliverLogs;
+    [HideInInspector] private int toDeliverCobbles;
+
     private ToBuildDictionary structsToBuild;
     private SelectedDictionary resources;
 
@@ -40,26 +43,22 @@ public class StructureBuild : MonoBehaviour
     }
     public void AddToStructure(GameObject resource)
     {
-        if (resource.GetComponent<LogComponent>())
+        if (resource.GetComponent<LogComponent>() && !AllLogsDelivered())
         {
             deliveredLogs++;
         }
-        if (resource.GetComponent<CobbleComponent>())
+        if (resource.GetComponent<CobbleComponent>() && !AllCobblesDelivered())
         {
             deliveredcobbles++;
         }
 
         deliveredObjects.Add(resource);
-        CheckDeliveredResources();
-    }
-    void CheckDeliveredResources()
-    {
-        if (deliveredLogs >= so.logsNeeded && deliveredcobbles >= so.cobblesNeeded)
+
+        if (AllLogsDelivered() && AllCobblesDelivered())
         {
             CompleteBuilding();
         }
     }
-
     public bool AllLogsDelivered()
     {
         if (deliveredLogs >= so.logsNeeded)
@@ -84,10 +83,35 @@ public class StructureBuild : MonoBehaviour
         }
     }
 
+    public bool AllLogsOrdered()
+    {
+        if (toDeliverLogs >= so.logsNeeded) return true;
+        return false;
+    }
+
+    public bool AllCobblesOrdered()
+    {
+        if (toDeliverCobbles >= so.cobblesNeeded) return true;
+        return false;
+    }
+
+    public void OrderLogs()
+    {
+        toDeliverLogs++;
+    }
+
+    public void OrderCobbles()
+    {
+        toDeliverCobbles++;
+    }
+
     void CompleteBuilding()
     {
         ConsumeResources();
         structsToBuild.Remove(gameObject);
+
+        toDeliverCobbles = 0;
+        toDeliverLogs = 0;
 
         Instantiate(so.Resulting_Building, position_To_Place, rotation_To_Place);
         Destroy(gameObject);

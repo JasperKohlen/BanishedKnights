@@ -96,18 +96,6 @@ public class HarvestSelection : MonoBehaviour
         {
             selectedTable.DeselectAll();
         }
-        else
-        {
-            //TODO: small bug when multiple are selecting and you then try to only select 1 tree who was already selected
-            //The tree you click on doesnt get selected until you click again afterwards
-            selectedTable.DeselectAll();
-            selectedTable.Add(hit.transform.gameObject);
-        }
-        //When you dont click on a removable object 
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            selectedTable.DeselectAll();
-        }
     }
 
     private void DrawSelectionBox()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,22 +22,13 @@ public class DeliverToBuildAction : GoapAction
     }
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        GameObject structToDeliverTo = null;
-        foreach (var item in structs.GetTable())
-        {
-            structToDeliverTo = item.Value;
+        GameObject structToDeliverTo;
+        if (agent.GetComponent<WorkerScript>().structToDeliverTo == null) return false;
 
-            if (agent.GetComponent<WorkerScript>().inv.HoldingCobbles() && !item.Value.GetComponent<StructureBuild>().AllCobblesDelivered())
-            {
-                structToDeliverTo = item.Value;
-                break;
-            }
-            if (agent.GetComponent<WorkerScript>().inv.HoldingLogs() && !item.Value.GetComponent<StructureBuild>().AllLogsDelivered())
-            {
-                structToDeliverTo = item.Value;
-                break;
-            }
-        }
+        structToDeliverTo = agent.GetComponent<WorkerScript>().structToDeliverTo;
+
+        if (structToDeliverTo == null) return false;
+
         targetStruct = structToDeliverTo;
         target = targetStruct;
 
@@ -51,7 +43,7 @@ public class DeliverToBuildAction : GoapAction
     public override bool perform(GameObject agent)
     {
         WorkerScript worker = agent.GetComponent<WorkerScript>();
-        targetStruct.transform.GetComponent<StructureBuild>().AddToStructure(worker.inv.ReturnResource());
+        targetStruct.GetComponent<StructureBuild>().AddToStructure(worker.inv.ReturnResource());
         worker.DropResource(worker.inv.ReturnResource());
         delivered = true;
         return true;

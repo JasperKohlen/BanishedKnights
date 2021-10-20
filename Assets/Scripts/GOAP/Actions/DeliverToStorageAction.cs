@@ -18,6 +18,7 @@ public class DeliverToStorageAction : GoapAction
     {
         addPrecondition("holdingResource", true);
         addPrecondition("structuresToBuild", false);
+        addPrecondition("toStorage", true);
         addEffect("holdingResource", false);
         addEffect("deliverToStorage", true);
     }
