@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 5748321604570088814}
   - component: {fileID: 7749772982565360351}
   - component: {fileID: 5030081017821065709}
+  - component: {fileID: -140808400795139085}
   m_Layer: 0
   m_Name: GOAPWorker
   m_TagString: Worker
@@ -101,6 +102,7 @@ MonoBehaviour:
   structsToBuild: {fileID: 0}
   inv: {fileID: 0}
   storages: {fileID: 0}
+  structToDeliverTo: {fileID: 0}
 --- !u!114 &6878634005094406732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f948956242c20194d817d0de1329a75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 1
+  cost: 2
   target: {fileID: 0}
 --- !u!114 &5748321604570088814
 MonoBehaviour:
@@ -205,6 +207,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-140808400795139085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030081017821065708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53db3ba58e414b64987d4cefe00d7a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 6
+  target: {fileID: 0}
 --- !u!1 &5030081018737070903
 GameObject:
   m_ObjectHideFlags: 0

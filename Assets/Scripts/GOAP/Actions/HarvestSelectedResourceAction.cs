@@ -18,7 +18,6 @@ public class HarvestSelectedResourceAction : GoapAction
         addPrecondition("resourcesSelected", true);
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
-        //CHECK
         addEffect("toStorage", true);
     }
     public override bool checkProceduralPrecondition(GameObject agent)

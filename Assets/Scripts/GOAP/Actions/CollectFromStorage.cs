@@ -11,12 +11,15 @@ public class CollectFromStorage : GoapAction
 
     public CollectFromStorage()
     {
-        //addPrecondition("structuresToBuild", true); condition should be there is the needed resource available in any storage
+        addPrecondition("unitsOrdered", true);
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
+        addEffect("toBarracks", true);
     }
     public override bool checkProceduralPrecondition(GameObject agent)
     {
+        if (agent.GetComponent<WorkerScript>().OrdersAvailable() == false) return false;
+
         agent.GetComponent<WorkerScript>().FindStorageToCollectFrom(out target);
         if (target == null) return false;
 
@@ -34,10 +37,11 @@ public class CollectFromStorage : GoapAction
     {
         WorkerScript worker = agent.GetComponent<WorkerScript>();
         LocalStorageDictionary storageInv = targetStorage.gameObject.GetComponent<LocalStorageDictionary>();
+        if (storageInv.GetLogsCount() <= 0) return false;
         
         //Collect needed resource
-        GameObject resource = Instantiate(storageInv.ReturnResource(worker.GetNeededResource()));
-        storageInv.Remove(storageInv.ReturnResource(worker.GetNeededResource()));
+        GameObject resource = Instantiate(storageInv.ReturnResource("Logs"));
+        storageInv.Remove(storageInv.ReturnResource("Logs"));
 
         //Carry resource ingame
         worker.CarryResource(resource);

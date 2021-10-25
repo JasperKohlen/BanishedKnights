@@ -18,34 +18,18 @@ public class BarracksController : MonoBehaviour
         barracksInv = GetComponent<LocalStorageDictionary>();
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other != null)
-        {
-            worker = other.GetComponent<Worker>();
-
-            if (other.gameObject.tag.Equals("Worker") && other.GetComponent<Worker>().state == State.DELIVERING_TO_BARRACKS)
-            {
-                worker.DropInStorage(gameObject.GetComponent<LocalStorageDictionary>());
-                CompareInventoryAndOrder(other.gameObject);
-            }
-        }
-    }
-
     public void MakeOrder(GameObject unit)
     {
         orders.Add(unit);
         Debug.Log("Ordered a " + unit + " | " + "Logs needed: " + unit.GetComponent<Soldier>().statsSO.logsRequired);
     }
 
-    private void CompareInventoryAndOrder(GameObject worker)
+    public void CheckOrderAndTrain(GameObject worker)
     {
-        foreach (var item in orders.GetTable())
+        //if first item in orders has required logs
+        if (ItemsAvailableInStorage(orders.GetTable().First().Value.GetComponent<Soldier>().statsSO.logsRequired) && orders.GetTable().First().Value.GetComponent<Controllable>())
         {
-            if (ItemsAvailableInStorage(item.Value.GetComponent<Soldier>().statsSO.logsRequired) && item.Value.GetComponent<Controllable>())
-            {
-                TrainSoldier(item.Value, worker);
-            }
+            TrainSoldier(orders.GetTable().First().Value, worker);
         }
     }
 

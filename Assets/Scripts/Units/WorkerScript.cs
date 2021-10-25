@@ -6,19 +6,26 @@ using UnityEngine.EventSystems;
 
 public class WorkerScript : Labourer
 {
-    private string neededResource;
     private GameObject resourceToHarvest;
     [HideInInspector] public GameObject structToDeliverTo;
+    [HideInInspector] public GameObject barracksToDeliverTo;
 
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
-        if (structsToBuild.GetTable().Count <= 0)
+        if (selected.GetTable().Count > 0)
         {
+            goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
         }
-        else
+        if (OrdersAvailable() && FindObjectsOfType<LocalStorageDictionary>().Any(s => s.GetLogsCount() > 0))
         {
+            goal.Clear();
+            goal.Add(new KeyValuePair<string, object>("deliverToBarracks", true));
+        }
+        if (structsToBuild.GetTable().Count > 0)
+        {
+            goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
         }
         return goal;
@@ -47,54 +54,32 @@ public class WorkerScript : Labourer
 
     public bool FindStorageToCollectFrom(out GameObject target)
     {
+        barracksToDeliverTo = FindBarracksToDeliverTo();
         foreach (var storage in storages.GetTable())
         {
-            foreach (var toBuild in structsToBuild.GetTable())
+            if (storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
             {
-                //If a buildable requires logs and a storage house has atleast one log
-                if (!toBuild.Value.GetComponent<StructureBuild>().AllLogsDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0)
-                {
-                    neededResource = "Logs";
-                    storage.Value.GetComponent<StorageController>().AddToPickups(neededResource);
-
-                    if (storage.Value.GetComponent<StorageController>().NoMoreNeededOfResource(neededResource))
-                    {
-                        target = null;
-                        return false;
-                    }
-
-                    target = storage.Value.transform.gameObject;
-                    return true;
-                }
-                //If a buildable requires cobbles and a storage house has atleast one cobble
-                if (!toBuild.Value.GetComponent<StructureBuild>().AllCobblesDelivered() && storage.Value.GetComponent<LocalStorageDictionary>().GetCobblesCount() > 0)
-                {
-                    neededResource = "Cobbles";
-                    storage.Value.GetComponent<StorageController>().AddToPickups(neededResource);
-
-                    if (storage.Value.GetComponent<StorageController>().NoMoreNeededOfResource(neededResource))
-                    {
-                        target = null;
-                        return false;
-                    }
-
-                    target = storage.Value.transform.gameObject;
-                    return true;
-                }
+                target = storage.Value.transform.gameObject;
+                return true;
             }
         }
         target = null;
         return false;
     }
 
-    public string GetNeededResource()
+    public GameObject FindBarracksToDeliverTo()
     {
-        return neededResource;
-    }
+        List<GameObject> barracksWithOrders = new List<GameObject>();
+        foreach (var order in FindObjectsOfType<OrderDictionary>())
+        {
+            if (order.Available())
+            {
+                barracksWithOrders.Add(order.gameObject);
+            }
+        }
 
-    public GameObject GetResourceToHarvest()
-    {
-        return resourceToHarvest;
+        barracksWithOrders = barracksWithOrders.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+        return barracksWithOrders.First();
     }
 
     public void SetResourceToHarvest(HarvestableComponent harvestable)

@@ -39,6 +39,7 @@ public abstract class Labourer : MonoBehaviour, IGoap
         worldData.Add(new KeyValuePair<string, object>("resourcesSelected", selected.GetTable().Count > 0));
         worldData.Add(new KeyValuePair<string, object>("structuresToBuild", structsToBuild.GetTable().Count > 0));
         worldData.Add(new KeyValuePair<string, object>("holdingResource", inv.HoldingResource()));
+        worldData.Add(new KeyValuePair<string, object>("unitsOrdered", OrdersAvailable()));
 
         return worldData;
     }
@@ -70,5 +71,20 @@ public abstract class Labourer : MonoBehaviour, IGoap
     public void planFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
     {
         Debug.Log("<color=green>Plan found</color> " + GoapAgent.prettyPrint(actions));
+    }
+    public bool OrdersAvailable()
+    {
+        if (FindObjectsOfType<OrderDictionary>() != null)
+        {
+
+            foreach (var order in FindObjectsOfType<OrderDictionary>())
+            {
+                if (order.Available())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -7,12 +7,7 @@ using UnityEngine.EventSystems;
 public class DeliverToBuildAction : GoapAction
 {
     private bool delivered;
-    private ToBuildDictionary structs;
     private GameObject targetStruct;
-    private void Start()
-    {
-        structs = EventSystem.current.GetComponent<ToBuildDictionary>();
-    }
     public DeliverToBuildAction()
     {
         addPrecondition("holdingResource", true);
