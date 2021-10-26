@@ -7,12 +7,14 @@ using UnityEngine.EventSystems;
 public class WorkerScript : Labourer
 {
     private GameObject resourceToHarvest;
-    [HideInInspector] public GameObject structToDeliverTo;
-    [HideInInspector] public GameObject barracksToDeliverTo;
+    [HideInInspector] public GameObject structToDeliverTo = null;
+    [HideInInspector] public GameObject barracksToDeliverTo = null;
 
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
+        goal.Add(new KeyValuePair<string, object>("idle", true));
+
         if (selected.GetTable().Count > 0)
         {
             goal.Clear();

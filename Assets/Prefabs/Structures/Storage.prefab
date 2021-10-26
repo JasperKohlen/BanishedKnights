@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 599125867826060326}
   - component: {fileID: 2943731654676084033}
   - component: {fileID: 8227666491570000972}
+  - component: {fileID: 4571884014734840596}
   - component: {fileID: 6627875504096308027}
   m_Layer: 0
   m_Name: rpgpp_lt_building_03
@@ -172,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d353d1b3e7c90224187cb684572466d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
 --- !u!114 &8227666491570000972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +183,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23f35f07a77274647809c4f9a5450281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4571884014734840596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277952335981381847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2551f684f80e0a74c9225e838a6c6ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &6627875504096308027

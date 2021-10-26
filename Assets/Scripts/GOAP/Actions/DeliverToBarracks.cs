@@ -17,6 +17,10 @@ public class DeliverToBarracks : GoapAction
     public override bool checkProceduralPrecondition(GameObject agent)
     {
         targetStruct = agent.GetComponent<WorkerScript>().barracksToDeliverTo;
+        if (targetStruct != null)
+        {
+            if (targetStruct.GetComponent<OrderedLogs>().GetPickedUpLogs() >= targetStruct.GetComponent<OrderDictionary>().GetTable().First().Value.GetComponent<Soldier>().statsSO.logsRequired) return false;
+        }
         target = targetStruct;
 
         return targetStruct != null;
@@ -32,11 +36,12 @@ public class DeliverToBarracks : GoapAction
         if (!agent.GetComponent<WorkerScript>().OrdersAvailable())
         { 
             reset();
-            addPrecondition("toStorage", true);
             return false;
         }
 
+        targetStruct.GetComponent<OrderedLogs>().IncreasePickedUpLogs();
         targetStruct.GetComponent<LocalStorageDictionary>().Add(agent.GetComponent<WorkerInventory>().ReturnResource());
+
         agent.GetComponent<WorkerScript>().DropResource(agent.GetComponent<WorkerInventory>().ReturnResource());
         delivered = true;
         targetStruct.GetComponent<BarracksController>().CheckOrderAndTrain(agent);
