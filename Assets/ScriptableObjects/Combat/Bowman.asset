@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ff041f0180f794e8b519b1a14a5b24, type: 3}
   m_Name: Bowman
   m_EditorClassIdentifier: 
+  id: 1854
   logsRequired: 3
   unitType: {fileID: 1501381058653441901, guid: 2a978670bf541984fb7487d6f4699527, type: 3}
-  aggroRange: 30
-  atkRange: 25
+  aggroRange: 40
+  atkRange: 29
   attackDmg: 10
   attackDelay: 4
   maxHealth: 20

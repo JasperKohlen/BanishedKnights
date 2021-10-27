@@ -10,12 +10,15 @@ public class BarracksController : MonoBehaviour
     [SerializeField] private GameObject logs;
 
     private Worker worker;
+    private int orderedLogs = 0;
     private OrderDictionary orders;
     private LocalStorageDictionary barracksInv;
+    [SerializeField] private UIBarracksManager ui;
     private void Start()
     {
         orders = GetComponent<OrderDictionary>();
         barracksInv = GetComponent<LocalStorageDictionary>();
+        ui = FindObjectOfType<UIBarracksManager>();
     }
 
     public void MakeOrder(GameObject unit)
@@ -26,14 +29,29 @@ public class BarracksController : MonoBehaviour
 
     public void CheckOrderAndTrain(GameObject worker)
     {
+        ui.UpdateBarracksMenu(orders);
         //if first item in orders has required logs
-        if (ItemsAvailableInStorage(orders.GetTable().First().Value.GetComponent<Soldier>().statsSO.logsRequired) && orders.GetTable().First().Value.GetComponent<Controllable>())
+        if (ItemsAvailableInBarracks(orders.GetTable().First().Value.GetComponent<Soldier>().statsSO.logsRequired) && orders.GetTable().First().Value.GetComponent<Controllable>())
         {
             TrainSoldier(orders.GetTable().First().Value, worker);
         }
     }
 
-    private bool ItemsAvailableInStorage(int logs)
+    public void OrderLogs()
+    {
+        orderedLogs++;
+    }
+
+    public bool AllLogsOrdered()
+    {
+        if (orderedLogs >= orders.GetTable().First().Value.GetComponent<Soldier>().statsSO.logsRequired)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool ItemsAvailableInBarracks(int logs)
     {
         if (barracksInv.GetLogsCount() >= logs)
         {
@@ -54,6 +72,7 @@ public class BarracksController : MonoBehaviour
             barracksInv.Remove(barracksInv.ReturnResource("Logs"));
         }
 
+        orderedLogs = 0;
         orders.RemoveFirstOrder(unit);
         Debug.Log(orders.GetTable().Count + " orders");
     }

@@ -22,6 +22,7 @@ public class CollectFromStorage : GoapAction
 
         agent.GetComponent<WorkerScript>().FindStorageToCollectFrom(out target);
         if (target == null) return false;
+        if (agent.GetComponent<WorkerScript>().barracksToDeliverTo.GetComponent<BarracksController>().AllLogsOrdered()) return false;
 
         targetStorage = target.GetComponent<StorageController>();
 
@@ -45,6 +46,7 @@ public class CollectFromStorage : GoapAction
 
         //Carry resource ingame
         worker.CarryResource(resource);
+        agent.GetComponent<WorkerScript>().barracksToDeliverTo.GetComponent<BarracksController>().OrderLogs();
 
         isCollected = true;
 

@@ -94,8 +94,6 @@ public class HarvestResourceAction : GoapAction
         target = targetHarvest.gameObject;
         targetHarvest.gameObject.AddComponent<SelectionComponent>();
 
-        agent.GetComponent<WorkerScript>().SetResourceToHarvest(targetHarvest);
-
         return closest != null;
     }
 

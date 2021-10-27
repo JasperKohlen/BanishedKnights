@@ -6221,7 +6221,7 @@ GameObject:
   - component: {fileID: 7626960662507231894}
   - component: {fileID: 4780344020815506786}
   m_Layer: 0
-  m_Name: LogsText (TMP)
+  m_Name: BarracksLogsText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

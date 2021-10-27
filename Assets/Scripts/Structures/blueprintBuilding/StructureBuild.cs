@@ -56,6 +56,7 @@ public class StructureBuild : MonoBehaviour
 
         if (AllLogsDelivered() && AllCobblesDelivered())
         {
+            resources.DeselectAll();
             CompleteBuilding();
         }
     }

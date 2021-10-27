@@ -17,7 +17,7 @@ public class TimeSpeedUp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (Time.timeScale == 1.0f)
-                Time.timeScale = 6.0f;
+                Time.timeScale = 4.0f;
             else
                 Time.timeScale = 1.0f;
             // Adjust fixed delta time according to timescale

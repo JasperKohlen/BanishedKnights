@@ -6,13 +6,17 @@ using UnityEngine.EventSystems;
 
 public class HarvestSelectedResourceAction : GoapAction
 {
+
+    private GameObject agent;
     private bool isHarvested = false;
     private SelectedDictionary selectedTable;
     private HarvestableComponent targetHarvest;
     private void Start()
     {
+        agent = this.gameObject;
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
     }
+
     public HarvestSelectedResourceAction()
     {
         addPrecondition("resourcesSelected", true);
@@ -54,7 +58,6 @@ public class HarvestSelectedResourceAction : GoapAction
         targetHarvest = closest;
         targetHarvest.isTarget = true;
         target = targetHarvest.gameObject;
-        agent.GetComponent<WorkerScript>().SetResourceToHarvest(targetHarvest);
 
         return closest != null;
     }
