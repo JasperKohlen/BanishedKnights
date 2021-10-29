@@ -14,21 +14,22 @@ public class WorkerScript : Labourer
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
         goal.Add(new KeyValuePair<string, object>("idle", true));
 
+        if (selected.GetTable().Count > 0 && structsToBuild.GetTable().Count <= 0)
+        {
+            goal.Clear();
+            goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
+        }
         if (OrdersAvailable() && FindObjectsOfType<LocalStorageDictionary>().Any(s => s.GetLogsCount() > 0))
         {
             goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToBarracks", true));
-        }
-        if (selected.GetTable().Count > 0)
-        {
-            goal.Clear();
-            goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
         }
         if (structsToBuild.GetTable().Count > 0)
         {
             goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
         }
+
         return goal;
     }
 
@@ -81,5 +82,12 @@ public class WorkerScript : Labourer
 
         barracksWithOrders = barracksWithOrders.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
         return barracksWithOrders.First();
+    }
+
+    public override void Die()
+    {
+        //TODO: Lost game button!!!
+
+        Destroy(gameObject);
     }
 }

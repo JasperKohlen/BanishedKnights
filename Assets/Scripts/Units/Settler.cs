@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Settler : MonoBehaviour
+public class Settler : UnitHealth
 {
+    [SerializeField] private GameObject loseScrn;
     [SerializeField] private Transform housePrefab;
     [SerializeField] private Transform storagePrefab;
     [SerializeField] private BlueprintSO houseSO;
@@ -68,5 +69,20 @@ public class Settler : MonoBehaviour
         {
             UtilsClass.CreateWorldTextPopup("Cannot build in this location!", Mouse3D.GetMouseWorldPosition3D());
         }
+    }
+
+    public override void Die()
+    {
+        StartCoroutine(Lose());
+    }
+
+    IEnumerator Lose()
+    {
+        Destroy(gameObject);
+        loseScrn.SetActive(false);
+        Debug.Log("Started lose game sequence at : " + Time.time);
+        yield return new WaitForSeconds(10);
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        loseScrn.SetActive(true);
     }
 }

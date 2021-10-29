@@ -13,6 +13,7 @@ public abstract class UnitHealth : MonoBehaviour
     private float pctHealth;
     private float updateSpeed = 0.2f;
     #endregion
+
     private void Awake()
     {
         currentHealth = statsSO.maxHealth;

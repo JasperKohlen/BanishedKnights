@@ -16,9 +16,8 @@ public class DeliverToStorageAction : GoapAction
     }
     public DeliverToStorageAction()
     {
-        //addPrecondition("resourcesSelected", true);
         addPrecondition("holdingResource", true);
-        addPrecondition("toStorage", true);
+        //addPrecondition("toStorage", true);
         addEffect("holdingResource", false);
         addEffect("deliverToStorage", true);
     }

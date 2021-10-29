@@ -87,11 +87,11 @@ public class OrderDictionary : MonoBehaviour
     {
         int id = Random.Range(0, 10000);
 
-        if (orders.Any(s => s.Value.GetComponent<Soldier>().statsSO.id.Equals(id)))
-        {
-            GenerateRandomID(unit);
-        }
-        unit.GetComponent<Soldier>().statsSO.id = id;
+        //if (orders.Any(s => s.Value.GetComponent<Soldier>().statsSO.id.Equals(id)))
+        //{
+        //    GenerateRandomID(unit);
+        //}
+        //unit.GetComponent<Soldier>().statsSO.id = id;
         return id;
     }
     private void CountIndividualSoldiers()

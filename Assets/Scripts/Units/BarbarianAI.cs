@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class BarbarianAI : UnitHealth
 {
-    private SoldierDictionary enemies;
+    private BarbarianController bController;
     private GameObject currentTarget;
     private NavMeshAgent agent;
     private Animator anim;
@@ -20,9 +20,10 @@ public class BarbarianAI : UnitHealth
     void Start()
     {
         anim = GetComponent<Animator>();
-        enemies = EventSystem.current.GetComponent<SoldierDictionary>();
         agent = GetComponent<NavMeshAgent>();
         attackTimer = statsSO.attackDelay;
+        bController = EventSystem.current.GetComponent<BarbarianController>();
+        bController.AddBarbarian(this);
     }
 
     // Update is called once per frame
@@ -30,9 +31,10 @@ public class BarbarianAI : UnitHealth
     {
         GetComponent<NavMeshAgent>().isStopped = false;
         Collider[] hits = Physics.OverlapSphere(camp.position, 20f, LayerMask.GetMask("Units"));
-        if (hits.Any(s => s.gameObject.layer == 6))
+
+        if (hits.Any(s => s.gameObject.GetComponent<UnitHealth>()))
         {
-            FindEnemies();
+            FindEnemies(hits);
         }
         else
         {
@@ -40,29 +42,31 @@ public class BarbarianAI : UnitHealth
             BackToCamp();
         }
     }
-    private void FindEnemies()
+    private void FindEnemies(Collider[] hits)
     {
-        //TODO: Doesnt target workers yet
-        if (enemies.GetTable().Count <= 0)
+        if (hits.ToList().Count <= 0)
         {
             aggro = false;
             BackToCamp();
         }
         else
         {
-            foreach (var enemy in enemies.GetTable().ToList())
+            foreach (var enemy in hits.ToList())
             {
-                var enemyDistanceToCamp = (camp.position - enemy.Value.transform.position).magnitude;
-                var distanceToEnemy = (transform.position - enemy.Value.transform.position).magnitude;
-
-                if (enemyDistanceToCamp <= statsSO.aggroRange)
+                if (enemy.GetComponent<UnitHealth>())
                 {
-                    SetAggro(enemy.Value);
-                    if (distanceToEnemy <= statsSO.atkRange)
+                    var enemyDistanceToCamp = (camp.position - enemy.transform.position).magnitude;
+                    var distanceToEnemy = (transform.position - enemy.transform.position).magnitude;
+
+                    if (enemyDistanceToCamp <= statsSO.aggroRange)
                     {
-                        GetComponent<NavMeshAgent>().isStopped = true;
-                        agent.SetDestination(transform.position);
-                        Attack();
+                        SetAggro(enemy.gameObject);
+                        if (distanceToEnemy <= statsSO.atkRange)
+                        {
+                            GetComponent<NavMeshAgent>().isStopped = true;
+                            agent.SetDestination(transform.position);
+                            Attack();
+                        }
                     }
                 }
             }
@@ -82,7 +86,7 @@ public class BarbarianAI : UnitHealth
         {
             anim.Play("BarbarianSwordSlash");
             Debug.Log("Barbarian: Attacking!");
-            currentTarget.GetComponent<Soldier>().TakeDamage(statsSO.attackDmg);
+            currentTarget.GetComponent<UnitHealth>().TakeDamage(statsSO.attackDmg);
             attackTimer = 0;
         }
     }
@@ -101,6 +105,7 @@ public class BarbarianAI : UnitHealth
 
     public override void Die()
     {
+        bController.RemoveBarbarian(this);
         Destroy(gameObject);
     }
 }

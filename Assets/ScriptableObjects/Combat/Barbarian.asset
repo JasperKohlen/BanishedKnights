@@ -15,7 +15,7 @@ MonoBehaviour:
   logsRequired: 0
   unitType: {fileID: 6734179170193490804, guid: de5bfb92df74c1542b6f911635e6cfce, type: 3}
   aggroRange: 40
-  atkRange: 3
+  atkRange: 4
   attackDmg: 10
   attackDelay: 3
   maxHealth: 80

@@ -7,13 +7,11 @@ using UnityEngine.EventSystems;
 public class HarvestSelectedResourceAction : GoapAction
 {
 
-    private GameObject agent;
     private bool isHarvested = false;
     private SelectedDictionary selectedTable;
     private HarvestableComponent targetHarvest;
     private void Start()
     {
-        agent = this.gameObject;
         selectedTable = EventSystem.current.GetComponent<SelectedDictionary>();
     }
 
@@ -22,7 +20,7 @@ public class HarvestSelectedResourceAction : GoapAction
         addPrecondition("resourcesSelected", true);
         addPrecondition("holdingResource", false);
         addEffect("holdingResource", true);
-        addEffect("toStorage", true);
+        //addEffect("toStorage", true);
     }
     public override bool checkProceduralPrecondition(GameObject agent)
     {

@@ -18,9 +18,9 @@ public class Controllable : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) )
         {
-            if (hit.collider.gameObject.GetComponent<BarbarianAI>())
+            if (hit.collider.gameObject.GetComponent<BarbarianAI>() && gameObject.GetComponent<Soldier>())
             {
                 gameObject.GetComponent<Soldier>().SetTarget(hit.collider.gameObject);
             }

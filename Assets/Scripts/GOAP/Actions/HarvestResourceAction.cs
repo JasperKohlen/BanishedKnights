@@ -49,11 +49,13 @@ public class HarvestResourceAction : GoapAction
         if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllLogsOrdered()
             && agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllCobblesOrdered()) return false;
 
+        
         if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllLogsOrdered() == false)
         {
             harvestables = FindObjectsOfType<HarvestableComponent>().Where(s => s.resource.GetComponent<LogComponent>());
             agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().OrderLogs();
         }
+        
         else if (agent.GetComponent<WorkerScript>().structToDeliverTo.GetComponent<StructureBuild>().AllCobblesOrdered() == false)
         {
             harvestables = FindObjectsOfType<HarvestableComponent>().Where(s => s.resource.GetComponent<CobbleComponent>());

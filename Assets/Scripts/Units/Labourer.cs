@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public abstract class Labourer : MonoBehaviour, IGoap
+public abstract class Labourer : UnitHealth, IGoap
 {
     [HideInInspector] public SelectedDictionary selected;
     [HideInInspector] public ToBuildDictionary structsToBuild;

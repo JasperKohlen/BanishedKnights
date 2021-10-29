@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MoveControllables : MonoBehaviour
 {
     private SelectedUnitDictionary selectedTable;
-    // Start is called before the first frame update
+
     void Start()
     {
         selectedTable = GetComponent<SelectedUnitDictionary>();
@@ -25,8 +25,6 @@ public class MoveControllables : MonoBehaviour
 
     void MoveUnits()
     {
-        //REFACTOR
-        //GameObject.Find("Settler").GetComponent<ControllableUnitAudio>().PlayMoveSound();
         foreach (var unit in selectedTable.GetTable())
         {
             unit.Value.GetComponent<Controllable>().MoveTowardsClick();
