@@ -29,11 +29,11 @@ public class DeliverToBarracks : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if (!agent.GetComponent<WorkerScript>().OrdersAvailable())
-        { 
-            reset();
-            return false;
-        }
+        //if (!agent.GetComponent<WorkerScript>().OrdersAvailable())
+        //{ 
+        //    reset();
+        //    return false;
+        //}
 
         targetStruct.GetComponent<LocalStorageDictionary>().Add(agent.GetComponent<WorkerInventory>().ReturnResource());
 

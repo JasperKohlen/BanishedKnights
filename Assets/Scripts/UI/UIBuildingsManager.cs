@@ -9,6 +9,8 @@ public class UIBuildingsManager : MonoBehaviour
 {
     HarvestSelection removableSelection;
 
+    private UIAudio uiAudio;
+
     [SerializeField] private GameObject removeBtn;
     [SerializeField] private GameObject removeDestroyPanel;
 
@@ -17,10 +19,12 @@ public class UIBuildingsManager : MonoBehaviour
     [SerializeField] private GameObject barracksBlueprint;
     private void Start()
     {
+        uiAudio = FindObjectOfType<UIAudio>();
         removableSelection = EventSystem.current.gameObject.GetComponent<HarvestSelection>();
     }
     public void SpawnHouseBlueprint()
     {
+        uiAudio.PlayBtnClick();
         //Disable panels to prevent deselection
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);
@@ -29,6 +33,7 @@ public class UIBuildingsManager : MonoBehaviour
 
     public void SpawnStorageBlueprint()
     {
+        uiAudio.PlayBtnClick();
         //Disable panels to prevent deselection
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);
@@ -37,6 +42,7 @@ public class UIBuildingsManager : MonoBehaviour
 
     public void SpawnBarracksBlueprint()
     {
+        uiAudio.PlayBtnClick();
         //Disable panels to prevent deselection
         removableSelection.enabled = false;
         removeDestroyPanel.SetActive(false);

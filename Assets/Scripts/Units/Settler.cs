@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Settler : UnitHealth
 {
+    private UIAudio uiAudio;
+    private GameObject bgMusic;
     [SerializeField] private GameObject loseScrn;
     [SerializeField] private Transform housePrefab;
     [SerializeField] private Transform storagePrefab;
@@ -14,7 +16,9 @@ public class Settler : UnitHealth
     private GridSystem gridSystem;
     private void Start()
     {
+        uiAudio = FindObjectOfType<UIAudio>();
         gridSystem = GameObject.Find("WorldManager").GetComponent<GridSystem>();
+        bgMusic = FindObjectOfType<BackgroundMusicPlayer>().gameObject;
     }
     public void ConsumeSettler()
     {
@@ -73,16 +77,9 @@ public class Settler : UnitHealth
 
     public override void Die()
     {
-        StartCoroutine(Lose());
-    }
-
-    IEnumerator Lose()
-    {
-        Destroy(gameObject);
-        loseScrn.SetActive(false);
-        Debug.Log("Started lose game sequence at : " + Time.time);
-        yield return new WaitForSeconds(10);
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        Time.timeScale = 0;
+        bgMusic.SetActive(false);
+        uiAudio.PlayLoseSound();
         loseScrn.SetActive(true);
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIBarracksManager : MonoBehaviour
 {
+    private UIAudio uiAudio;
+
     [SerializeField] private GameObject barracksMenu;
     
     [SerializeField] private TMP_Text LogsTxt;
@@ -22,11 +24,13 @@ public class UIBarracksManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        uiAudio = FindObjectOfType<UIAudio>();
         UnitTrainingCost();
     }
 
     public void OpenBarracksMenu(LocalStorageDictionary localStorage)
     {
+        uiAudio.PlayBuildingClick();
         thisStorage = localStorage;
         selectedBarracks = localStorage.gameObject.GetComponent<BarracksController>();
         barracksMenu.SetActive(true);
@@ -48,18 +52,22 @@ public class UIBarracksManager : MonoBehaviour
 
     public void OrderSwordman()
     {
+        uiAudio.PlayBtnClick();
         selectedBarracks.MakeOrder(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void OrderBowman()
     {
+        uiAudio.PlayBtnClick();
         selectedBarracks.MakeOrder(OrderBowmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void CancelSwordmanOrder()
     {
+        uiAudio.PlayBtnClick();
         selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder(OrderSwordmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void CancelBowmanOrder()
     {
+        uiAudio.PlayBtnClick();
         selectedBarracks.gameObject.GetComponent<OrderDictionary>().RemoveFirstOrder(OrderBowmanBtn.GetComponent<OrderBtnComponent>().unit.unitType);
     }
     public void UnitTrainingCost()

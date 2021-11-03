@@ -12,22 +12,20 @@ public class WorkerScript : Labourer
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
-        goal.Add(new KeyValuePair<string, object>("idle", true));
-
-        if (selected.GetTable().Count > 0 && structsToBuild.GetTable().Count <= 0)
+        if (selected.GetTable().Count > 0)
         {
             goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
-        }
-        if (OrdersAvailable() && FindObjectsOfType<LocalStorageDictionary>().Any(s => s.GetLogsCount() > 0))
-        {
-            goal.Clear();
-            goal.Add(new KeyValuePair<string, object>("deliverToBarracks", true));
         }
         if (structsToBuild.GetTable().Count > 0)
         {
             goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToBuild", true));
+        }
+        if (OrdersAvailable() && FindObjectsOfType<StorageController>().Any(s => s.GetComponent<LocalStorageDictionary>().GetLogsCount() > 0))
+        {
+            goal.Clear();
+            goal.Add(new KeyValuePair<string, object>("deliverToBarracks", true));
         }
 
         return goal;
@@ -50,7 +48,7 @@ public class WorkerScript : Labourer
         resource.transform.parent = null;
         resource.transform.position = gameObject.transform.position;
         resource.GetComponent<BoxCollider>().enabled = false;
-
+        wAudio.PlayDropSound();
         inv.Remove(resource);
     }
 
@@ -72,15 +70,16 @@ public class WorkerScript : Labourer
     public GameObject FindBarracksToDeliverTo()
     {
         List<GameObject> barracksWithOrders = new List<GameObject>();
-        foreach (var order in FindObjectsOfType<OrderDictionary>())
+        foreach (var barracks in FindObjectsOfType<OrderDictionary>())
         {
-            if (order.Available())
+            if (barracks.Available())
             {
-                barracksWithOrders.Add(order.gameObject);
+                barracksWithOrders.Add(barracks.gameObject);
             }
         }
 
         barracksWithOrders = barracksWithOrders.OrderBy(s => Vector3.Distance(gameObject.transform.position, s.transform.position)).ToList();
+        if (barracksWithOrders == null) return null;
         return barracksWithOrders.First();
     }
 

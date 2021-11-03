@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     HarvestSelection removableSelection;
+
+    private UIAudio uiAudio;
 
     [SerializeField] private GameObject removeBtn;
     [SerializeField] private GameObject removeDestroyPanel;
@@ -23,12 +26,14 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        uiAudio = FindObjectOfType<UIAudio>();
         removableSelection = EventSystem.current.gameObject.GetComponent<HarvestSelection>();
     }
 
     //Open the menu with all remove and destroy buttons
     public void HandleHarvestPanel()
     {
+        uiAudio.PlayBtnClick();
         //Disable remove-panel
         if (removeDestroyPanel.activeSelf)
         {
@@ -46,6 +51,7 @@ public class UIManager : MonoBehaviour
 
     public void HandleInstructionsMenu()
     {
+        uiAudio.PlayBtnClick();
         if (!instructionsMenu.activeSelf)
         {
             instructionsMenu.SetActive(true);
@@ -57,6 +63,7 @@ public class UIManager : MonoBehaviour
     }
     public void HandleGlobalStorageMenu()
     {
+        uiAudio.PlayBtnClick();
         if (!globalStorageMenu.activeSelf)
         {
             globalStorageMenu.SetActive(true);
@@ -70,6 +77,7 @@ public class UIManager : MonoBehaviour
     #region structure stats
     public void OpenStorageMenu(LocalStorageDictionary localStorage)
     {
+        uiAudio.PlayBuildingClick();
         storageMenu.SetActive(true);
         logsTxt.text = "Logs : " + localStorage.GetLogsCount();
         cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
@@ -84,6 +92,11 @@ public class UIManager : MonoBehaviour
     {
         logsTxt.text = "Logs : " + localStorage.GetLogsCount();
         cobblesTxt.text = "Cobbles : " + localStorage.GetCobblesCount();
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
     #endregion

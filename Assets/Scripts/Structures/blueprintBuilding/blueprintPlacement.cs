@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 //Starts dragging blueprint once it's spawned in
 public class blueprintPlacement : MonoBehaviour
 {
+    private UIAudio uiAudio;
     [Header("Blueprint")]
     [SerializeField] private static blueprintPlacement instance;
     [SerializeField] private Transform prefab;
@@ -24,6 +25,7 @@ public class blueprintPlacement : MonoBehaviour
 
     private void Start()
     {
+        uiAudio = FindObjectOfType<UIAudio>();
         gridSystem = GameObject.Find("WorldManager").GetComponent<GridSystem>();
     }
     private void Awake()
@@ -116,6 +118,8 @@ public class blueprintPlacement : MonoBehaviour
                 gridSystem.grid.GetGridObject(gridPos.x, gridPos.y).SetTransform(builtTransform);
             }
             gridObject.SetTransform(builtTransform);
+            //Play audio
+            uiAudio.PlayBlueprintPlacement();
         }
         else
         {

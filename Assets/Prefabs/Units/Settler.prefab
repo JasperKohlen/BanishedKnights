@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsSO: {fileID: 11400000, guid: b9c26e8faf3203c40a9be80548e73338, type: 2}
   healthBar: {fileID: 1564601160193297012}
+  loseScrn: {fileID: 0}
   housePrefab: {fileID: 759559390215995794, guid: 79c906f9d74e59545b2986e314b52e97, type: 3}
   storagePrefab: {fileID: 531159852797634537, guid: 96944f1a106fa7d4da4cd82acdce4868, type: 3}
   houseSO: {fileID: 11400000, guid: 42352b5d95ea6ff4f863f0387b95b465, type: 2}
@@ -339,7 +340,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.477
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

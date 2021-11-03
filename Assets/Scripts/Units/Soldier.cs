@@ -84,7 +84,15 @@ public class Soldier : UnitHealth
 
         if (attackTimer >= statsSO.attackDelay)
         {
-            anim.Play("SwordSlash");
+            if (statsSO.unitType.GetComponent<BowmanComponent>())
+            {
+                anim.Play("bowSlash");
+
+            }
+            if (statsSO.unitType.GetComponent<SwordmanComponent>())
+            {
+                anim.Play("SwordSlash");
+            }
             currentTarget.GetComponent<BarbarianAI>().TakeDamage(statsSO.attackDmg);
             attackTimer = 0;
         }

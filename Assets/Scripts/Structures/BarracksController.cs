@@ -13,6 +13,7 @@ public class BarracksController : MonoBehaviour
     private int orderedLogs = 0;
     private OrderDictionary orders;
     private LocalStorageDictionary barracksInv;
+
     [SerializeField] private UIBarracksManager ui;
     private void Start()
     {

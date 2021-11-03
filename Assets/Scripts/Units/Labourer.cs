@@ -10,6 +10,7 @@ public abstract class Labourer : UnitHealth, IGoap
     [HideInInspector] public ToBuildDictionary structsToBuild;
     [HideInInspector] public WorkerInventory inv;
     [HideInInspector] public StorageBuildingsDictionary storages;
+    [SerializeField] internal WorkerAudio wAudio;
     private NavMeshAgent agent;
 
     private void Start()
