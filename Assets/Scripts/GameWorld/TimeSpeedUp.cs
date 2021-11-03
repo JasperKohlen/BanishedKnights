@@ -10,6 +10,7 @@ public class TimeSpeedUp : MonoBehaviour
     private bool paused = false;
     void Awake()
     {
+        Time.timeScale = 1.0f;
         // Make a copy of the fixedDeltaTime, it defaults to 0.02f, but it can be changed in the editor
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }

@@ -11,6 +11,15 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject loadingImage;
     [SerializeField] private TMP_Text loadingTxt;
 
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip mainTheme;
+
+    private void Start()
+    {
+        source.clip = mainTheme;
+        source.loop = true;
+        source.Play();
+    }
     public void ChangeScene()
     {
         StartCoroutine(LoadAsyncScene());

@@ -12,11 +12,7 @@ public class WorkerScript : Labourer
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
-        if (selected.GetTable().Count > 0)
-        {
-            goal.Clear();
-            goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
-        }
+
         if (structsToBuild.GetTable().Count > 0)
         {
             goal.Clear();
@@ -27,7 +23,11 @@ public class WorkerScript : Labourer
             goal.Clear();
             goal.Add(new KeyValuePair<string, object>("deliverToBarracks", true));
         }
-
+        if (selected.GetTable().Count > 0 && structsToBuild.GetTable().Count <= 0)
+        {
+            goal.Clear();
+            goal.Add(new KeyValuePair<string, object>("deliverToStorage", true));
+        }
         return goal;
     }
 
@@ -85,8 +85,6 @@ public class WorkerScript : Labourer
 
     public override void Die()
     {
-        //TODO: Lost game button!!!
-
         Destroy(gameObject);
     }
 }
